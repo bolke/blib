@@ -19,10 +19,9 @@ public:
   virtual size_t Push(const std::string& data);										//push data in preformed structure
 	
 	virtual std::vector<char_t>& GetData();													//returns data vector reference
-	virtual std::vector<EnumVar_t>& GetStructure();									//return data structure	
+	virtual std::vector<EnumVar_t> GetStructure();									//return data structure	
 	
 	virtual EnumResult_t PushVariable(const void* variable,const EnumVar_t type);				//push variable of given data type
-	virtual EnumResult_t PushVariable(const void* variable,const type_info* type);			//push variable of given datatype
 	virtual EnumResult_t PushVariable(const std::string value, const EnumVar_t type);		//push data of given type in string form
 };
 

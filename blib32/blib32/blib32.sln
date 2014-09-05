@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "blib32", "blib32.vcproj", "{DF9C8BE2-D943-4EEC-A683-1A4AE1FB36F4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F86C83C8-2C9A-40F6-8303-2144032599BD} = {F86C83C8-2C9A-40F6-8303-2144032599BD}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Messages", "..\Messages\Messages.vcproj", "{F86C83C8-2C9A-40F6-8303-2144032599BD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF9C8BE2-D943-4EEC-A683-1A4AE1FB36F4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DF9C8BE2-D943-4EEC-A683-1A4AE1FB36F4}.Debug|Win32.Build.0 = Debug|Win32
+		{DF9C8BE2-D943-4EEC-A683-1A4AE1FB36F4}.Release|Win32.ActiveCfg = Release|Win32
+		{DF9C8BE2-D943-4EEC-A683-1A4AE1FB36F4}.Release|Win32.Build.0 = Release|Win32
+		{F86C83C8-2C9A-40F6-8303-2144032599BD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F86C83C8-2C9A-40F6-8303-2144032599BD}.Debug|Win32.Build.0 = Debug|Win32
+		{F86C83C8-2C9A-40F6-8303-2144032599BD}.Release|Win32.ActiveCfg = Release|Win32
+		{F86C83C8-2C9A-40F6-8303-2144032599BD}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
