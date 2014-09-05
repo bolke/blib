@@ -320,11 +320,11 @@ float32_t StringParser::ToFloat32_t(const std::string line,const int32_t decimal
 			str="%f";
 		else{
       char buf[512];
-      sprintf(buf,"%i",decimals);
+      sprintf_s(buf,"%i",decimals);
       str.append(buf);
 		  str.append("f");
 		}
-    sscanf(line.c_str(),str.c_str(),&result);  
+    sscanf_s(line.c_str(),str.c_str(),&result);  
 	}
 	return result;
 }
@@ -337,11 +337,11 @@ float64_t StringParser::ToFloat64_t(const std::string line,const int32_t decimal
 			str="%lf";
 		else{
       char buf[512];
-      sprintf(buf,"%i",decimals);
+      sprintf_s(buf,"%i",decimals);
       str.append(buf);
 		  str.append("lf");
 		}
-    sscanf(line.c_str(),str.c_str(),&result);  
+    sscanf_s(line.c_str(),str.c_str(),&result);  
 	}
 	return result;
 }
@@ -354,11 +354,11 @@ float StringParser::ToFloat(const std::string line,const int32_t decimals){
 			str="%f";
 		else{
       char buf[512];
-      sprintf(buf,"%i",decimals);
+      sprintf_s(buf,"%i",decimals);
       str.append(buf);
 		  str.append("f");
 		}
-    sscanf(line.c_str(),str.c_str(),&result);
+    sscanf_s(line.c_str(),str.c_str(),&result);
   }
   return result;
 }
@@ -712,7 +712,7 @@ std::string StringParser::ToString(const char* format, ...){
 
   va_list arg;
   va_start(arg, format);
-  vsnprintf(message, sizeof(message) - 1, format, arg);
+  vsnprintf_s(message, sizeof(message) - 1,5120, format, arg);
 
   va_end(arg);
 

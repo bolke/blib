@@ -2,9 +2,10 @@
 
 using namespace blib;
 
-ThreadWorker::ThreadWorker(ThreadTaskPool* taskPool){
+ThreadWorker::ThreadWorker(ThreadTaskPool* taskPool,bool destroyPool){
 	this->taskPool=taskPool;
-  workParallel=false;
+	this->destroyPool=destroyPool;
+  workParallel=false;	
 	thread=NULL;
 	task=NULL;
 }
@@ -17,7 +18,7 @@ ThreadWorker::~ThreadWorker(){
 		if(callback!=NULL)
 			delete callback;
 	}
-	if(taskPool!=NULL)
+	if(destroyPool&&(taskPool!=NULL))
 		delete taskPool;
 }
 
@@ -99,8 +100,11 @@ EnumResult_t ThreadWorker::AddTask(ThreadTask* task){
   EnumResult_t result=FAIL;
 	if(task!=NULL){		
 	  if(lock->Lock()){				
-			if(taskPool!=NULL){
+			if(taskPool!=NULL)
 				result=taskPool->Push(task);
+			else if(this->task==NULL){
+				this->task=task;
+			  result=SUCCESS;
 			}
 			lock->Unlock();
 		}		

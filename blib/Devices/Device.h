@@ -12,12 +12,12 @@ protected:
 public:
   Device(ThreadItem& item,bool destroyLockpad=false);							//get a lock from somewhere, and do we need to destroy it
 	Device(ThreadLock& lock=*(new ThreadLock(false)));							//get your own lock, will be destroyed
-  virtual ~Device(); 
+  virtual ~Device();																							//destructo does nothing really
   virtual size_t Size()=0;																				//return size of data that's poppable
-  virtual size_t Pop(char_t& c,size_t size=1)=0;									
-  virtual size_t Pop(std::string& data);
-  virtual size_t Push(const char_t &c,size_t size=1)=0;  
-  virtual size_t Push(const std::string& data); 
+  virtual size_t Pop(char_t& c,size_t size=1)=0;									//pop data into char array, return cnt of data popped
+  virtual size_t Pop(std::string& data);													//pop data into string, return cnt of data popped
+  virtual size_t Push(const char_t &c,size_t size=1)=0;						//push data into device, return cnt of data pushed
+  virtual size_t Push(const std::string& data);										//push data into device, return cnt of data pushed
 	virtual bool IsOpen();																					//returns isOpen variable
   virtual EnumResult_t Open();																		//sets isOpen to TRUE
   virtual EnumResult_t Close();																		//sets isOpen to FALSE
@@ -26,6 +26,7 @@ public:
 	virtual Device& operator>>(std::string& data);									//stream data to string (this->pop(string))
 	virtual Device& operator<<(const std::string& data);						//stream data from string (this->push(string))
 
+	//push data from a istream into a Device, return the stream. 
 	friend std::istream& operator>>(std::istream &stream,Device &output){
 		char_t* data=NULL;
 		size_t pos;
@@ -44,7 +45,7 @@ public:
 					size=size-pos;
 					if(size>0){
 						data=new char_t[size];
-						stream.readsome(data,size);
+						stream.readsome(data,size);					//ignore warnings, parameters are safe
 						size=stream.gcount();
 						output.Push(*data,size);
 						delete[] data;
@@ -55,6 +56,7 @@ public:
 		return stream;
 	};
 
+	//pop data from a Device and into an ostream.
 	friend std::ostream& operator<<(std::ostream& stream,Device& input){    
     size_t size=input.Size();
     if(size>0){    

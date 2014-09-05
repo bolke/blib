@@ -15,7 +15,7 @@ public:
   virtual size_t Size();																					//size of data available
 	virtual EnumResult_t SetDestroyData(bool value);								
 	virtual bool GetDestroyData();
-  virtual size_t Pop(char_t& c,size_t size=1);  
+  virtual size_t Pop(char_t& c,size_t size=1);
   virtual size_t Pop(std::string& data);	
   virtual size_t Push(const char_t &c,size_t size=1);  
 	virtual size_t Push(const std::string& data);

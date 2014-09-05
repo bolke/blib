@@ -41,7 +41,7 @@ public:
 					size=size-pos;
 					if(size>0){
 						data=new char_t[size];
-						stream.readsome(data,size);
+						stream.readsome(data,size);							//ignore warning, parameters are safe
 						size=stream.gcount();
 						output.Push(*data,size);
 						delete[] data;
