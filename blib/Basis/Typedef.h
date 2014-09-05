@@ -177,6 +177,10 @@ EnumVar_t GetEnumVar(const std::type_info* type);
 const std::type_info* GetTypeInfo(EnumVar_t type);
 const std::type_info* GetTypeInfo(size_t hash);
 
+size_t GetSize(const std::type_info* type);
+size_t GetSize(const EnumVar_t type);
+size_t GetSize(const size_t hash);
+
 EnumResult_t InitTypeMaps();
 
 };
