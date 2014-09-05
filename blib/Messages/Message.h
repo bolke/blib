@@ -7,14 +7,13 @@ namespace blib{
 
 class Message:public Data{
 protected:
-  size_t pos;																											//current position of data pointer
 	std::map<size_t,EnumVar_t> structure;														//data structure complete with offset	
 	std::vector<char_t> data;																				//buffer for data	
 public:
 	Message();																											
 	virtual size_t Size();																					//size of data
-  virtual size_t Pop(char_t& c,size_t size=1);										//pop data
-  virtual size_t Pop(std::string& data);													//pop data
+  virtual size_t Pop(char_t& c,size_t size=1);										//pop data according to preformed structure, according to structure
+  virtual size_t Pop(std::string& data);													//pop data according to preformed structure
   virtual size_t Push(const char_t &c,size_t size=1);							//push data in preformed structure
   virtual size_t Push(const std::string& data);										//push data in preformed structure
 	

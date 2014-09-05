@@ -14,12 +14,12 @@ size_t Message::Size(){
 	return result;
 }
 
-
 size_t Message::Pop(std::string& data){
 	return Data::Pop(data);
 }
 
 size_t Message::Pop(char_t& c,size_t size){
+
 	return size;
 }
 
@@ -47,3 +47,4 @@ std::vector<EnumVar_t> Message::GetStructure(){
 	}
 	return result;
 }
+
