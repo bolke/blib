@@ -233,3 +233,66 @@ const std::type_info* blib::GetTypeInfo(EnumVar_t type){
 const std::type_info* blib::GetTypeInfo(size_t hash){
   return GetTypeInfo(GetEnumVar(hash));
 }
+
+size_t blib::GetSize(const EnumVar_t type){
+	size_t result=0;
+	switch(type){
+	  case CHAR_T:
+			result=sizeof(char_t);
+      break;
+    case INT8_T:
+			result=sizeof(int8_t);
+      break;
+    case UINT8_T:
+			result=sizeof(uint8_t);
+      break;
+    case INT16_T:
+			result=sizeof(int16_t);
+      break;
+    case UINT16_T:
+			result=sizeof(uint16_t);
+      break;
+    case INT32_T:
+			result=sizeof(int32_t);
+      break;
+    case UINT32_T:
+			result=sizeof(uint32_t);
+      break;
+    case INT64_T:
+			result=sizeof(int64_t);
+      break;
+    case UINT64_T:
+			result=sizeof(uint64_t);
+      break;
+    case LONG_T:
+			result=sizeof(long_t);
+      break;
+    case ULONG_T:
+			result=sizeof(ulong_t);
+      break;
+    case LLONG_T:
+			result=sizeof(llong_t);
+      break;
+    case ULLONG_T:
+			result=sizeof(ullong_t);
+      break;
+    case FLOAT32_T:
+			result=sizeof(float32_t);
+      break;
+    case FLOAT64_T:
+			result=sizeof(float64_t);
+      break;
+    case LFLOAT64_T:
+			result=sizeof(lfloat64_t);
+      break;
+	}
+	return result;
+}
+
+size_t blib::GetSize(const std::type_info* type){
+	return GetSize(GetEnumVar(type));
+}
+
+size_t blib::GetSize(const size_t hash){
+  return GetSize(GetEnumVar(hash));
+}
