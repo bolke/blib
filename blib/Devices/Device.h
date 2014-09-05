@@ -26,7 +26,7 @@ public:
 	virtual Device& operator>>(std::string& data);									//stream data to string (this->pop(string))
 	virtual Device& operator<<(const std::string& data);						//stream data from string (this->push(string))
 
-	//push data from a istream into a Device, return the stream. 
+	//push data from an istream into a Device, return the stream. 
 	friend std::istream& operator>>(std::istream &stream,Device &output){
 		char_t* data=NULL;
 		size_t pos;
