@@ -20,7 +20,7 @@ public:
 	static float32_t GetFloat32_t(const char_t& buffer,const size_t start=0);										//put 4 bytes into float32
 	static float64_t GetFloat64_t(const char_t& buffer,const size_t start=0);										//put 8 bytes into float64
 	static std::string GetString(const char_t& buffer,const size_t start=0,const size_t size=0);	//if size==0, stop on null value in buffer, or on default size
-	static EnumResult_t GetVariable(const char_t& buffer,const size_t start,const std::type_info* info,void* variable,const size_t size=0); //grab data from buffer according to typeinfo		
+	static EnumResult_t GetVariable(const char_t& buffer,const size_t start,const std::type_info* info,void* variable,const size_t size=0); //grab data from buffer according to typeinfo			
 
 	static EnumResult_t SetUInt8_t(const uint8_t value,char_t& target,const size_t start=0);			//put uint8_t into char array, start at start			
 	static EnumResult_t SetInt8_t(const int8_t value,char_t& target,const size_t start=0);				//put int8_t into char array, start at start
@@ -34,7 +34,7 @@ public:
 	static EnumResult_t SetFloat64_t(const float64_t value,char_t& target,const size_t start=0);	//put float64_t into char array, start at start
 	static EnumResult_t SetString(const std::string& value,char_t& target,const size_t start=0);	//put string into char array, start at start, buffer has to be large enough
 	static EnumResult_t SetVariable(const std::string& value,const EnumVar_t type,char_t& target,const size_t start=0); //set var according to type, converted from string
-
+	
 	static EnumResult_t ToString(const void* source,const EnumVar_t type,std::string& target);				//convert source of given type to string, base types and pointers to base type accepted, pointer != NULL
   static EnumResult_t ToString(const void* source,const std::type_info* type,std::string& target);	//convert source to given type to string, base types and pointers to base type accepted, pointer != NULL
 };
