@@ -12,22 +12,21 @@ size_t DataStructure::Size(){
 
 size_t DataStructure::Pop(char_t& c,size_t size){
 	size_t result=0;
-	if(popIt==structure.end()){
-		if(data->Size()>0)
-		  popIt=structure.begin();
-	}
+	size_t expectedSize=0;
 	if(popIt!=structure.end()){
-		size_t expectedSize=GetSize(*popIt);
-		if(size>=expectedSize){
-			if(data->Size()>=expectedSize){				
-			  result=data->Pop(c,expectedSize);				
-				popIt++;				
-				if(result==expectedSize){
-					if(popIt!=structure.end()){
-						expectedSize=GetSize(*popIt);
-						if((size-result)>=expectedSize)
-							result=result+Pop(((&c)[result]),size-result);
-					}
+		if(*popIt==STRING_T){
+			char2_int16_t length;
+			if(data->Pop(length.c[0],2)==2)
+				expectedSize=length.u_value;
+		}else
+			expectedSize=GetSize(*popIt);
+		if((expectedSize>0)&&(size>=expectedSize)){
+			result=data->Pop(c,expectedSize);
+			popIt++;
+			if(popIt!=structure.end()){
+				if(*popIt!=STRING_T){
+					if(result<size)
+			      result=result+Pop((&c)[result],size-result);
 				}
 			}
 		}
@@ -41,14 +40,26 @@ size_t DataStructure::Pop(std::string& data){
 
 size_t DataStructure::Push(const char_t &c,size_t size){
 	size_t result=0;
-	if(popIt!=structure.end()){
-		if(size>=GetSize(*popIt)){
-			size_t expectedSize=GetSize(*popIt);			
-			result=data->Push(c,expectedSize);
-			if(result==expectedSize){		
-				popIt++;
-				if((size-result)>0)
-					result=result+Push((&c)[result],size-result);
+	if(popIt==structure.end()){
+		if(this->data->Size()==0)
+			popIt=structure.begin();
+	}
+	if(size>0){
+		if(popIt!=structure.end()){	
+			size_t expectedSize=0;
+			if(*popIt==STRING_T)
+				expectedSize=size;
+			else
+				expectedSize=GetSize(*popIt);
+			if((expectedSize>0)&&(expectedSize<=size)){
+				result=data->Push(c,expectedSize);
+			  popIt++;
+				if(popIt!=structure.end()){
+					if((*popIt)!=STRING_T){
+						if((size-result)>0)
+						  result=result+Push((&c)[result],size-result);
+					}
+				}
 			}
 		}
 	}
@@ -56,7 +67,7 @@ size_t DataStructure::Push(const char_t &c,size_t size){
 }
 
 size_t DataStructure::Push(const std::string& data){
-	return DataWrapper::Push(data);
+	return Push(*(data.c_str()),data.length());
 }
 
 EnumResult_t DataStructure::AddVariable(const EnumVar_t variable){
