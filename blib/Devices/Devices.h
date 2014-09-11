@@ -12,5 +12,6 @@
 #include "DeviceBuffer.h"									//creates a buffer for a device, with a threshold. saving data until a threshold is reached
 #include "DeviceTimer.h"									//creates a device timer, timing input and output
 #include "DataWrapper.h"									//wrap a data object into a device object
+#include "DataStructure.h"
 
 #endif
