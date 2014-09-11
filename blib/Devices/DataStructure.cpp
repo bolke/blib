@@ -31,6 +31,8 @@ size_t DataStructure::Pop(char_t& c,size_t size){
 			}
 		}
 	}
+	if(Size()==0)
+		popIt=structure.begin();
 	return result;
 }
 
@@ -40,29 +42,34 @@ size_t DataStructure::Pop(std::string& data){
 
 size_t DataStructure::Push(const char_t &c,size_t size){
 	size_t result=0;
-	if(popIt==structure.end()){
-		if(this->data->Size()==0)
-			popIt=structure.begin();
-	}
-	if(size>0){
-		if(popIt!=structure.end()){	
-			size_t expectedSize=0;
-			if(*popIt==STRING_T)
-				expectedSize=size;
-			else
-				expectedSize=GetSize(*popIt);
-			if((expectedSize>0)&&(expectedSize<=size)){
-				result=data->Push(c,expectedSize);
-			  popIt++;
-				if(popIt!=structure.end()){
-					if((*popIt)!=STRING_T){
-						if((size-result)>0)
-						  result=result+Push((&c)[result],size-result);
+	if(!((popIt==structure.begin())&&(data->Size()>0))){
+		if(size>0){
+			if(popIt!=structure.end()){	
+				size_t expectedSize=0;
+				if(*popIt==STRING_T)
+					expectedSize=size;
+				else
+					expectedSize=GetSize(*popIt);
+				if((expectedSize>0)&&(expectedSize<=size)){
+					if((*popIt==STRING_T)&&(expectedSize<65534)){
+						char2_int16_t length;
+						length.u_value=expectedSize;
+						data->Push(length.c[0],2);
+					}
+					result=data->Push(c,expectedSize);
+					popIt++;
+					if(popIt!=structure.end()){
+						if((*popIt)!=STRING_T){
+							if((size-result)>0)
+								result=result+Push((&c)[result],size-result);
+						}
 					}
 				}
 			}
 		}
-	}
+	}	
+	if(popIt==structure.end())		
+	  popIt=structure.begin();	
 	return result;
 }
 

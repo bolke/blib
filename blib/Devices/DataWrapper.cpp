@@ -27,12 +27,7 @@ size_t DataWrapper::Pop(char_t& c,size_t size){
 }
 
 size_t DataWrapper::Pop(std::string& data){
-	size_t result=0;
-	if(lock->Lock()){
-	  result=this->data->Pop(data);
-  	lock->Unlock();
-	}
-	return result;
+	return Device::Pop(data);
 }
 
 size_t DataWrapper::Push(const char_t &c,size_t size){
@@ -45,12 +40,7 @@ size_t DataWrapper::Push(const char_t &c,size_t size){
 }
 
 size_t DataWrapper::Push(const std::string& data){
-	size_t result=0;
-	if(lock->Lock()){
-		result=this->data->Push(data);
-		lock->Unlock();
-	}
-	return result;
+	return Device::Push(data);
 }
 
 EnumResult_t DataWrapper::SetDestroyData(bool value){
