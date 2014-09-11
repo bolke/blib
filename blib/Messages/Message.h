@@ -5,10 +5,9 @@
 
 namespace blib{
 
-class Message:public Data{
+class Message:public DataStructure{
 protected:
-	std::map<size_t,EnumVar_t> structure;														//data structure complete with offset	
-	std::vector<char_t> data;																				//buffer for data	
+	std::vector<char_t> buffer;																			//buffer for data	
 public:
 	Message();																											
 	virtual size_t Size();																					//size of data
@@ -18,10 +17,16 @@ public:
   virtual size_t Push(const std::string& data);										//push data in preformed structure
 	
 	virtual std::vector<char_t>& GetData();													//returns data vector reference
-	virtual std::vector<EnumVar_t> GetStructure();									//return data structure	
-	
+
 	virtual EnumResult_t PushVariable(const void* variable,const EnumVar_t type);				//push variable of given data type
 	virtual EnumResult_t PushVariable(const std::string value, const EnumVar_t type);		//push data of given type in string form
+	virtual EnumResult_t PopVariable(const void* variable);
+	virtual EnumResult_t PopVariable(std::string& value);
+
+	virtual EnumVar_t NextVariable();
+
+	virtual bool IsEmpty();
+	virtual bool IsFull();
 };
 
 };
