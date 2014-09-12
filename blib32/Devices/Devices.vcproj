@@ -155,6 +155,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\blib\Devices\DataStructure.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\blib\Devices\DataWrapper.cpp"
 				>
 			</File>
@@ -194,6 +198,10 @@
 			>
 			<File
 				RelativePath="..\..\blib\Devices\DataBuffer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\blib\Devices\DataStructure.h"
 				>
 			</File>
 			<File

@@ -13,6 +13,8 @@ size_t DataStructure::Size(){
 size_t DataStructure::Pop(char_t& c,size_t size){
 	size_t result=0;
 	size_t expectedSize=0;
+	if(popIt==structure.end())		
+	  popIt=structure.begin();	
 	if(popIt!=structure.end()){
 		if(*popIt==STRING_T){
 			char2_int16_t length;
@@ -68,8 +70,6 @@ size_t DataStructure::Push(const char_t &c,size_t size){
 			}
 		}
 	}	
-	if(popIt==structure.end())		
-	  popIt=structure.begin();	
 	return result;
 }
 
@@ -79,9 +79,12 @@ size_t DataStructure::Push(const std::string& data){
 
 EnumResult_t DataStructure::AddVariable(const EnumVar_t variable){
 	EnumResult_t result=FAIL;
-	if((structure.size()==0)||(popIt==structure.begin())){
+	if((structure.size()==0)||(popIt==structure.end())){
 		structure.push_back(variable);
-		popIt=structure.begin();
+		if(data->Size()>0)
+		  popIt=structure.begin()+(structure.size()-1);
+		else
+			popIt=structure.begin();
 		result=SUCCESS;
 	}
 	return SUCCESS;
