@@ -34,11 +34,11 @@ size_t Message::Push(const std::string& data){
 	return DataStructure::Push(data);
 }
 
-EnumResult_t Message::PushVariable(const std::string value, const EnumVar_t type){
+EnumResult_t Message::AddVariable(const std::string value, const EnumVar_t type){
   EnumResult_t result=FAIL;
 	if(lock->Lock()){
 		if(IsFull()||(IsEmpty()&&(structure.size()==0))){
-			if(AddVariable(type)==SUCCESS){				
+			if(DataStructure::AddVariable(type)==SUCCESS){				
 				if(type==STRING_T)
 					Push(value);
 				else{					
@@ -58,25 +58,71 @@ EnumResult_t Message::PushVariable(const std::string value, const EnumVar_t type
 	return result;
 }
 
-EnumResult_t Message::PushVariable(const void* variable,const EnumVar_t type){
+EnumResult_t Message::AddVariable(const void* variable,const EnumVar_t type){
   EnumResult_t result=FAIL;
-	if(lock->Lock()){		
-		if(IsFull()||(IsEmpty()&&(structure.size()==0))){
-			if(type!=STRING_T){
-				size_t expectedSize=GetSize(type);
-				if(expectedSize>0){
-					if(AddVariable(type)==SUCCESS)
-					  if(Push(*((const char_t*)variable),expectedSize)==expectedSize)
-						  result=SUCCESS;				
+	if(variable!=NULL){
+		if(lock->Lock()){		
+			if(IsFull()||(IsEmpty()&&(structure.size()==0))){
+				if(type!=STRING_T){
+					size_t expectedSize=GetSize(type);
+					if(expectedSize>0){
+						if(DataStructure::AddVariable(type)==SUCCESS)
+							if(Push(*((const char_t*)variable),expectedSize)==expectedSize)
+								result=SUCCESS;				
+					}
+				}else{
+					result=AddVariable(*((std::string*)variable),type);
 				}
-			}else{
-				result=PushVariable(*((std::string*)variable),type);
 			}
+			lock->Unlock();
+		}
+	}
+	return result;
+};
+
+EnumResult_t Message::PushVariable(const void* variable){
+  EnumResult_t result=FAIL;
+	if(variable!=NULL){
+		if(lock->Lock()){
+			if(!IsFull()){
+				size_t expectedSize=GetSize(NextVariable());
+				if(NextVariable()==STRING_T){
+					if(Push(*((const std::string*)variable))>0)
+						result=SUCCESS;
+				}else if(expectedSize>0){
+					std::string target;
+					if(RawParser::ToString(variable,NextVariable(),target)==SUCCESS){
+					  result=PushVariable(target); 
+					}
+				}
+			}
+			lock->Unlock();
+		}
+	}
+	return result;
+}
+
+EnumResult_t Message::PushVariable(const std::string& value){
+  EnumResult_t result=FAIL;
+	if(lock->Lock()){
+		if(NextVariable()==STRING_T){
+		  if(Push(value)>0)
+				result=SUCCESS;
+		}else{
+			size_t expectedSize=GetSize(NextVariable());
+			if(expectedSize>0){
+			  char_t* c=new char_t[expectedSize];
+				if(RawParser::SetVariable(value,NextVariable(),*c)==SUCCESS){
+				  if(Push(*c,expectedSize)==expectedSize)
+						result=SUCCESS;
+				}
+				delete[] c;
+			}		  
 		}
 	  lock->Unlock();
 	}
 	return result;
-};
+}
 
 EnumResult_t Message::PopVariable(std::string& value){
 	EnumResult_t result=FAIL;
@@ -96,6 +142,7 @@ EnumResult_t Message::PopVariable(std::string& value){
 				  char_t* c=new char_t[expectedSize];
 					if(Pop(c[0],expectedSize)==expectedSize)
 						result=RawParser::ToString(c,varType,value);					
+					delete[] c;
 				}
 			}
 		}
@@ -126,3 +173,14 @@ bool Message::IsFull(){
 	};
 	return result;
 };
+
+EnumResult_t Message::PopVariable(void* variable){
+	EnumResult_t result=FAIL;
+	if(variable!=NULL){
+		if(lock->Lock()){
+			
+			lock->Unlock();
+		}
+	}
+  return result;
+}
