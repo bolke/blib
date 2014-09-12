@@ -76,6 +76,42 @@ EnumResult_t Message::PushVariable(const void* variable,const EnumVar_t type){
 	  lock->Unlock();
 	}
 	return result;
+};
+
+EnumResult_t Message::PopVariable(std::string& value){
+	EnumResult_t result=FAIL;
+	if(lock->Lock()){
+		if(popIt==structure.end()){
+			if(!IsEmpty())
+				popIt=structure.begin();
+		}
+		if(NextVariable()!=UNKNOWN_T){
+			if(*popIt==STRING_T){
+			  Pop(value);
+			  result=SUCCESS;
+			}else{
+				size_t expectedSize=GetSize(*popIt);
+				if(expectedSize>0){
+					EnumVar_t varType=*popIt;
+				  char_t* c=new char_t[expectedSize];
+					if(Pop(c[0],expectedSize)==expectedSize)
+						result=RawParser::ToString(c,varType,value);					
+				}
+			}
+		}
+	  lock->Unlock();
+	}
+	return result;
+};
+
+EnumVar_t Message::NextVariable(){
+	EnumVar_t result=UNKNOWN_T;
+	if(lock->Lock()){
+		if(popIt!=structure.end())
+			result=*popIt;
+		lock->Unlock();
+	}
+	return result;
 }
 
 bool Message::IsEmpty(){
