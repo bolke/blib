@@ -21,9 +21,9 @@ public:
 	virtual EnumResult_t AddVariable(const void* variable,const EnumVar_t type);				//push variable of given data type
 	virtual EnumResult_t AddVariable(const std::string value, const EnumVar_t type);		//push data of given type in string form
 	
-	virtual EnumResult_t PushVariable(const void* variable);
-	virtual EnumResult_t PushVariable(const std::string& value);
-	virtual EnumResult_t PopVariable(void* variable);
+	virtual EnumResult_t PushVariable(const void* variable);        //add variable of expected type
+	virtual EnumResult_t PushVariable(const std::string& value);    //add variable in string form
+	virtual EnumResult_t PopVariable(void* variable);               //pop variable pointer to expected type
 	virtual EnumResult_t PopVariable(std::string& value);						//pop variable to string
 
 	virtual EnumVar_t NextVariable();																//what is the next variable
