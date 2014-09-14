@@ -6,11 +6,13 @@
 #include "Serial.h"                                               
 #include "FileIO.h"
 #include "Network.h"                                              
+#include "Security.h"
+#include "Sql.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
-#define BLIB_VERSION "1.05.09.2014"
+#define BLIB_VERSION "1.14.09.2014"
 #define BLIB_CORE "x86 device"
 
 #if defined(WINDOWS)

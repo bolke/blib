@@ -25,7 +25,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="xcopy /y /b &quot;$(ProjectDir)..\Core\inc\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\Messages\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\Network\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\FileIO\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\Serial\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;copy /y /b &quot;$(ProjectDir)..\..\Blib.h&quot; &quot;$(SolutionDir)inc\Blib.h&quot;&#x0D;&#x0A;"
+				CommandLine="xcopy /y /b &quot;$(ProjectDir)..\Core\inc\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\Messages\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\Network\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\FileIO\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\Serial\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\Security\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\Sql\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;copy /y /b &quot;$(ProjectDir)..\..\Blib.h&quot; &quot;$(SolutionDir)inc\Blib.h&quot;&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="Core.lib Messages.lib Serial.lib"
+				AdditionalDependencies="Core.lib FileIO.lib Messages.lib Network.lib Security.lib Serial.lib Sql.lib"
 				OutputFile="$(OutDir)\blib.lib"
 				AdditionalLibraryDirectories=".\build;.\..\Core\lib\"
 			/>
@@ -92,7 +92,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="xcopy /y /b &quot;$(ProjectDir)..\Core\inc\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\Messages\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\Network\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\FileIO\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\Serial\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;copy /y /b &quot;$(ProjectDir)..\..\Blib.h&quot; &quot;$(SolutionDir)inc\Blib.h&quot;&#x0D;&#x0A;"
+				CommandLine="xcopy /y /b &quot;$(ProjectDir)..\Core\inc\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\Messages\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\Network\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\FileIO\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\Serial\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\Security\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\Sql\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;copy /y /b &quot;$(ProjectDir)..\..\Blib.h&quot; &quot;$(SolutionDir)inc\Blib.h&quot;&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -129,7 +129,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="Core.lib Messages.lib Serial.lib"
+				AdditionalDependencies="Core.lib FileIO.lib Messages.lib Network.lib Security.lib Serial.lib Sql.lib"
 				OutputFile="$(OutDir)\blib.lib"
 				AdditionalLibraryDirectories=".\build;.\..\Core\lib\"
 			/>
