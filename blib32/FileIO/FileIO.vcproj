@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
-	Name="blib32"
-	ProjectGUID="{DF9C8BE2-D943-4EEC-A683-1A4AE1FB36F4}"
-	RootNamespace="blib32"
+	Version="9,00"
+	Name="FileIO"
+	ProjectGUID="{42C9CE48-7C69-453B-9EAD-5E31A47C15CF}"
+	RootNamespace="FileIO"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -18,14 +18,13 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)\lib"
-			IntermediateDirectory="$(SolutionDir)\lib"
+			OutputDirectory="$(SolutionDir)\build"
+			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
 			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="xcopy /y /b &quot;$(ProjectDir)..\Core\inc\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\Messages\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\Network\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\FileIO\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\Serial\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;copy /y /b &quot;$(ProjectDir)..\..\Blib.h&quot; &quot;$(SolutionDir)inc\Blib.h&quot;&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -42,13 +41,13 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\inc"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;WINDOWS"
+				AdditionalIncludeDirectories="..\blib32\inc"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
-				WarningLevel="1"
+				WarningLevel="3"
 				DebugInformationFormat="4"
 			/>
 			<Tool
@@ -62,9 +61,6 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="Core.lib Messages.lib Serial.lib"
-				OutputFile="$(OutDir)\blib.lib"
-				AdditionalLibraryDirectories=".\build;.\..\Core\lib\"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -84,7 +80,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)\lib"
+			OutputDirectory="$(SolutionDir)\build"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
 			CharacterSet="1"
@@ -92,7 +88,6 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="xcopy /y /b &quot;$(ProjectDir)..\Core\inc\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\Messages\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\Network\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\FileIO\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;xcopy /y /b &quot;$(ProjectDir)..\..\blib\Serial\*.h&quot; &quot;$(SolutionDir)inc&quot;&#x0D;&#x0A;copy /y /b &quot;$(ProjectDir)..\..\Blib.h&quot; &quot;$(SolutionDir)inc\Blib.h&quot;&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -110,8 +105,8 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories=".\inc"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;WINDOWS"
+				AdditionalIncludeDirectories="..\blib32\inc"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
@@ -129,9 +124,6 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="Core.lib Messages.lib Serial.lib"
-				OutputFile="$(OutDir)\blib.lib"
-				AdditionalLibraryDirectories=".\build;.\..\Core\lib\"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -159,7 +151,15 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\Blib.cpp"
+				RelativePath="..\..\blib\FileIO\FileInterface.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\blib\FileIO\ReplayFile.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\blib\FileIO\SaveFile.cpp"
 				>
 			</File>
 		</Filter>
@@ -169,7 +169,19 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\Blib.h"
+				RelativePath="..\..\blib\FileIO\FileInterface.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\blib\FileIO\FileIO.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\blib\FileIO\ReplayFile.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\blib\FileIO\SaveFile.h"
 				>
 			</File>
 		</Filter>
@@ -179,6 +191,10 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 		</Filter>
+		<File
+			RelativePath=".\ReadMe.txt"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

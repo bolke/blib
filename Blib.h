@@ -1,8 +1,11 @@
 #ifndef BLIB_H
 #define BLIB_H
 
-#include "Core.h"           																			//locked
-#include "Messages.h"																							//released
+#include "Core.h"           																			
+#include "Messages.h"																							
+#include "Serial.h"                                               
+#include "FileIO.h"
+#include "Network.h"                                              
 
 #include <stdio.h>
 #include <stdlib.h>
