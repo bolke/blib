@@ -22,6 +22,7 @@ public:
   const std::type_info* GetParamTypeInfo(size_t nr);								//returns type of argument nr requested, or type info of void	
   EnumResult_t SetParameter(size_t nr,void* a);											//set the argument according to type, void type is converted if possible  
   EnumResult_t SetParamFromString(size_t nr,std::string value);     //set variable from string, if possible           
+  EnumResult_t SetParamsFromString(std::string value);              //set all variables from string, if possible
   const std::type_info* GetReturnTypeInfo(void);										//return the return type info			
 	void* GetReturnRef();																							//return a pointer to the return value of a call, which is a pointer to the return type info
 	virtual EnumResult_t Callback()=0;														  	//per child class implemented callback function

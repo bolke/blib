@@ -21,3 +21,6 @@ size_t DataBuffer::Push(const char_t &c,size_t size){
 	return size;
 };
 											 
+std::vector<char_t>& DataBuffer::GetBuffer(){
+  return buffer;
+}

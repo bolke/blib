@@ -1,13 +1,15 @@
 #ifndef BLIB_H
 #define BLIB_H
 
-#include "Core.h"           																			
-#include "Messages.h"																							
-#include "Serial.h"                                               
+#include "Core.h"
+#include "Messages.h"
+#include "Serial.h"
 #include "FileIO.h"
-#include "Network.h"                                              
+#include "Network.h"  
 #include "Security.h"
-#include "Sql.h"
+#include "Sql.h"                    //uses sqlite, public domain
+#include "WebServing.h"             //uses mongoose lib,MIT licensed version
+#include "Xml.h"                    //uses pugixml lib,MIT license
 
 #include <stdio.h>
 #include <stdlib.h>

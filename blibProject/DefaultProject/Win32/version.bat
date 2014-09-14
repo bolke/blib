@@ -1,0 +1,2 @@
+DefaultProject.exe -v
+pause

@@ -39,6 +39,20 @@ EnumResult_t CallbackTemp::SetParamFromString(size_t nr,std::string value){
   return RawParser::SetVariable(value,GetEnumVar(GetParamTypeInfo(nr)),*((char*)parameters[nr]),0);
 }
 
+EnumResult_t CallbackTemp::SetParamsFromString(std::string value){
+  EnumResult_t result=FAIL;
+  std::vector<std::string> parameters=StringParser::SplitIntoArguments(value);
+  if(parameters.size()==GetNrOfParameters()){
+    for(size_t i=0;i<parameters.size();i++){
+      if(SetParamFromString(i,parameters[i])==FAIL){
+        result=FAIL;
+        break;
+      }
+    }
+  }
+  return result;
+}
+
 const std::type_info* CallbackTemp::GetReturnTypeInfo(void){								
   return returnTypeInfo;
 }

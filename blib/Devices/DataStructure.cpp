@@ -87,7 +87,7 @@ EnumResult_t DataStructure::AddVariable(const EnumVar_t variable){
 			popIt=structure.begin();
 		result=SUCCESS;
 	}
-	return SUCCESS;
+	return result;
 }
 
 const std::vector<EnumVar_t>& DataStructure::GetStructure(){
