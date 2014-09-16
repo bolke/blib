@@ -258,6 +258,175 @@ EnumResult_t RawParser::SetVariable(const std::string& value,const EnumVar_t typ
 	return result;
 }
 
+EnumResult_t RawParser::FromString(const std::string& source,const EnumVar_t type,void* target){
+	EnumResult_t result=FAIL;
+	if((target!=NULL)&&(source.size()>0)){
+		result=SUCCESS;
+		switch(type){
+			case PCHAR_T:
+				target=(void*)(*((char**)target));
+				if(target==NULL){
+					result=FAIL;
+					break;
+				}
+			case CHAR_T:
+				*((char_t*)target)=source[0];				
+				break;
+			case PINT8_T:
+				target=(void*)(*((int8_t**)target));
+				if(target==NULL){
+					result=FAIL;
+					break;
+				}
+			case INT8_T:
+				*((int8_t*)target)=StringParser::ToInt8_t(source);				
+				break;
+			case PUINT8_T:
+				target=(void*)(*((uint8_t**)target));
+				if(target==NULL){
+					result=FAIL;
+					break;
+				}
+			case UINT8_T:
+				*((uint8_t*)target)=StringParser::ToUInt8_t(source);								
+				break;
+			case PINT16_T:
+				target=(void*)(*((int16_t**)target));
+				if(target==NULL){
+					result=FAIL;
+					break;
+				}
+			case INT16_T:
+				*((int16_t*)target)=StringParser::ToInt16_t(source);				
+				break;
+			case PUINT16_T:
+				target=(void*)(*((uint16_t**)target));
+				if(target==NULL){
+					result=FAIL;
+					break;
+				}
+			case UINT16_T:
+				*((uint16_t*)target)=StringParser::ToUInt16_t(source);								
+				break;
+			case PINT32_T:
+				target=(void*)(*((int32_t**)target));
+				if(target==NULL){
+					result=FAIL;
+					break;
+				}
+			case INT32_T:
+				*((int32_t*)target)=StringParser::ToInt32_t(source);				
+				break;
+			case PUINT32_T:
+				target=(void*)(*((uint32_t**)target));
+				if(target==NULL){
+					result=FAIL;
+					break;
+				}
+			case UINT32_T:
+				*((uint32_t*)target)=StringParser::ToUInt32_t(source);								
+				break;
+			case PINT64_T:
+				target=(void*)(*((int64_t**)target));
+				if(target==NULL){
+					result=FAIL;
+					break;
+				}
+			case INT64_T:
+				*((int64_t*)target)=StringParser::ToInt64_t(source);				
+				break;
+			case PUINT64_T:
+				target=(void*)(*((uint64_t**)target));
+				if(target==NULL){
+					result=FAIL;
+					break;
+				}
+			case UINT64_T:
+				*((uint64_t*)target)=StringParser::ToUInt64_t(source);								
+				break;
+			case PLONG_T:
+				target=(void*)(*((int64_t**)target));
+				if(target==NULL){
+					result=FAIL;
+					break;
+				}
+			case LONG_T:
+				*((long_t*)target)=StringParser::ToInt64_t(source);								
+				break;
+			case PULONG_T:
+				target=(void*)(*((uint64_t**)target));
+				if(target==NULL){
+					result=FAIL;
+					break;
+				}
+			case ULONG_T:
+				*((ulong_t*)target)=StringParser::ToUInt64_t(source);				
+				break;
+			case PLLONG_T:
+				target=(void*)(*((int64_t**)target));
+				if(target==NULL){
+					result=FAIL;
+					break;
+				}
+			case LLONG_T:
+				*((llong_t*)target)=StringParser::ToInt64_t(source);								
+				break;
+			case PULLONG_T:
+				target=(void*)(*((uint64_t**)target));
+				if(target==NULL){
+					result=FAIL;
+					break;
+				}
+			case ULLONG_T:
+				*((ullong_t*)target)=StringParser::ToUInt64_t(source);				
+				break;
+			case PFLOAT32_T:
+				target=(void*)(*((float32_t**)target));
+				if(target==NULL){
+					result=FAIL;
+					break;
+				}
+			case FLOAT32_T:
+				*((float32_t*)target)=StringParser::ToFloat32_t(source);				
+				break;
+			case PFLOAT64_T:
+				target=(void*)(*((float64_t**)target));
+				if(target==NULL){
+					result=FAIL;
+					break;
+				}
+			case FLOAT64_T:
+				*((float64_t*)target)=StringParser::ToFloat64_t(source);				
+				break;
+			case PLFLOAT64_T:
+				target=(void*)(*((float64_t**)target));
+				if(target==NULL){
+					result=FAIL;
+					break;
+				}
+			case LFLOAT64_T:
+				*((lfloat64_t*)target)=StringParser::ToFloat64_t(source);				
+				break;
+			case PSTRING_T:
+				target=(void*)(*((std::string**)target));
+				if(target==NULL){
+					result=FAIL;
+					break;
+				}
+			case STRING_T:				
+				*((std::string*)target)=source;
+				break;
+			default:
+				result=FAIL;
+		}
+	}
+	return result;
+}
+
+EnumResult_t RawParser::FromString(const std::string& source,const std::type_info* type,void* target){
+  return FromString(source,GetEnumVar(type),target);
+}
+
 EnumResult_t RawParser::ToString(const void* source,const EnumVar_t type,std::string& target){
 	EnumResult_t result=SUCCESS;
 	switch(type){
