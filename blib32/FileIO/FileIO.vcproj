@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="FileIO"
 	ProjectGUID="{42C9CE48-7C69-453B-9EAD-5E31A47C15CF}"
 	RootNamespace="FileIO"
@@ -152,6 +152,10 @@
 			>
 			<File
 				RelativePath="..\..\blib\FileIO\FileInterface.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\blib\FileIO\FileIO.cpp"
 				>
 			</File>
 			<File
