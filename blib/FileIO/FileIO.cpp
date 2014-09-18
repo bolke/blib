@@ -104,3 +104,19 @@ bool blib::IsDirectory(std::string path){
   return result;	
 }
 	
+bool blib::IsFile(std::string path){
+  bool result=false;
+#ifdef WINDOWS	
+  FileInterface f;
+	f.SetFilename(path);
+	if(f.Open()==SUCCESS){
+		result=true;
+		f.Close();
+	}
+#endif
+  return result;	
+}
+
+bool blib::DoesItExists(std::string path){
+  return IsDirectory(path)||IsFile(path);
+}

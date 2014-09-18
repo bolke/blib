@@ -10,6 +10,8 @@ namespace blib{
 	EnumResult_t GetFiles(std::string path,std::vector<std::string>& files,size_t depth=9999);
 	EnumResult_t GetDirectories(std::string path,std::vector<std::string>& paths,size_t depth=9999);
 	bool IsDirectory(std::string path);
+	bool IsFile(std::string path);
+	bool DoesItExists(std::string path);
 };
 
 #endif
