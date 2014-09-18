@@ -9,7 +9,6 @@
 #include "Security.h"
 #include "Sql.h"                    //uses sqlite, public domain
 #include "WebServing.h"             //uses mongoose lib,MIT licensed version
-#include "Xml.h"                    //uses pugixml lib,MIT license
 
 #include <stdio.h>
 #include <stdlib.h>
