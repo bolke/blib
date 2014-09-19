@@ -30,10 +30,17 @@ void ReplaceVersion(std::string path){
 			std::string oldLine=StringParser::Sub(buffer.front(),start);
 			oldLine=StringParser::Sub(oldLine,0,StringParser::First(oldLine,"\n"));
 
-			std::string oldVersion=StringParser::After(oldLine,"\"");
+			std::string trackNr=StringParser::After(oldLine,".");
+			trackNr=StringParser::Before(trackNr,".");
+
+			std::string oldVersion=StringParser::After(oldLine,"\"");			
 			oldVersion=StringParser::Before(oldVersion,".");
 
-			std::string newLine=StringParser::ToString("#define BLIB_VERSION \"%s.%s\"",oldVersion.c_str(),date.c_str());
+			std::string newLine=StringParser::ToString("#define BLIB_VERSION \"%s.%i.%s\"",oldVersion.c_str(),StringParser::ToUInt32_t(trackNr),date.c_str());
+			if(StringParser::Compare(oldLine,newLine))
+				newLine=StringParser::ToString("#define BLIB_VERSION \"%s.%i.%s\"",oldVersion.c_str(),StringParser::ToUInt32_t(trackNr)+1,date.c_str());
+			else
+				newLine=StringParser::ToString("#define BLIB_VERSION \"%s.%i.%s\"",oldVersion.c_str(),1,date.c_str());
 			buffer.front()=StringParser::Replace(buffer.front(),oldLine,newLine);
 		}
 		f.Push(buffer.front());

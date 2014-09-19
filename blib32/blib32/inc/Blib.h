@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define BLIB_VERSION "1.18.09.2014"
+#define BLIB_VERSION "1.2.19.09.2014"
 #define BLIB_CORE "x86 device"
 
 #if defined(WINDOWS)
