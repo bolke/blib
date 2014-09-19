@@ -8,12 +8,12 @@
 #include "Network.h"  
 #include "Security.h"
 #include "Sql.h"                    //uses sqlite, public domain
-#include "WebServing.h"             //uses mongoose lib,MIT licensed version
+#include "WebServing.h"             //uses mongoose lib,MIT licensed version, pre licence change
 
 #include <stdio.h>
 #include <stdlib.h>
 
-#define BLIB_VERSION "1.2.19.09.2014"
+#define BLIB_VERSION "1.7.19.09.2014"
 #define BLIB_CORE "x86 device"
 
 #if defined(WINDOWS)

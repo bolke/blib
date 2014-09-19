@@ -7,7 +7,7 @@ namespace blib{
 
 class ReplayFile:public DeviceOpener{
 protected:
-  FileInterface* file;																						//connection to the file
+  FileInterface* file;																							
 public:
   ReplayFile(std::string filename="");
   

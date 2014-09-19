@@ -15,7 +15,6 @@ public:
   virtual EnumResult_t Bind(std::string targetIp="",uint16_t targetPort=0);
 	virtual EnumResult_t SetTarget(uint16_t targetPort);
   virtual EnumResult_t SetTarget(std::string targetIp,uint16_t targetPort=0);  
-
 };
 
 };

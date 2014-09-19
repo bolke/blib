@@ -8,7 +8,7 @@ namespace blib{
 class SaveFile:public FileInterface{
 protected:
 	int32_t fileCnt;
-	bool hardSizes;
+	bool useHardSizes;
 	size_t fileSize;
 	size_t maxFileSize;
 	std::string realFilename;
@@ -21,8 +21,8 @@ public:
   virtual size_t Push(const char_t &c,size_t size=1);
   virtual size_t Push(const std::string& data);
 
-	virtual bool GetHardSizes();
-	virtual EnumResult_t SetHardSizes(bool hardSizes);
+	virtual bool GetUseHardSizes();
+	virtual EnumResult_t SetUseHardSizes(bool useHardSizes);
 
 	virtual size_t GetMaxFileSize();
 	virtual EnumResult_t SetMaxFileSize(size_t maxFileSize);

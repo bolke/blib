@@ -5,7 +5,7 @@ using namespace blib;
 SaveFile::SaveFile(std::string filename,size_t maxFileSize){
 	fileCnt=0;
 	SetMaxFileSize(maxFileSize);
-	SetHardSizes(true);
+	SetUseHardSizes(true);
 	SetFilename(filename);
 	SetFilemode(std::ios::out);
   fileSize=0;
@@ -35,14 +35,14 @@ EnumResult_t SaveFile::SetFilemode(int32_t filemode){
 	return result;
 }
 
-bool SaveFile::GetHardSizes(){
-  return hardSizes;
+bool SaveFile::GetUseHardSizes(){
+  return useHardSizes;
 }
 
-EnumResult_t SaveFile::SetHardSizes(bool hardSizes){
+EnumResult_t SaveFile::SetUseHardSizes(bool useHardSizes){
   EnumResult_t result=FAIL;
 	if(lock->Lock()){
-		this->hardSizes=hardSizes;
+		this->useHardSizes=useHardSizes;
 		result=SUCCESS;
 		lock->Unlock();
 	}
@@ -80,7 +80,7 @@ size_t SaveFile::Push(const char_t &c,size_t size){
 				if(fileSize<maxFileSize)
 					writeSize=maxFileSize-fileSize;
 				if(size>writeSize){
-					if(hardSizes)
+					if(useHardSizes)
 						result=FileInterface::Push(c,writeSize);						
 					else
 				    result=FileInterface::Push(c,size);
@@ -89,7 +89,7 @@ size_t SaveFile::Push(const char_t &c,size_t size){
 					SetFilename(realFilename);
 					Open();
 					fileSize=0;					
-					if(hardSizes)
+					if(useHardSizes)
 					  fileSize=Push((&c)[writeSize],size-writeSize);
 					result+=fileSize;
 				}else{
