@@ -17,7 +17,7 @@ size_t DataStructure::Pop(char_t& c,size_t size){
 	  popIt=structure.begin();	
 	if(popIt!=structure.end()){
 		if(*popIt==STRING_T){
-			char2_int16_t length;
+			union16_t length;
 			if(data->Pop(length.c[0],2)==2)
 				expectedSize=length.u_value;
 		}else
@@ -54,7 +54,7 @@ size_t DataStructure::Push(const char_t &c,size_t size){
 					expectedSize=GetSize(*popIt);
 				if((expectedSize>0)&&(expectedSize<=size)){
 					if((*popIt==STRING_T)&&(expectedSize<65534)){
-						char2_int16_t length;
+						union16_t length;
 						length.u_value=expectedSize;
 						data->Push(length.c[0],2);
 					}

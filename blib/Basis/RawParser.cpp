@@ -5,7 +5,7 @@
 using namespace blib;
 
 uint8_t RawParser::GetUInt8_t(const char_t& buffer,const size_t start){
-	char1_int8_t data;
+	union8_t data;
 	memcpy(data.c,&((&buffer)[start]),1);
 	return data.u_value;
 }
@@ -15,51 +15,51 @@ int8_t RawParser::GetInt8_t(const char_t& buffer,const size_t start){
 }
 
 uint16_t RawParser::GetUInt16_t(const char_t& buffer,const size_t start){
-	char2_int16_t data;
+	union16_t data;
 	memcpy(data.c,&((&buffer)[start]),2);
 	return data.u_value;
 }
 
 int16_t RawParser::GetInt16_t(const char_t& buffer,const size_t start){
-	char2_int16_t data;
+	union16_t data;
 	memcpy(data.c,&((&buffer)[start]),2);
 	return data.value;
 }
 
 uint32_t RawParser::GetUInt32_t(const char_t& buffer,const size_t start){
-	char4_int32_t data;
+	union32_t data;
 	memcpy(data.c,&((&buffer)[start]),4);
 	return data.u_value;
 }
 
 int32_t RawParser::GetInt32_t(const char_t& buffer,const size_t start){
-	char4_int32_t data;
+	union32_t data;
 	memcpy(data.c,&((&buffer)[start]),4);
 	return data.value;
 }
 
 uint64_t RawParser::GetUInt64_t(const char_t& buffer,const size_t start){
-	char8_int64_t data;
+	union64_t data;
 	memcpy(data.c,&((&buffer)[start]),8);
 	return data.u_value;
 }
 											
 int64_t RawParser::GetInt64_t(const char_t& buffer,const size_t start){
-	char8_int64_t data;
+	union64_t data;
 	memcpy(data.c,&((&buffer)[start]),8);
 	return data.value;
 }
 												
 float32_t RawParser::GetFloat32_t(const char_t& buffer,const size_t start){
-	char4_float32_t data;
+	union32_t data;
 	memcpy(data.c,&((&buffer)[start]),4);
-	return data.value;
+	return data.f_value;
 }
 
 float64_t RawParser::GetFloat64_t(const char_t& buffer,const size_t start){
-	char8_float64_t data;
+	union64_t data;
 	memcpy(data.c,&((&buffer)[start]),8);
-	return data.value;
+	return data.f_value;
 }
 		
 std::string RawParser::GetString(const char_t& buffer,const size_t start,const size_t size){
@@ -117,70 +117,70 @@ EnumResult_t RawParser::GetVariable(const char_t& buffer,const size_t start,cons
 }
 
 EnumResult_t RawParser::SetUInt8_t(const uint8_t value,char_t& target,const size_t start){  
-	char1_int8_t data;
+	union8_t data;
 	data.u_value=value;
 	memcpy(&(&target)[start],data.c,1);
 	return SUCCESS;
 }
 	
 EnumResult_t RawParser::SetInt8_t(const int8_t value,char_t& target,const size_t start){
-	char1_int8_t data;
+	union8_t data;
 	data.value=value;
 	memcpy(&(&target)[start],data.c,1);
 	return SUCCESS;
 }
 
 EnumResult_t RawParser::SetUInt16_t(const uint16_t value,char_t& target,const size_t start){
-	char2_int16_t data;
+	union16_t data;
 	data.u_value=value;
 	memcpy(&(&target)[start],data.c,2);
 	return SUCCESS;
 }
 
 EnumResult_t RawParser::SetInt16_t(const int16_t value,char_t& target,const size_t start){
-	char2_int16_t data;
+	union16_t data;
 	data.value=value;
 	memcpy(&(&target)[start],data.c,2);
 	return SUCCESS;
 }
 
 EnumResult_t RawParser::SetUInt32_t(const uint32_t value,char_t& target,const size_t start){
-	char4_int32_t data;
+	union32_t data;
 	data.u_value=value;
 	memcpy(&(&target)[start],data.c,4);
 	return SUCCESS;
 }
 
 EnumResult_t RawParser::SetInt32_t(const int32_t value,char_t& target,const size_t start){
-	char4_int32_t data;
+	union32_t data;
 	data.value=value;
 	memcpy(&(&target)[start],data.c,4);
 	return SUCCESS;
 }
 
 EnumResult_t RawParser::SetUInt64_t(const uint64_t value,char_t& target,const size_t start){
-	char8_int64_t data;
+	union64_t data;
 	data.u_value=value;
 	memcpy(&(&target)[start],data.c,8);
 	return SUCCESS;
 }
 
 EnumResult_t RawParser::SetInt64_t(const int64_t value,char_t& target,const size_t start){
-	char8_int64_t data;
+	union64_t data;
 	data.value=value;
 	memcpy(&(&target)[start],data.c,8);
 	return SUCCESS;
 }
 
 EnumResult_t RawParser::SetFloat32_t(const float32_t value,char_t& target,const size_t start){
-	char4_float32_t data;
+	union32_t data;
 	data.value=value;
 	memcpy(&(&target)[start],data.c,4);
 	return SUCCESS;
 }
 
 EnumResult_t RawParser::SetFloat64_t(const float64_t value,char_t& target,const size_t start){
-	char8_float64_t data;
+	union64_t data;
 	data.value=value;
 	memcpy(&(&target)[start],data.c,8);
 	return SUCCESS;

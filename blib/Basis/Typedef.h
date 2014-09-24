@@ -78,7 +78,7 @@ typedef struct{
 		int8_t value;
 		char_t c[1];
 	};
-}char1_int8_t;
+}union8_t;
 
 typedef struct{
 	union{
@@ -86,37 +86,25 @@ typedef struct{
 	  int16_t value;
 		char_t c[2];
 	};
-}char2_int16_t;
+}union16_t;
 
 typedef struct{
 	union{
 		uint32_t u_value;
 	  int32_t value;
+		float32_t f_value;
 		char_t c[4];
 	};
-}char4_int32_t;
+}union32_t;
 
 typedef struct{
 	union{
 		uint64_t u_value;
 	  int64_t value;
+		float64_t f_value;
 		char_t c[8];
 	};
-}char8_int64_t;
-
-typedef struct{
-	union{
-	  float32_t value;
-		char_t c[4];
-	};
-}char4_float32_t;
-
-typedef struct{
-	union{
-	  float64_t value;
-	  char_t c[8];
-	};
-}char8_float64_t;
+}union64_t;
 
 typedef enum{
 	UNKNOWN_T,
