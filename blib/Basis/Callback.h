@@ -97,7 +97,7 @@ protected:
   returnType(*onlyFunctionPointer)(arg0);
   arg0 a0;
 public:
-	  Callback1(classType* c,returnType(classType::*f)(arg0),arg0 a0):Callback0<returnType,classType>::Callback0(c,NULL){
+	Callback1(classType* c,returnType(classType::*f)(arg0),arg0 a0):Callback0<returnType,classType>::Callback0(c,NULL){
     this->classPointer=c;
     functionPointer=f;
     this->a0=a0;	
