@@ -315,52 +315,27 @@ bool StringParser::IsNegative(const std::string line){
 float32_t StringParser::ToFloat32_t(const std::string line,const int32_t decimals){
 	float32_t result=0.0f;
 	if(IsFloat(line)){
-	  std::string str("%.");
-		if(decimals<0)
-			str="%f";
-		else{
-      char buf[512];
-      sprintf_s(buf,"%i",decimals);
-      str.append(buf);
-		  str.append("f");
-		}
-    sscanf_s(line.c_str(),str.c_str(),&result);  
-	}
+    std::string newLine=line;
+    if((decimals>0)&&(StringParser::Contains(line,".")))
+      newLine=StringParser::SubLeft(line,StringParser::Position(line,".")+decimals+2);
+    result=atof(newLine.c_str());
+  }
 	return result;
 }
 
 float64_t StringParser::ToFloat64_t(const std::string line,const int32_t decimals){
-	float64_t result=0.0f;
+	float32_t result=0.0f;
 	if(IsFloat(line)){
-	  std::string str("%.");
-		if(decimals<0)
-			str="%lf";
-		else{
-      char buf[512];
-      sprintf_s(buf,"%i",decimals);
-      str.append(buf);
-		  str.append("lf");
-		}
-    sscanf_s(line.c_str(),str.c_str(),&result);  
-	}
+    std::string newLine=line;
+    if((decimals>0)&&(StringParser::Contains(line,".")))
+      newLine=StringParser::SubLeft(line,StringParser::Position(line,".")+decimals+2);
+    result=atof(newLine.c_str());
+  }
 	return result;
 }
 
 float StringParser::ToFloat(const std::string line,const int32_t decimals){
-  float result=0.0f;
-  if(IsFloat(line)){
-    std::string str("%.");
-		if(decimals<0)
-			str="%f";
-		else{
-      char buf[512];
-      sprintf_s(buf,"%i",decimals);
-      str.append(buf);
-		  str.append("f");
-		}
-    sscanf_s(line.c_str(),str.c_str(),&result);
-  }
-  return result;
+  return ToFloat32_t(line,decimals);
 }
 
 int64_t StringParser::ToInt(const std::string line){
