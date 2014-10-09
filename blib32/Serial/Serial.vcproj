@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="Serial"
 	ProjectGUID="{F6C94CD1-B276-4941-AE12-C4E71D815B71}"
 	RootNamespace="Serial"
@@ -151,6 +151,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath="..\..\blib\Serial\AutoSerialPort.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\blib\Serial\Serial.cpp"
 				>
 			</File>
@@ -164,6 +168,10 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath="..\..\blib\Serial\AutoSerialPort.h"
+				>
+			</File>
 			<File
 				RelativePath="..\..\blib\Serial\Serial.h"
 				>

@@ -15,7 +15,8 @@ std::multimap<EnumVar_t,size_t>& blib::GetVarHashMap(){
 	std::multimap<EnumVar_t,size_t>* result=&varHashMap;
 	if(result->size()==0){
 		(*result).insert(std::pair<EnumVar_t,size_t>(UNKNOWN_T,0));
-		(*result).insert(std::pair<EnumVar_t,size_t>(CHAR_T,GetHashCode(&typeid(char_t))));
+    (*result).insert(std::pair<EnumVar_t,size_t>(BOOL_T,GetHashCode(&typeid(bool))));
+    (*result).insert(std::pair<EnumVar_t,size_t>(CHAR_T,GetHashCode(&typeid(char_t))));
 		(*result).insert(std::pair<EnumVar_t,size_t>(INT8_T,GetHashCode(&typeid(int8_t))));
 		(*result).insert(std::pair<EnumVar_t,size_t>(UINT8_T,GetHashCode(&typeid(uint8_t))));
 		(*result).insert(std::pair<EnumVar_t,size_t>(INT16_T,GetHashCode(&typeid(int16_t))));
@@ -33,7 +34,8 @@ std::multimap<EnumVar_t,size_t>& blib::GetVarHashMap(){
 		(*result).insert(std::pair<EnumVar_t,size_t>(LFLOAT64_T,GetHashCode(&typeid(lfloat64_t))));
 		(*result).insert(std::pair<EnumVar_t,size_t>(STRING_T,GetHashCode(&typeid(std::string))));
 		(*result).insert(std::pair<EnumVar_t,size_t>(VOID_T,GetHashCode(&typeid(void))));	
-		(*result).insert(std::pair<EnumVar_t,size_t>(PCHAR_T,GetHashCode(&typeid(char_t*))));
+    (*result).insert(std::pair<EnumVar_t,size_t>(PBOOL_T,GetHashCode(&typeid(bool*))));
+    (*result).insert(std::pair<EnumVar_t,size_t>(PCHAR_T,GetHashCode(&typeid(char_t*))));
 		(*result).insert(std::pair<EnumVar_t,size_t>(PINT8_T,GetHashCode(&typeid(int8_t*))));
 		(*result).insert(std::pair<EnumVar_t,size_t>(PUINT8_T,GetHashCode(&typeid(uint8_t*))));
 		(*result).insert(std::pair<EnumVar_t,size_t>(PINT16_T,GetHashCode(&typeid(int16_t*))));
@@ -59,6 +61,7 @@ std::multimap<size_t,EnumVar_t>& blib::GetHashVarMap(){
 	std::multimap<size_t,EnumVar_t>* result=&hashVarMap;
 	if(result->size()==0){
 		(*result).insert(std::pair<size_t,EnumVar_t>(GetHashCode(&typeid(0)),UNKNOWN_T));
+    (*result).insert(std::pair<size_t,EnumVar_t>(GetHashCode(&typeid(bool)),BOOL_T));
 		(*result).insert(std::pair<size_t,EnumVar_t>(GetHashCode(&typeid(char_t)),CHAR_T));
 		(*result).insert(std::pair<size_t,EnumVar_t>(GetHashCode(&typeid(int8_t)),INT8_T));
 		(*result).insert(std::pair<size_t,EnumVar_t>(GetHashCode(&typeid(uint8_t)),UINT8_T));
@@ -76,7 +79,8 @@ std::multimap<size_t,EnumVar_t>& blib::GetHashVarMap(){
 		(*result).insert(std::pair<size_t,EnumVar_t>(GetHashCode(&typeid(float64_t)),FLOAT64_T));
 		(*result).insert(std::pair<size_t,EnumVar_t>(GetHashCode(&typeid(lfloat64_t)),LFLOAT64_T));
 		(*result).insert(std::pair<size_t,EnumVar_t>(GetHashCode(&typeid(std::string)),STRING_T));
-		(*result).insert(std::pair<size_t,EnumVar_t>(GetHashCode(&typeid(void)),VOID_T));	
+		(*result).insert(std::pair<size_t,EnumVar_t>(GetHashCode(&typeid(void)),VOID_T));
+    (*result).insert(std::pair<size_t,EnumVar_t>(GetHashCode(&typeid(bool*)),PBOOL_T));
 		(*result).insert(std::pair<size_t,EnumVar_t>(GetHashCode(&typeid(char_t*)),PCHAR_T));
 		(*result).insert(std::pair<size_t,EnumVar_t>(GetHashCode(&typeid(int8_t*)),PINT8_T));
 		(*result).insert(std::pair<size_t,EnumVar_t>(GetHashCode(&typeid(uint8_t*)),PUINT8_T));
@@ -103,6 +107,7 @@ std::multimap<EnumVar_t,const std::type_info*>& blib::GetVarTypeInfoMap(){
 	std::multimap<EnumVar_t,const std::type_info*>* result=&varTypeInfoMap;
 	if(result->size()==0){
 		(*result).insert(std::pair<EnumVar_t,const std::type_info*>(UNKNOWN_T,&typeid(void)));
+    (*result).insert(std::pair<EnumVar_t,const std::type_info*>(BOOL_T,&typeid(bool)));
 		(*result).insert(std::pair<EnumVar_t,const std::type_info*>(CHAR_T,&typeid(char_t)));
 		(*result).insert(std::pair<EnumVar_t,const std::type_info*>(INT8_T,&typeid(int8_t)));
 		(*result).insert(std::pair<EnumVar_t,const std::type_info*>(UINT8_T,&typeid(uint8_t)));
@@ -120,7 +125,8 @@ std::multimap<EnumVar_t,const std::type_info*>& blib::GetVarTypeInfoMap(){
 		(*result).insert(std::pair<EnumVar_t,const std::type_info*>(FLOAT64_T,&typeid(float64_t)));
 		(*result).insert(std::pair<EnumVar_t,const std::type_info*>(LFLOAT64_T,&typeid(lfloat64_t)));
 		(*result).insert(std::pair<EnumVar_t,const std::type_info*>(STRING_T,&typeid(std::string)));
-		(*result).insert(std::pair<EnumVar_t,const std::type_info*>(VOID_T,&typeid(void)));	
+		(*result).insert(std::pair<EnumVar_t,const std::type_info*>(VOID_T,&typeid(void)));
+    (*result).insert(std::pair<EnumVar_t,const std::type_info*>(BOOL_T,&typeid(bool*)));
 		(*result).insert(std::pair<EnumVar_t,const std::type_info*>(PCHAR_T,&typeid(char_t*)));
 		(*result).insert(std::pair<EnumVar_t,const std::type_info*>(PINT8_T,&typeid(int8_t*)));
 		(*result).insert(std::pair<EnumVar_t,const std::type_info*>(PUINT8_T,&typeid(uint8_t*)));
@@ -147,7 +153,8 @@ std::multimap<const std::type_info*,EnumVar_t>& blib::GetTypeInfoVarMap(){
 	std::multimap<const std::type_info*,EnumVar_t>* result=&typeInfoVarMap;
 	if(result->size()==0){
 		(*result).insert(std::pair<const std::type_info*,EnumVar_t>(&typeid(void),UNKNOWN_T));
-		(*result).insert(std::pair<const std::type_info*,EnumVar_t>(&typeid(char_t),CHAR_T));
+		(*result).insert(std::pair<const std::type_info*,EnumVar_t>(&typeid(bool),BOOL_T));
+    (*result).insert(std::pair<const std::type_info*,EnumVar_t>(&typeid(char_t),CHAR_T));
 		(*result).insert(std::pair<const std::type_info*,EnumVar_t>(&typeid(int8_t),INT8_T));
 		(*result).insert(std::pair<const std::type_info*,EnumVar_t>(&typeid(uint8_t),UINT8_T));
 		(*result).insert(std::pair<const std::type_info*,EnumVar_t>(&typeid(int16_t),INT16_T));
@@ -164,7 +171,8 @@ std::multimap<const std::type_info*,EnumVar_t>& blib::GetTypeInfoVarMap(){
 		(*result).insert(std::pair<const std::type_info*,EnumVar_t>(&typeid(float64_t),FLOAT64_T));
 		(*result).insert(std::pair<const std::type_info*,EnumVar_t>(&typeid(lfloat64_t),LFLOAT64_T));
 		(*result).insert(std::pair<const std::type_info*,EnumVar_t>(&typeid(std::string),STRING_T));
-		(*result).insert(std::pair<const std::type_info*,EnumVar_t>(&typeid(void),VOID_T));	
+		(*result).insert(std::pair<const std::type_info*,EnumVar_t>(&typeid(void),VOID_T));		
+		(*result).insert(std::pair<const std::type_info*,EnumVar_t>(&typeid(bool*),PBOOL_T));
 		(*result).insert(std::pair<const std::type_info*,EnumVar_t>(&typeid(char_t*),PCHAR_T));
 		(*result).insert(std::pair<const std::type_info*,EnumVar_t>(&typeid(int8_t*),PINT8_T));
 		(*result).insert(std::pair<const std::type_info*,EnumVar_t>(&typeid(uint8_t*),PUINT8_T));
@@ -237,7 +245,10 @@ const std::type_info* blib::GetTypeInfo(size_t hash){
 size_t blib::GetSize(const EnumVar_t type){
 	size_t result=0;
 	switch(type){
-	  case CHAR_T:
+    case BOOL_T:
+      result=sizeof(bool);
+      break;
+    case CHAR_T:
 			result=sizeof(char_t);
       break;
     case INT8_T:

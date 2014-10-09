@@ -108,7 +108,8 @@ typedef struct{
 
 typedef enum{
 	UNKNOWN_T,
-	CHAR_T,
+	BOOL_T,
+  CHAR_T,
   INT8_T,
 	UINT8_T,
 	INT16_T,
@@ -126,6 +127,7 @@ typedef enum{
 	LFLOAT64_T,
 	STRING_T,
 	VOID_T,
+  PBOOL_T,
 	PCHAR_T,
 	PINT8_T,
 	PUINT8_T,
