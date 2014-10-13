@@ -8,7 +8,7 @@ NetworkHub::NetworkHub(){
 	broadcastSocket=NULL;
 	serverSocket=NULL;
 	killClientsOnClose=true;
-	broadcastMessage="NETWORKHUB";
+	broadcastMessage="";
   
 	broadcastThread.SetRunDelay(1000);
 	broadcastThread.SetSetupCallback(new Callback0<void,NetworkHub>(this,&NetworkHub::BroadcastSetup));
@@ -22,14 +22,17 @@ NetworkHub::NetworkHub(){
 }
 
 void NetworkHub::BroadcastSetup(){
+	std::string broadcastAddress;
 	std::string address;
 	InitNetwork();
 	GetIpAddress(&address);
-	address=StringParser::BeforeLast(address,".");
-	address=StringParser::Append(address,".255");
+	broadcastAddress=StringParser::BeforeLast(address,".");
+	broadcastAddress=StringParser::Append(broadcastAddress,".255");
 
+	if(broadcastMessage.size()==0)
+		broadcastMessage=StringParser::ToString("#@[%s][%u]$#",address.c_str(),port);
 	broadcastSocket=new MultiSocket();
-	broadcastSocket->SetTarget(address,port);
+	broadcastSocket->SetTarget(broadcastAddress,port);
 }
 
 void NetworkHub::BroadcastRun(){
@@ -166,4 +169,24 @@ EnumResult_t NetworkHub::SetKillClientsOnClose(const bool value){
 }
 
 std::vector<TcpSocket*>& NetworkHub::GetClients(){
+  return clients;
+}
+
+std::string NetworkHub::GetBroadcastMessage(){
+	std::string result="";
+	if(lock->Lock()){
+		result=broadcastMessage;
+		lock->Unlock();
+	}
+	return result;
+}
+
+EnumResult_t NetworkHub::SetBroadcastMessage(const std::string value){
+  EnumResult_t result=FAIL;
+	if(lock->Lock()){
+		broadcastMessage=value;
+		result=SUCCESS;
+		lock->Unlock();
+	}
+	return result;
 }

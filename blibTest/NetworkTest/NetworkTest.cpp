@@ -10,8 +10,8 @@ int32_t main(int32_t argc, char_t* argv[]){
 	NetworkHub hub;
 	hub.SetPort(1234);
 	hub.Open();
-
-	while(1){
+	
+	while(1){		
 	  SleepMs(1000);
 	}
 

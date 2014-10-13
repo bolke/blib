@@ -1,7 +1,8 @@
 #ifndef BLIB_AUTOSERIALPROT_H
 #define BLIB_AUTOSERIALPORT_H
 
-#include "blib.h"
+#include "Core.h"
+#include "SerialPort.h"
 
 namespace blib{
 

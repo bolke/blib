@@ -34,6 +34,8 @@ public:
 	bool GetKillClientsOnClose();
 	EnumResult_t SetKillClientsOnClose(const bool value);
 	std::vector<TcpSocket*>& GetClients();
+	std::string GetBroadcastMessage();
+	EnumResult_t SetBroadcastMessage(const std::string value);
 };
 
 };
