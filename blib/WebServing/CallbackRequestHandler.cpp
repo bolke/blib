@@ -5,7 +5,7 @@ using namespace blib;
 EnumResult_t CallbackRequestHandler::HandleRequest(mongoose::ServerHandlingEvent eventCode,mongoose::MongooseResponse &response,std::string uri,std::vector<std::pair<std::string,std::string>> &variables){
   EnumResult_t  result=FAIL;
 	std::map<std::string,CallbackTemp*>::iterator cIt=callbacks.end();
-
+	
 	if(triggerOnUri)
 		cIt=callbacks.find(StringParser::After(uri,"/"));    
 	else if(variables.size()>0){		
