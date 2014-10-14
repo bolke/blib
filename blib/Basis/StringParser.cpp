@@ -760,3 +760,124 @@ std::string StringParser::Assign(const std::string line){
 std::string StringParser::Assign(const char_t& c,const size_t length){
 	return std::string(&c,length);
 }
+
+static std::string TypeEnumToString(const EnumVar_t value){
+  std::string result;
+  switch(value){
+    case BOOL_T:
+      result="bool";
+      break;
+    case CHAR_T:
+      result="char_t";
+      break;
+    case INT8_T:
+      result="int8_t";
+      break;
+    case UINT8_T:
+      result="uint8_t";
+      break;
+    case INT16_T:
+      result="int16_t";
+      break;
+    case UINT16_T:
+      result="uint16_t";
+      break;
+    case INT32_T:
+      result="int32_t";
+      break;
+    case UINT32_T:
+      result="uint32_t";
+      break;
+    case INT64_T:
+      result="int64_t";
+      break;
+    case UINT64_T:
+      result="uint64_t";
+      break;
+    case LONG_T:
+      result="long_t";
+      break;
+    case ULONG_T:
+      result="ulong_t";
+      break;
+    case LLONG_T:
+      result="llong_t";
+      break;
+    case ULLONG_T:
+      result="ullong_t";
+      break;
+    case FLOAT32_T:
+      result="float32_t";
+      break;
+    case FLOAT64_T:
+      result="float64_t";
+      break;
+    case LFLOAT64_T:
+      result="lfloat64_t";
+      break;
+    case STRING_T:
+      result="std::string";
+      break;
+    case VOID_T:
+      result="void";
+      break;
+    case PBOOL_T:
+      result="bool*";
+      break;
+    case PCHAR_T:
+      result="char_t*";
+      break;
+    case PINT8_T:
+      result="int8_t*";
+      break;
+    case PUINT8_T:
+      result="uint8_t*";
+      break;
+    case PINT16_T:
+      result="int16_t*";
+      break;
+    case PUINT16_T:
+      result="uint16_t*";
+      break;
+    case PINT32_T:
+      result="int32_t*";
+      break;
+    case PUINT32_T:
+      result="uint32_t*";
+      break;
+    case PINT64_T:
+      result="int64_t*";
+      break;
+    case PUINT64_T:
+      result="uint64_t*";
+      break;
+    case PLONG_T:
+      result="long_t*";
+      break;
+    case PULONG_T:
+      result="ulong_t*";
+      break;
+    case PLLONG_T:
+      result="llong_t*";
+      break;
+    case PULLONG_T:
+      result="ullong*";
+      break;
+    case PFLOAT32_T:
+      result="float32_t*";
+      break;
+    case PFLOAT64_T:
+      result="float64_t*";
+      break;
+    case PLFLOAT64_T:
+      result="lfloat64_t*";
+      break;
+    case PSTRING_T:
+      result="std::string*";
+      break;
+    case PVOID_T:
+      result="void*";
+      break;
+  }
+  return result;
+}

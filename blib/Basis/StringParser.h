@@ -126,6 +126,8 @@ public:
 	static std::string UIntToString(const uint64_t value);																														//uint value to string
   static std::string IntToString(const int64_t value);																															//int value to string
   static std::string FloatToString(const float value);																															//float value to string																																									//cleanup
+  
+  static std::string TypeEnumToString(const EnumVar_t value);
 };
 
 };
