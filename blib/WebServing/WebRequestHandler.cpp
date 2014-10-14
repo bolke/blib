@@ -46,8 +46,10 @@ bool WebRequestHandler::ParseRequest(mongoose::ServerHandlingEvent eventCode,mon
 		this->request=NULL;
 		this->connection=NULL;
 		this->response=NULL;
-	}else if(lastCalls.size()>64)
-		lastCalls.erase(lastCalls.begin());
+	}else{
+		if(lastCalls.size()>64)
+		  lastCalls.erase(lastCalls.begin());
+	}
   return result;
 }
 
