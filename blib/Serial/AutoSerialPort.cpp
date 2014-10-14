@@ -14,7 +14,7 @@ EnumResult_t AutoSerialPort::Open(void){
     if(port.size()>0)
       SerialPort::Open();
     if(!IsOpen()){
-      std::vector<std::string> ports=GetAvailableSerialPorts();
+			std::vector<std::string> ports=GetAvailableSerialPorts();
       for(size_t i=0;i<ports.size();i++){
         SetPort(ports[i]);
         SerialPort::Open();

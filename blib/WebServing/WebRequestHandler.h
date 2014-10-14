@@ -10,6 +10,7 @@ namespace blib{
 
 class WebRequestHandler{
 protected:
+	std::vector<time_t> lastCalls;
   mongoose::MongooseRequest* request;
   mongoose::MongooseConnection* connection;
   mongoose::MongooseResponse* response;

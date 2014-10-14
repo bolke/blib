@@ -27,23 +27,29 @@ size_t WebRequestHandler::ExtractVariables(std::string queryString,const mongoos
 
 bool WebRequestHandler::ParseRequest(mongoose::ServerHandlingEvent eventCode,mongoose::MongooseConnection &connection,const mongoose::MongooseRequest &request, mongoose::MongooseResponse &response){
   bool result=false;
-  this->request=&((mongoose::MongooseRequest)request);
-  this->connection=&connection;
-  this->response=&response;
-  if(request.getRequestMethodCode()==mongoose::MongooseRequestMethodCode::rmcPost){
-    std::vector<std::pair<std::string,std::string>> variables;
-    std::string uri=request.getUri();
-    ExtractVariables(request.readQueryString(),request,variables);
-    result=HandleRequest(eventCode,response,uri,variables);		
-  }else if(request.getRequestMethodCode()==mongoose::MongooseRequestMethodCode::rmcGet){            
-    std::vector<std::pair<std::string,std::string>> variables;
-    std::string uri=request.getUri();
-    ExtractVariables(request.getQueryString(),request,variables);
-    result=HandleRequest(eventCode,response,uri,variables);
-  }
-  this->request=NULL;
-  this->connection=NULL;
-  this->response=NULL;
+	if(std::find(lastCalls.begin(),lastCalls.end(),connection.GetCreationTime())==lastCalls.end()){
+		lastCalls.push_back(connection.GetCreationTime());
+		this->request=&((mongoose::MongooseRequest)request);
+		this->connection=&connection;
+		this->response=&response;
+		if(request.getRequestMethodCode()==mongoose::MongooseRequestMethodCode::rmcPost){
+			std::vector<std::pair<std::string,std::string>> variables;
+			std::string uri=request.getUri();
+			ExtractVariables(request.readQueryString(),request,variables);
+			result=HandleRequest(eventCode,response,uri,variables)==SUCCESS;		
+		}else if(request.getRequestMethodCode()==mongoose::MongooseRequestMethodCode::rmcGet){            
+			std::vector<std::pair<std::string,std::string>> variables;
+			std::string uri=request.getUri();
+			ExtractVariables(request.getQueryString(),request,variables);
+			result=HandleRequest(eventCode,response,uri,variables)==SUCCESS;
+		}
+		this->request=NULL;
+		this->connection=NULL;
+		this->response=NULL;
+	}else{
+		if(lastCalls.size()>64)
+		  lastCalls.erase(lastCalls.begin());
+	}
   return result;
 }
 
