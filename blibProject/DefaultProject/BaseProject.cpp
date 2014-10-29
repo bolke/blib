@@ -308,6 +308,57 @@ void BaseProject::InitArguments(){
 	argumentFunctions["v"]=new Callback0<void,BaseProject>(this,&BaseProject::PrintVersion);	
 }
 
+EnumResult_t BaseProject::ParseArguments(std::vector<std::string> lines){
+  EnumResult_t result=FAIL;
+	if(lock->Lock()){
+		result=SUCCESS;	
+		std::vector<std::string> arguments;
+		size_t i=0;
+
+		for(i=0;i<lines.size();i++){					
+		  arguments.push_back(lines[i]);			
+		}		
+		
+		if(result==SUCCESS){
+			result=FAIL;
+			for(i=0;i<arguments.size();i++){
+				CallbackTemp* call=NULL;
+				if(StringParser::Contains(arguments[i]," ")){
+					if(argumentFunctions.find(StringParser::Before(arguments[i]," "))!=argumentFunctions.end())
+						call=argumentFunctions[StringParser::Before(arguments[i]," ")];			
+				}else if(argumentFunctions.find(arguments[i])!=argumentFunctions.end())
+					call=argumentFunctions[arguments[i]];				
+				if(call!=NULL){					
+					if(arguments[i].size()>0){
+						std::string options=StringParser::After(arguments[i]," ");
+            if(options.size()>0){
+              call->SetParamsFromString(options);
+              result=call->Callback();
+              //result=call->Call(StringParser::Append(StringParser::Append("\"",options),"\""));
+            }else if(call->GetNrOfParameters()==0)
+              result=call->Callback();
+					}else if(call->GetNrOfParameters()==0)
+            result=call->Callback();
+				}
+				if(result==FAIL){
+					if(call==NULL)
+						std::cout<<StringParser::ToString("Invalid argument. Command %s not found.\n\n",arguments[i].c_str());
+					else
+						std::cout<<StringParser::ToString("Error executing argument. Command: %s Parameters: %s\n\n",StringParser::Before(arguments[i]," ").c_str(),StringParser::After(arguments[i]," ").c_str());
+					break;
+				}
+			}
+		}else
+			i=i-1;
+
+		if(result==FAIL)
+			PrintHelp();
+		lock->Unlock();
+  }
+
+	return result;
+}
+
 EnumResult_t BaseProject::ParseArguments(size_t length,char_t* arg[]){
   EnumResult_t result=FAIL;
 	if(lock->Lock()){
@@ -382,7 +433,6 @@ EnumResult_t BaseProject::CleanupArgumentFunctions(){
 	return result;
 }
 
-
 EnumResult_t BaseProject::Init(size_t argc, char_t* argv[]){
 	EnumResult_t result=FAIL;
 	if(argc<=1)
@@ -395,6 +445,22 @@ EnumResult_t BaseProject::Init(size_t argc, char_t* argv[]){
 				result=FAIL;
 			lock->Unlock();
 		}
+	}
+	return result;
+}
+
+EnumResult_t BaseProject::Init(std::string configFile){
+  EnumResult_t result=FAIL;
+	if(configFile.length()>0){
+	  FileInterface config;
+		std::string line;
+		std::string data;
+
+		while(config.Pop(line)>0)
+			data=StringParser::Append(data,line);
+		
+		std::vector<std::string> lines=StringParser::SplitLines(data);
+
 	}
 	return result;
 }

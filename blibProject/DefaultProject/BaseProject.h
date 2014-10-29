@@ -71,6 +71,7 @@ protected:
 	virtual void InputFromArgument(std::string arguments);					//set inputDevice to device according to arguments
 
 	virtual void InitArguments();																		    //initialize arguments handling
+	virtual EnumResult_t ParseArguments(std::vector<std::string> lines);	//handle arguments in listed string form
 	virtual EnumResult_t ParseArguments(size_t length,char_t* arg[]);		//handle arguments
 	virtual EnumResult_t CleanupArgumentFunctions();									  //cleanup function callbacks 
 public:		
@@ -78,6 +79,7 @@ public:
 	~BaseProject();
 
   virtual EnumResult_t Init(size_t argc, char_t* argv[]);			        //init according to arguments, if any
+	virtual EnumResult_t Init(std::string configFile);									//init with settings loaded from given configFile, if any
 	virtual EnumResult_t Cleanup();															        //reset cin/cout and stop threads
 
   virtual size_t Size();																	            //size of cin buffer, if applicable
