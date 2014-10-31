@@ -10,18 +10,18 @@ namespace blib{
 
 class Data{
 public:
-	Data();
+	BLIB_LIB_API Data();
 
-	virtual size_t Size()=0;
-  virtual size_t Pop(char_t& c,size_t size=1)=0;
-  virtual size_t Pop(std::string& data);
-  virtual size_t Push(const char_t &c,size_t size=1)=0;
-  virtual size_t Push(const std::string& data);
+	BLIB_LIB_API virtual size_t Size()=0;
+  BLIB_LIB_API virtual size_t Pop(char_t& c,size_t size=1)=0;
+  BLIB_LIB_API virtual size_t Pop(std::string& data);
+  BLIB_LIB_API virtual size_t Push(const char_t &c,size_t size=1)=0;
+  BLIB_LIB_API virtual size_t Push(const std::string& data);
 
-	virtual Data& operator>>(Data& device);
-  virtual Data& operator<<(Data& device);
-	virtual Data& operator>>(std::string& data);
-	virtual Data& operator<<(const std::string& data);
+	BLIB_LIB_API virtual Data& operator>>(Data& device);
+  BLIB_LIB_API virtual Data& operator<<(Data& device);
+	BLIB_LIB_API virtual Data& operator>>(std::string& data);
+	BLIB_LIB_API virtual Data& operator<<(const std::string& data);
 
 	friend std::istream& operator>>(std::istream &stream,Data &output){
 		char_t* data=NULL;

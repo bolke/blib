@@ -12,10 +12,10 @@ protected:
 	std::vector<ThreadTask*> tasks;
 	std::vector<ThreadTask*> completedTasks;
 public:
-	ThreadTaskPool();
-	ThreadTask* Pop();
-	ThreadTask* PopCompleted();
-	EnumResult_t Push(ThreadTask* task);
+	BLIB_LIB_API ThreadTaskPool();
+	BLIB_LIB_API ThreadTask* Pop();
+	BLIB_LIB_API ThreadTask* PopCompleted();
+	BLIB_LIB_API EnumResult_t Push(ThreadTask* task);
 };
 
 };

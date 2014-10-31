@@ -8,7 +8,7 @@ namespace blib{
 class Base{																										
 protected:																										
 public:
-  virtual ~Base();	
+  BLIB_LIB_API virtual ~Base();	
 };
 
 };

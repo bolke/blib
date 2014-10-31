@@ -9,18 +9,18 @@ protected:
 	bool destroyDevice;
   Device* device;
 public:	
-  DeviceWrapper(Device& d,bool destroyDevice=false);							//give a device and if we should destroy it
-  virtual ~DeviceWrapper();
-  virtual size_t Size();
-  virtual bool IsOpen();
-  virtual EnumResult_t Open();
-  virtual EnumResult_t Close();
-	virtual EnumResult_t SetDestroyDevice(bool value);					
-	virtual bool GetDestroyDevice();
-  virtual size_t Pop(char_t& c,size_t size=1);  
-  virtual size_t Pop(std::string& data);	
-  virtual size_t Push(const char_t &c,size_t size=1);  
-	virtual size_t Push(const std::string& data);
+  BLIB_LIB_API DeviceWrapper(Device& d,bool destroyDevice=false);							//give a device and if we should destroy it
+  BLIB_LIB_API virtual ~DeviceWrapper();
+  BLIB_LIB_API virtual size_t Size();
+  BLIB_LIB_API virtual bool IsOpen();
+  BLIB_LIB_API virtual EnumResult_t Open();
+  BLIB_LIB_API virtual EnumResult_t Close();
+	BLIB_LIB_API virtual EnumResult_t SetDestroyDevice(bool value);					
+	BLIB_LIB_API virtual bool GetDestroyDevice();
+  BLIB_LIB_API virtual size_t Pop(char_t& c,size_t size=1);  
+  BLIB_LIB_API virtual size_t Pop(std::string& data);	
+  BLIB_LIB_API virtual size_t Push(const char_t &c,size_t size=1);  
+	BLIB_LIB_API virtual size_t Push(const std::string& data);
 };
 
 };

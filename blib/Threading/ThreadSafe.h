@@ -10,10 +10,10 @@ class ThreadSafe{
 protected:
 	ThreadLock* lock;
 public:
-	ThreadSafe(ThreadItem& item,bool destroyLockpad=false);
-	ThreadSafe(ThreadLock& lock=*(new ThreadLock(false)));
-	virtual ~ThreadSafe()=0;
-	virtual ThreadLock& GetLock();
+	BLIB_LIB_API ThreadSafe(ThreadItem& item,bool destroyLockpad=false);
+	BLIB_LIB_API ThreadSafe(ThreadLock& lock=*(new ThreadLock(false)));
+	BLIB_LIB_API virtual ~ThreadSafe()=0;
+	BLIB_LIB_API virtual ThreadLock& GetLock();
 };
 
 };

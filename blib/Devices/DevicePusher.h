@@ -7,15 +7,15 @@ namespace blib{
 
 class DevicePusher:public DeviceCoupler{
 public:
-	DevicePusher();
-  virtual size_t Size();
-  virtual size_t Pop(char_t& c,size_t size=1);  
-  virtual size_t Pop(std::string& data);
-  virtual size_t Push(const char_t &c,size_t size=1);  
-  virtual size_t Push(const std::string& data); 
-	virtual bool IsOpen();
-  virtual EnumResult_t Open();
-  virtual EnumResult_t Close();		
+	BLIB_LIB_API DevicePusher();
+  BLIB_LIB_API virtual size_t Size();
+  BLIB_LIB_API virtual size_t Pop(char_t& c,size_t size=1);  
+  BLIB_LIB_API virtual size_t Pop(std::string& data);
+  BLIB_LIB_API virtual size_t Push(const char_t &c,size_t size=1);  
+  BLIB_LIB_API virtual size_t Push(const std::string& data); 
+	BLIB_LIB_API virtual bool IsOpen();
+  BLIB_LIB_API virtual EnumResult_t Open();
+  BLIB_LIB_API virtual EnumResult_t Close();		
 };
 
 };

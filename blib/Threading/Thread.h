@@ -21,44 +21,44 @@ class Thread:public Base,public ThreadSafe{
     uint64_t killTimeout;																			//time before the killing is executed, if activated
     uint64_t runDelay;																				//delay between calls to run callback, in ms
     
-    virtual void Setup(void);																	//thread setup function, runs within the new thread       
-	  virtual void Run(void);																		//here goes the main function, runs within the new thread
-	  virtual void Cleanup(void); 															//cleanup function, also runs within the new thread
+    BLIB_LIB_API virtual void Setup(void);																	//thread setup function, runs within the new thread       
+	  BLIB_LIB_API virtual void Run(void);																		//here goes the main function, runs within the new thread
+	  BLIB_LIB_API virtual void Cleanup(void); 															//cleanup function, also runs within the new thread
     
     EnumResult_t Kill(void);																	//kill the thread hard
     
   public:
-		Thread(ThreadItem& item,bool destroyLockpad=false);				//init internal a new lock with this threadItem
-    Thread(ThreadLock& lock=*(new ThreadLock(false)));				//init a new lock
-    ~Thread(void);																						//stops thread
+		BLIB_LIB_API Thread(ThreadItem& item,bool destroyLockpad=false);				//init internal a new lock with this threadItem
+    BLIB_LIB_API Thread(ThreadLock& lock=*(new ThreadLock(false)));				//init a new lock
+    BLIB_LIB_API ~Thread(void);																						//stops thread
 
-    bool IsAlive(void);																				//is this thread alive, checks through threadHandle
-    EnumResult_t Start(void);																	//starts this thread, calls Entrypoint within a new thread, this calls setup run and cleanup
-    EnumResult_t Stop(void);																	//order the thread to stop. calls kill after timeout if enabled
+    BLIB_LIB_API bool IsAlive(void);																				//is this thread alive, checks through threadHandle
+    BLIB_LIB_API EnumResult_t Start(void);																	//starts this thread, calls Entrypoint within a new thread, this calls setup run and cleanup
+    BLIB_LIB_API EnumResult_t Stop(void);																	//order the thread to stop. calls kill after timeout if enabled
 
-    EnumResult_t SetKillEnabled(bool bKillEnabled);						//killing is disabled by default, not recommended
-    bool GetKillEnabled(void);														
+    BLIB_LIB_API EnumResult_t SetKillEnabled(bool bKillEnabled);						//killing is disabled by default, not recommended
+    BLIB_LIB_API bool GetKillEnabled(void);														
 
-    uint64_t GetKillTimeout(void);														//time the thread waits until killing starts, if enabled
-    EnumResult_t SetKillTimeout(uint64_t killTimeout);         
-    EnumResult_t SetPriority(int32_t threadPriority);					//thread priority based upon OS
-    int32_t GetPriority(void);                            
+    BLIB_LIB_API uint64_t GetKillTimeout(void);														//time the thread waits until killing starts, if enabled
+    BLIB_LIB_API EnumResult_t SetKillTimeout(uint64_t killTimeout);         
+    BLIB_LIB_API EnumResult_t SetPriority(int32_t threadPriority);					//thread priority based upon OS
+    BLIB_LIB_API int32_t GetPriority(void);                            
 
-		bool GetRunning();																		    //return the running variable, not if the thread is alive, use IsAlive for that
-		EnumResult_t SetRunning(bool running);										//set the running variable
+		BLIB_LIB_API bool GetRunning();																		    //return the running variable, not if the thread is alive, use IsAlive for that
+		BLIB_LIB_API EnumResult_t SetRunning(bool running);										//set the running variable
 
-    EnumResult_t SetSetupCallback(CallbackTemp* callback);    //set the setup callback, old one, if any, isn't destroyed
-    EnumResult_t SetRunCallback(CallbackTemp* callback);      //set the run callback, old one, if any, isn't destroyed
-    EnumResult_t SetCleanupCallback(CallbackTemp* callback);  //set the cleanup callback, odl one, if any, isn't destroy
+    BLIB_LIB_API EnumResult_t SetSetupCallback(CallbackTemp* callback);    //set the setup callback, old one, if any, isn't destroyed
+    BLIB_LIB_API EnumResult_t SetRunCallback(CallbackTemp* callback);      //set the run callback, old one, if any, isn't destroyed
+    BLIB_LIB_API EnumResult_t SetCleanupCallback(CallbackTemp* callback);  //set the cleanup callback, odl one, if any, isn't destroy
 
-    CallbackTemp* GetSetupCallback();                         //return the callback for setup
-    CallbackTemp* GetRunCallback();                           //return the callback for run
-    CallbackTemp* GetCleanupCallback();                       //return the callback for cleanup
+    BLIB_LIB_API CallbackTemp* GetSetupCallback();                         //return the callback for setup
+    BLIB_LIB_API CallbackTemp* GetRunCallback();                           //return the callback for run
+    BLIB_LIB_API CallbackTemp* GetCleanupCallback();                       //return the callback for cleanup
 
-		EnumResult_t ClearCallbacks();														//clear all the callbacks, delete them and set to NULL
+		BLIB_LIB_API EnumResult_t ClearCallbacks();														//clear all the callbacks, delete them and set to NULL
 
-    uint64_t GetRunDelay();                                   //return running delay in milliseconds, default 1ms
-    EnumResult_t SetRunDelay(uint64_t runDelay);							//running delay in milliseconds  
+    BLIB_LIB_API uint64_t GetRunDelay();                                   //return running delay in milliseconds, default 1ms
+    BLIB_LIB_API EnumResult_t SetRunDelay(uint64_t runDelay);							//running delay in milliseconds  
 };
 
 };

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="Threading"
 	ProjectGUID="{7172DA3B-7B3D-439C-B6FB-7481DEAFE688}"
 	RootNamespace="Threading"

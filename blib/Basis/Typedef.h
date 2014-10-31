@@ -18,6 +18,14 @@
 
 #include <windows.h>
 
+#ifdef BLIB_DLL
+#define BLIB_LIB_API  __declspec(dllexport) 
+#elif defined BLIB_LIB
+#define BLIB_LIB_API
+#else
+#define BLIB_LIB_API __declspec(dllimport)  
+#endif
+
 #ifndef _STDINT_H
   typedef __int8 int8_t;
   typedef unsigned __int8 uint8_t;
@@ -47,6 +55,14 @@
 #endif
 
 #if defined __unix__
+
+//#ifdef BLIB_DLL
+//#define BLIB_LIB_API  __declspec(dllexport) 
+//#elif defined BLIB_LIB
+#define BLIB_LIB_API
+//#else
+//#define BLIB_LIB_API __declspec(dllimport)  
+//#endif
 
   #define LINUX 1
 
@@ -153,25 +169,25 @@ typedef enum{
 	SUCCESS=TRUE
 } EnumResult_t;
 
-std::multimap<EnumVar_t,size_t>& GetVarHashMap();
-std::multimap<size_t,EnumVar_t>& GetHashVarMap();
-std::multimap<EnumVar_t,const std::type_info*>& GetVarTypeInfoMap();
-std::multimap<const std::type_info*,EnumVar_t>& GetTypeInfoVarMap();
+BLIB_LIB_API std::multimap<EnumVar_t,size_t>& GetVarHashMap();
+BLIB_LIB_API std::multimap<size_t,EnumVar_t>& GetHashVarMap();
+BLIB_LIB_API std::multimap<EnumVar_t,const std::type_info*>& GetVarTypeInfoMap();
+BLIB_LIB_API std::multimap<const std::type_info*,EnumVar_t>& GetTypeInfoVarMap();
 
-size_t GetHash(EnumVar_t type);
-size_t GetHash(const std::type_info* type);
+BLIB_LIB_API size_t GetHash(EnumVar_t type);
+BLIB_LIB_API size_t GetHash(const std::type_info* type);
 
-EnumVar_t GetEnumVar(size_t hash);
-EnumVar_t GetEnumVar(const std::type_info* type);
+BLIB_LIB_API EnumVar_t GetEnumVar(size_t hash);
+BLIB_LIB_API EnumVar_t GetEnumVar(const std::type_info* type);
 
-const std::type_info* GetTypeInfo(EnumVar_t type);
-const std::type_info* GetTypeInfo(size_t hash);
+BLIB_LIB_API const std::type_info* GetTypeInfo(EnumVar_t type);
+BLIB_LIB_API const std::type_info* GetTypeInfo(size_t hash);
 
-size_t GetSize(const std::type_info* type);
-size_t GetSize(const EnumVar_t type);
-size_t GetSize(const size_t hash);
+BLIB_LIB_API size_t GetSize(const std::type_info* type);
+BLIB_LIB_API size_t GetSize(const EnumVar_t type);
+BLIB_LIB_API size_t GetSize(const size_t hash);
 
-EnumResult_t InitTypeMaps();
+BLIB_LIB_API EnumResult_t InitTypeMaps();
 
 };
 

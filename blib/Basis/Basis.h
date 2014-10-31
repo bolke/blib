@@ -13,11 +13,11 @@
 
 namespace blib{
 
-uint64_t GetRunTimeMs();																					//universal GetTickCount function (windows, unix, etc)
-void SleepMs(uint64_t ms);																				//universal Sleep function
+BLIB_LIB_API uint64_t GetRunTimeMs();																					//universal GetTickCount function (windows, unix, etc)
+BLIB_LIB_API void SleepMs(uint64_t ms);																				//universal Sleep function
 
-size_t GetHashCode(const std::type_info* classType);							//get a hash of a class type
-size_t GetHashSize();																							//get size of hash, sizeof(size_t)
+BLIB_LIB_API size_t GetHashCode(const std::type_info* classType);							//get a hash of a class type
+BLIB_LIB_API size_t GetHashSize();																							//get size of hash, sizeof(size_t)
 
 };
 #endif

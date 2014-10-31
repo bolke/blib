@@ -17,15 +17,15 @@ protected:
 	std::vector<void*> parameters;																		//pointer to parameter values
 	std::vector<const std::type_info*> parametersTypeInfo;						//parameter types
 public:
-	CallbackTemp();																										//init returnValue pointer
-  size_t GetNrOfParameters(void);																		//return size of parameters vector
-  const std::type_info* GetParamTypeInfo(size_t nr);								//returns type of argument nr requested, or type info of void	
-  EnumResult_t SetParameter(size_t nr,void* a);											//set the argument according to type, void type is converted if possible  
-  EnumResult_t SetParamFromString(size_t nr,std::string value);     //set variable from string, if possible           
-  EnumResult_t SetParamsFromString(std::string value);              //set all variables from string, if possible
-  const std::type_info* GetReturnTypeInfo(void);										//return the return type info			
-	void* GetReturnRef();																							//return a pointer to the return value of a call, which is a pointer to the return type info
-	virtual EnumResult_t Callback()=0;														  	//per child class implemented callback function
+	BLIB_LIB_API CallbackTemp();																										//init returnValue pointer
+  BLIB_LIB_API size_t GetNrOfParameters(void);																		//return size of parameters vector
+  BLIB_LIB_API const std::type_info* GetParamTypeInfo(size_t nr);								//returns type of argument nr requested, or type info of void	
+  BLIB_LIB_API EnumResult_t SetParameter(size_t nr,void* a);											//set the argument according to type, void type is converted if possible  
+  BLIB_LIB_API EnumResult_t SetParamFromString(size_t nr,std::string value);     //set variable from string, if possible           
+  BLIB_LIB_API EnumResult_t SetParamsFromString(std::string value);              //set all variables from string, if possible
+  BLIB_LIB_API const std::type_info* GetReturnTypeInfo(void);										//return the return type info			
+	BLIB_LIB_API void* GetReturnRef();																							//return a pointer to the return value of a call, which is a pointer to the return type info
+	BLIB_LIB_API virtual EnumResult_t Callback()=0;														  	//per child class implemented callback function
 };
 
 template<class returnType,class classType=Base> class Callback0:public CallbackTemp,public Base{

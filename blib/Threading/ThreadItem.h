@@ -12,13 +12,13 @@ class ThreadItem:public Base{
     threadId_t owner;																							//current owner of the mutex and thus of the class, is threadid
     HANDLE mutex;																									//mutex that gets grabbed, or released      
   public:		
-    ThreadItem(size_t grabTimeout=INFINITE);											//create mutex with delay, or infinite delay
-    ~ThreadItem(void);																						//release mutex, no check of release    
-    bool GrabMutex(void);																					//returns true if owner of mutex, or blocks
-    bool DropMutex(void);																					//returns true if mutex is loose or released, false if not the owner (and cannot release)		
-    threadId_t GetOwner(void);																		//returns owner id      
-    size_t GetGrabCnt(void);																			//return nr of grabs
-    size_t GetGrabTimeout(void);																	//return grab timeout
+    BLIB_LIB_API ThreadItem(size_t grabTimeout=INFINITE);											//create mutex with delay, or infinite delay
+    BLIB_LIB_API ~ThreadItem(void);																						//release mutex, no check of release    
+    BLIB_LIB_API bool GrabMutex(void);																					//returns true if owner of mutex, or blocks
+    BLIB_LIB_API bool DropMutex(void);																					//returns true if mutex is loose or released, false if not the owner (and cannot release)		
+    BLIB_LIB_API threadId_t GetOwner(void);																		//returns owner id      
+    BLIB_LIB_API size_t GetGrabCnt(void);																			//return nr of grabs
+    BLIB_LIB_API size_t GetGrabTimeout(void);																	//return grab timeout
 };
 
 };

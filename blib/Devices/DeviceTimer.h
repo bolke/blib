@@ -12,11 +12,11 @@ protected:
 	uint64_t popDelay;
 	uint64_t pushDelay;
 public:
-	DeviceTimer(Device& d,uint64_t popDelay=0,uint64_t pushDelay=0);  
-  virtual size_t Pop(char_t& c,size_t size=1);  
-  virtual size_t Pop(std::string& data);	
-  virtual size_t Push(const char_t &c,size_t size=1);  
-	virtual size_t Push(const std::string& data);
+	BLIB_LIB_API DeviceTimer(Device& d,uint64_t popDelay=0,uint64_t pushDelay=0);  
+  BLIB_LIB_API virtual size_t Pop(char_t& c,size_t size=1);  
+  BLIB_LIB_API virtual size_t Pop(std::string& data);	
+  BLIB_LIB_API virtual size_t Push(const char_t &c,size_t size=1);  
+	BLIB_LIB_API virtual size_t Push(const std::string& data);
 };
 
 };

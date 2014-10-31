@@ -10,15 +10,15 @@ protected:
 	bool destroyData;																								//destroy flag
   Data* data;																											//data pointer
 public:	
-  DataWrapper(Data& d,bool destroyData=false);										//add data, default don't destroy
-  virtual ~DataWrapper();																					//check destroyData, destroys accordingly
-  virtual size_t Size();																					//size of data available
-	virtual EnumResult_t SetDestroyData(bool value);								
-	virtual bool GetDestroyData();
-  virtual size_t Pop(char_t& c,size_t size=1);
-  virtual size_t Pop(std::string& data);	
-  virtual size_t Push(const char_t &c,size_t size=1);  
-	virtual size_t Push(const std::string& data);
+  BLIB_LIB_API DataWrapper(Data& d,bool destroyData=false);										//add data, default don't destroy
+  BLIB_LIB_API virtual ~DataWrapper();																					//check destroyData, destroys accordingly
+  BLIB_LIB_API virtual size_t Size();																					//size of data available
+	BLIB_LIB_API virtual EnumResult_t SetDestroyData(bool value);								
+	BLIB_LIB_API virtual bool GetDestroyData();
+  BLIB_LIB_API virtual size_t Pop(char_t& c,size_t size=1);
+  BLIB_LIB_API virtual size_t Pop(std::string& data);	
+  BLIB_LIB_API virtual size_t Push(const char_t &c,size_t size=1);  
+	BLIB_LIB_API virtual size_t Push(const std::string& data);
 };
 
 };
