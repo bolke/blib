@@ -687,7 +687,7 @@ std::string StringParser::ToString(const char* format, ...){
 
   va_list arg;
   va_start(arg, format);
-  vsnprintf_s(message, sizeof(message) - 1,5120, format, arg);
+  vsnprintf(message, sizeof(message) - 1, format, arg);
 
   va_end(arg);
 

@@ -101,8 +101,8 @@ public:
     this->classPointer=c;
     functionPointer=f;
     this->a0=a0;	
-		parametersTypeInfo.push_back(&typeid(arg0));
-    parameters.push_back((void*)(arg0*)&this->a0);
+		this->parametersTypeInfo.push_back(&typeid(arg0));
+    this->parameters.push_back((void*)(arg0*)&this->a0);
   };
 
   Callback1(returnType(*f)(arg0),arg0 a0):Callback0<returnType,Base>::Callback0(NULL){
@@ -110,17 +110,17 @@ public:
     this->functionPointer=NULL;
     this->onlyFunctionPointer=f;
     this->a0=a0;
-		parametersTypeInfo.push_back(&typeid(arg0));
-    parameters.push_back((void*)(arg0*)&this->a0);
+		this->parametersTypeInfo.push_back(&typeid(arg0));
+    this->parameters.push_back((void*)(arg0*)&this->a0);
   };
 
 	virtual EnumResult_t Callback(){
 		EnumResult_t result=FAIL;
 		if((this->classPointer!=NULL)&&(this->functionPointer!=NULL))	
-      returnValue=(*this->classPointer.*this->functionPointer)(a0);      
+      this->returnValue=(*this->classPointer.*this->functionPointer)(a0);      
 		else
-			returnValue=(*this->onlyFunctionPointer)(a0);
-		returnRef=(void*)((returnType*)&returnValue);		
+			this->returnValue=(*this->onlyFunctionPointer)(a0);
+		this->returnRef=(void*)((returnType*)&(this->returnValue));		
 		return SUCCESS;
 	};
 };
@@ -135,8 +135,8 @@ public:
     this->classPointer=c;
     functionPointer=f;
     this->a0=a0;	
-		parametersTypeInfo.push_back(&typeid(arg0));
-    parameters.push_back((void*)(arg0*)&this->a0);
+		this->parametersTypeInfo.push_back(&typeid(arg0));
+    this->parameters.push_back((void*)(arg0*)&this->a0);
   };
 
   Callback1(void(*f)(arg0),arg0 a0):Callback0<void,Base>::Callback0(NULL){
@@ -144,8 +144,8 @@ public:
     this->functionPointer=NULL;
     this->onlyFunctionPointer=f;
     this->a0=a0;
-		parametersTypeInfo.push_back(&typeid(arg0));
-    parameters.push_back((void*)(arg0*)&this->a0);
+		this->parametersTypeInfo.push_back(&typeid(arg0));
+    this->parameters.push_back((void*)(arg0*)&this->a0);
   };
 
 	virtual EnumResult_t Callback(){
@@ -168,8 +168,8 @@ public:
     this->classPointer=c;
     functionPointer=f;
     this->a1=a1;	
-		parametersTypeInfo.push_back(&typeid(arg1));
-    parameters.push_back((void*)(arg1*)&this->a1);
+		this->parametersTypeInfo.push_back(&typeid(arg1));
+    this->parameters.push_back((void*)(arg1*)&this->a1);
   };
 
   Callback2(returnType(*f)(arg0,arg1),arg0 a0,arg1 a1):Callback1<returnType,Base,arg0>::Callback1(NULL,a0){
@@ -177,17 +177,17 @@ public:
     this->functionPointer=NULL;
     this->onlyFunctionPointer=f;
     this->a1=a1;
-		parametersTypeInfo.push_back(&typeid(arg1));
-    parameters.push_back((void*)(arg1*)&this->a1);
+		this->parametersTypeInfo.push_back(&typeid(arg1));
+    this->parameters.push_back((void*)(arg1*)&this->a1);
   };
 
 	virtual EnumResult_t Callback(){
 		EnumResult_t result=FAIL;
 		if((this->classPointer!=NULL)&&(this->functionPointer!=NULL))	
-      returnValue=(*this->classPointer.*this->functionPointer)(a0,a1);      
+      this->returnValue=(*this->classPointer.*this->functionPointer)(this->a0,this->a1);      
 		else
-			returnValue=(*this->onlyFunctionPointer)(a0,a1);
-		returnRef=(void*)((returnType*)&returnValue);		
+			this->returnValue=(*this->onlyFunctionPointer)(this->a0,this->a1);
+		this->returnRef=(void*)((returnType*)&(this->returnValue));
 		return SUCCESS;
 	};
 };
@@ -202,8 +202,8 @@ public:
     this->classPointer=c;
     functionPointer=f;
     this->a1=a1;	
-		parametersTypeInfo.push_back(&typeid(arg1));
-    parameters.push_back((void*)(arg1*)&this->a1);
+		this->parametersTypeInfo.push_back(&typeid(arg1));
+    this->parameters.push_back((void*)(arg1*)&this->a1);
   };
 
   Callback2(void(*f)(arg0,arg1),arg0 a0,arg1 a1):Callback1<void,Base,arg0>::Callback1(NULL,a0){
@@ -211,8 +211,8 @@ public:
     this->functionPointer=NULL;
     this->onlyFunctionPointer=f;
     this->a1=a1;
-		parametersTypeInfo.push_back(&typeid(arg1));
-    parameters.push_back((void*)(arg1*)&this->a1);
+		this->parametersTypeInfo.push_back(&typeid(arg1));
+    this->parameters.push_back((void*)(arg1*)&this->a1);
   };
 
 	virtual EnumResult_t Callback(){
@@ -235,8 +235,8 @@ public:
     this->classPointer=c;
     functionPointer=f;
     this->a2=a2;	
-		parametersTypeInfo.push_back(&typeid(arg2));
-    parameters.push_back((void*)(arg2*)&this->a2);
+		this->parametersTypeInfo.push_back(&typeid(arg2));
+    this->parameters.push_back((void*)(arg2*)&this->a2);
   };
 
   Callback3(returnType(*f)(arg0,arg1,arg2),arg0 a0,arg1 a1,arg2 a2):Callback2<returnType,Base,arg0,arg1>::Callback2(NULL,a0,a1){
@@ -244,17 +244,17 @@ public:
     this->functionPointer=NULL;
     this->onlyFunctionPointer=f;
     this->a2=a2;
-		parametersTypeInfo.push_back(&typeid(arg2));
-    parameters.push_back((void*)(arg2*)&this->a2);
+		this->parametersTypeInfo.push_back(&typeid(arg2));
+    this->parameters.push_back((void*)(arg2*)&this->a2);
   };
 
 	virtual EnumResult_t Callback(){
 		EnumResult_t result=FAIL;
 		if((this->classPointer!=NULL)&&(this->functionPointer!=NULL))	
-      returnValue=(*this->classPointer.*this->functionPointer)(a0,a1,a2);
+      this->returnValue=(*this->classPointer.*this->functionPointer)(this->a0,this->a1,this->a2);
 		else
-			returnValue=(*this->onlyFunctionPointer)(a0,a1,a2);
-		returnRef=(void*)((returnType*)&returnValue);		
+			this->returnValue=(*this->onlyFunctionPointer)(this->a0,this->a1,this->a2);
+		this->returnRef=(void*)((returnType*)&(this->returnValue));
 		return SUCCESS;
 	};
 };
@@ -269,8 +269,8 @@ public:
     this->classPointer=c;
     functionPointer=f;
     this->a2=a2;	
-		parametersTypeInfo.push_back(&typeid(arg2));
-    parameters.push_back((void*)(arg2*)&this->a2);
+		this->parametersTypeInfo.push_back(&typeid(arg2));
+    this->parameters.push_back((void*)(arg2*)&this->a2);
   };
 
   Callback3(void(*f)(arg0,arg1,arg2),arg0 a0,arg1 a1,arg2 a2):Callback2<void,Base,arg0,arg1>::Callback2(NULL,a0,a1){
@@ -278,8 +278,8 @@ public:
     this->functionPointer=NULL;
     this->onlyFunctionPointer=f;
     this->a2=a2;
-		parametersTypeInfo.push_back(&typeid(arg2));
-    parameters.push_back((void*)(arg2*)&this->a2);
+		this->parametersTypeInfo.push_back(&typeid(arg2));
+    this->parameters.push_back((void*)(arg2*)&this->a2);
   };
 
 	virtual EnumResult_t Callback(){
@@ -298,30 +298,30 @@ protected:
   returnType(*onlyFunctionPointer)(arg0,arg1,arg2,arg3);
   arg3 a3;
 public:
-	  Callback4(classType* c,returnType(classType::*f)(arg0,arg1,arg2,arg3),arg0 a0,arg1 a1,arg2 a2):Callback3<returnType,classType,arg0,arg1,arg2>::Callback2(c,NULL,a0,a1,a2){
+	Callback4(classType* c,returnType(classType::*f)(arg0,arg1,arg2,arg3),arg0 a0,arg1 a1,arg2 a2):Callback3<returnType,classType,arg0,arg1,arg2>::Callback2(c,NULL,a0,a1,a2){
     this->classPointer=c;
     functionPointer=f;
     this->a3=a3;	
-		parametersTypeInfo.push_back(&typeid(arg2));
-    parameters.push_back((void*)(arg3*)&this->a3);
+		this->parametersTypeInfo.push_back(&typeid(arg2));
+    this->parameters.push_back((void*)(arg3*)&this->a3);
   };
 
-  Callback4(returnType(*f)(arg0,arg1,arg2,arg3),arg0 a0,arg1 a1,arg2 a2,arg3 a3):Callback2<returnType,Base,arg0,arg1,arg2>::Callback3(NULL,a0,a1,a2){
+  Callback4(returnType(*f)(arg0,arg1,arg2,arg3),arg0 a0,arg1 a1,arg2 a2,arg3 a3):Callback3<returnType,Base,arg0,arg1,arg2>::Callback3(NULL,a0,a1,a2){
     this->classPointer=NULL;
     this->functionPointer=NULL;
     this->onlyFunctionPointer=f;
     this->a3=a3;
-		parametersTypeInfo.push_back(&typeid(arg3));
-    parameters.push_back((void*)(arg3*)&this->a3);
+		this->parametersTypeInfo.push_back(&typeid(arg3));
+    this->parameters.push_back((void*)(arg3*)&this->a3);
   };
 
 	virtual EnumResult_t Callback(){
 		EnumResult_t result=FAIL;
 		if((this->classPointer!=NULL)&&(this->functionPointer!=NULL))	
-      returnValue=(*this->classPointer.*this->functionPointer)(a0,a1,a2,a3);
+      this->returnValue=(*this->classPointer.*this->functionPointer)(this->a0,this->a1,this->a2,this->a3);
 		else
-			returnValue=(*this->onlyFunctionPointer)(a0,a1,a2,a3);
-		returnRef=(void*)((returnType*)&returnValue);		
+			this->returnValue=(*this->onlyFunctionPointer)(this->a0,this->a1,this->a2,this->a3);
+		this->returnRef=(void*)((returnType*)&(this->returnValue));		
 		return SUCCESS;
 	};
 };
@@ -336,8 +336,8 @@ public:
     this->classPointer=c;
     functionPointer=f;
     this->a3=a3;	
-		parametersTypeInfo.push_back(&typeid(arg3));
-    parameters.push_back((void*)(arg3*)&this->a3);
+		this->parametersTypeInfo.push_back(&typeid(arg3));
+    this->parameters.push_back((void*)(arg3*)&this->a3);
   };
 
   Callback4(void(*f)(arg0,arg1,arg2,arg3),arg0 a0,arg1 a1,arg2 a2,arg3 a3):Callback3<void,Base,arg0,arg1,arg2>::Callback3(NULL,a0,a1,a2){
@@ -345,8 +345,8 @@ public:
     this->functionPointer=NULL;
     this->onlyFunctionPointer=f;
     this->a3=a3;
-		parametersTypeInfo.push_back(&typeid(arg3));
-    parameters.push_back((void*)(arg3*)&this->a3);
+		this->parametersTypeInfo.push_back(&typeid(arg3));
+    this->parameters.push_back((void*)(arg3*)&this->a3);
   };
 
 	virtual EnumResult_t Callback(){

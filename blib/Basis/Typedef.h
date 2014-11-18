@@ -20,10 +20,10 @@
 
 #ifdef BLIB_DLL
 #define BLIB_LIB_API  __declspec(dllexport) 
-#elif defined BLIB_LIB
-#define BLIB_LIB_API
+#elif defined BLIB_DLL_IMPORT
+#define BLIB_LIB_API  __declspec(dllimport) 
 #else
-#define BLIB_LIB_API __declspec(dllimport)  
+#define BLIB_LIB_API
 #endif
 
 #ifndef _STDINT_H
@@ -45,7 +45,6 @@
   typedef float float32_t;
   typedef double float64_t;
   typedef long double lfloat64_t;
-
   typedef ulong_t threadId_t;
 
 #ifdef NO_VISUAL_STUDIO
@@ -71,6 +70,17 @@
   #include <signal.h>
   #include <unistd.h>
 
+	#define INFINITE            0xFFFFFFFF
+	
+  typedef signed long long_t;
+  typedef unsigned long ulong_t;
+  typedef int64_t llong_t;
+  typedef uint64_t ullong_t;
+
+  typedef float float32_t;
+  typedef double float64_t;
+  typedef long double lfloat64_t;
+  
   typedef uint32_t DWORD;
   typedef pthread_t threadId_t;
 

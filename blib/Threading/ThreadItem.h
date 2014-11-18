@@ -10,7 +10,11 @@ class ThreadItem:public Base{
     size_t grabTimeout;																						//time the grab tries to grab the mutex before giving up
     size_t grabCnt;																								//counter of the amount of grabs performed on the mutex
     threadId_t owner;																							//current owner of the mutex and thus of the class, is threadid
+		#ifdef LINUX
+		pthread_mutex_t mutex;   
+		#else
     HANDLE mutex;																									//mutex that gets grabbed, or released      
+		#endif
   public:		
     BLIB_LIB_API ThreadItem(size_t grabTimeout=INFINITE);											//create mutex with delay, or infinite delay
     BLIB_LIB_API ~ThreadItem(void);																						//release mutex, no check of release    

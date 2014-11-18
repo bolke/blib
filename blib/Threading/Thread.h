@@ -8,10 +8,15 @@ namespace blib{
 
 class Thread:public Base,public ThreadSafe{																	
   protected:
+	#ifdef LINUX
+    threadId_t threadHandle;                      						//used for killing and tracking the thread
+    threadId_t threadId;                          						//unique id of this thread, same value used in mutex functions
+    static void* ThreadEntry(void* args);         						//static function used to start the threads
+	#else
 		HANDLE threadHandle;																			//used for killing and tracking the thread
     DWORD threadId;																						//unique id of this thread, same value used in mutex functions
     static DWORD WINAPI Entrypoint(LPVOID args);							//static function used to start the threads
-
+  #endif
     CallbackTemp* setupCallback;															//alternative for setup
     CallbackTemp* runCallback;																//alternative for run
     CallbackTemp* cleanupCallback;														//alternative for cleanup
@@ -21,9 +26,9 @@ class Thread:public Base,public ThreadSafe{
     uint64_t killTimeout;																			//time before the killing is executed, if activated
     uint64_t runDelay;																				//delay between calls to run callback, in ms
     
-    BLIB_LIB_API virtual void Setup(void);																	//thread setup function, runs within the new thread       
-	  BLIB_LIB_API virtual void Run(void);																		//here goes the main function, runs within the new thread
-	  BLIB_LIB_API virtual void Cleanup(void); 															//cleanup function, also runs within the new thread
+    BLIB_LIB_API virtual void Setup(void);										//thread setup function, runs within the new thread       
+	  BLIB_LIB_API virtual void Run(void);											//here goes the main function, runs within the new thread
+	  BLIB_LIB_API virtual void Cleanup(void); 									//cleanup function, also runs within the new thread
     
     EnumResult_t Kill(void);																	//kill the thread hard
     

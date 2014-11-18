@@ -18,16 +18,19 @@ size_t GetDjbHash(const char_t* toHash){
 }
 
 uint64_t blib::GetRunTimeMs(){
+  uint64_t result=0;
 #ifdef WINDOWS
-	return GetTickCount();
+	result=GetTickCount();
 #elif LINUX
-#error IMPLEMENT THIS FEATURE FOR LINUX
-	return 0;
+  struct timespec ts;
+  if(clock_gettime(CLOCK_MONOTONIC,&ts)==0)
+    result=(ts.tv_sec*1000)+(ts.tv_nsec%1000000);  
 #endif
+  return result;
 }
 
 void blib::SleepMs(uint64_t ms){
-#ifdef WINDOWS)
+#ifdef WINDOWS
 	Sleep(ms);
 #elif LINUX
 	usleep(ms*1000);
