@@ -10,6 +10,7 @@
 using namespace blib;
 using namespace mongoose;
 
+#ifdef WINDOWS
 #include <tchar.h>
 
 std::string CurrentPath(){
@@ -26,6 +27,12 @@ std::string CurrentPath(){
   }
   return result;
 }
+#elif defined(LINUX)
+std::string CurrentPath(){
+  return "";
+}
+
+#endif
 
 WebServer::WebServer(){
   setOption("document_root","www");

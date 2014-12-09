@@ -62,8 +62,9 @@
 //#else
 //#define BLIB_LIB_API __declspec(dllimport)  
 //#endif
-
-  #define LINUX 1
+  #ifndef LINUX
+    #define LINUX 1
+  #endif
 
   #include <stdint.h>   //might need to be cstdint.h
   #include <pthread.h>

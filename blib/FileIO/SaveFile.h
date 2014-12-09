@@ -16,7 +16,7 @@ public:
 	SaveFile(std::string filename="",size_t maxFileSize=DEFAULT_BUFFER_SIZE);
  
   virtual EnumResult_t SetFilename(std::string filename);
-  virtual EnumResult_t SetFilemode(int32_t filemode);
+  virtual EnumResult_t SetFilemode(std::ios_base::openmode filemode);
 
   virtual size_t Push(const char_t &c,size_t size=1);
   virtual size_t Push(const std::string& data);

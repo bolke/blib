@@ -4,7 +4,7 @@ using namespace blib;
 
 ThreadItem::ThreadItem(size_t grabTimeout){  
   this->grabTimeout=grabTimeout;
-  this->owner=NO_OWNER;
+  owner=NO_OWNER;
   grabCnt=0;  
 #ifdef LINUX
   mutex=PTHREAD_MUTEX_INITIALIZER;

@@ -30,7 +30,7 @@ class Thread:public Base,public ThreadSafe{
 	  BLIB_LIB_API virtual void Run(void);											//here goes the main function, runs within the new thread
 	  BLIB_LIB_API virtual void Cleanup(void); 									//cleanup function, also runs within the new thread
     
-    EnumResult_t Kill(void);																	//kill the thread hard
+    EnumResult_t Kill(void);																	//kill the thread hard, doesn't check killenabled, that's used in the stop function. therefor it's protected.
     
   public:
 		BLIB_LIB_API Thread(ThreadItem& item,bool destroyLockpad=false);				//init internal a new lock with this threadItem

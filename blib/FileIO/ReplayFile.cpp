@@ -61,8 +61,8 @@ EnumResult_t ReplayFile::SetBinairy(bool value){
     if(!IsOpen()){
       if(value)
         file->SetFilemode(file->GetFilemode()|std::fstream::binary);
-      else
-        file->SetFilemode(file->GetFilemode()&(!std::fstream::binary));
+      else if(IsBinairy())
+        file->SetFilemode(file->GetFilemode()&(~(std::fstream::binary)));
       result=SUCCESS;
     }
     lock->Unlock();

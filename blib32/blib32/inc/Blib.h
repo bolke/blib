@@ -1,19 +1,12 @@
 #ifndef BLIB_H
 #define BLIB_H
 
-#include "Core.h"
-#include "Messages.h"
-#include "Serial.h"
-#include "FileIO.h"
-#include "Network.h"  
-#include "Security.h"
-#include "Sql.h"                    //uses sqlite, public domain
-#include "WebServing.h"             //uses mongoose lib,MIT licensed version, pre licence change
+#include "BlibHeaders.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
-#define BLIB_VERSION "1.1.17.10.2014"
+#define BLIB_VERSION "1.4.09.12.2014"
 #define BLIB_CORE "x86 device"
 
 #if defined(WINDOWS)

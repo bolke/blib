@@ -5,17 +5,24 @@
 #include <iostream>
 #include <fstream>
 
+#ifdef LINUX
+#include <sys/io.h>
+#else
+#include <io.h>
+#define F_OK 00
+#endif
+
 #include "Core.h"
 
 namespace blib{
 
 class FileInterface:public Device,public Base{
 protected:
-	int32_t filemode;  
+  std::ios_base::openmode filemode;
   std::string filename;
   std::fstream file;
 public:
-  FileInterface(std::string filename="",int32_t filemode=std::fstream::in);
+  FileInterface(std::string filename="",std::ios_base::openmode filemode=std::ios::in);
 
   virtual EnumResult_t Open(void);
   virtual EnumResult_t Close(void);
@@ -24,8 +31,8 @@ public:
  
   virtual std::string GetFilename();
   virtual EnumResult_t SetFilename(std::string filename);
-  virtual int32_t GetFilemode();
-  virtual EnumResult_t SetFilemode(int32_t filemode);
+  virtual std::ios_base::openmode GetFilemode();
+  virtual EnumResult_t SetFilemode(std::ios_base::openmode filemode=std::ios::in);
 
   virtual size_t Pop(char_t& c,size_t size=1);  
   virtual size_t Pop(std::string& data);

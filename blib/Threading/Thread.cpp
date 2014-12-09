@@ -6,7 +6,11 @@ Thread::Thread(ThreadItem& item,bool destroyLockpad):ThreadSafe(item,destroyLock
 	if(lock->Lock()){
     killEnabled=false;                                  //at default no killing, because it's not recommended
     killTimeout=KILL_TIMEOUT;                               
+#ifdef LINUX
+		threadHandle=0;                                      
+#else
     threadHandle=NULL;                                      
+#endif
     threadId=0;
     threadId=0;
     running=false;    
@@ -22,8 +26,12 @@ Thread::Thread(ThreadLock& lock):ThreadSafe(lock){
 	if(lock.Lock()){
     killEnabled=false;                                  //at default no killing, because it's not recommended
     killTimeout=KILL_TIMEOUT;                               
-    threadHandle=NULL;                                      
-    threadId=0;
+#ifdef LINUX		
+    threadHandle=0;                                      
+#else
+		threadHandle=NULL;                                      
+#endif
+    threadId=0;		
     threadId=0;
     running=false;    
     runDelay=RUN_DELAY;
@@ -225,7 +233,7 @@ bool Thread::IsAlive(void){
   DWORD exitCode=0;
   #ifdef LINUX
   exitCode=~0;
-  if(!threadHandle==0)                                    //if we've got a thread
+  if(!(threadHandle==0))                                    //if we've got a thread
     exitCode=pthread_kill(threadHandle,0);                
   result=(exitCode==0);                                   //if active, alive, otherwise, not
   #else
@@ -240,9 +248,10 @@ EnumResult_t Thread::Start(void){
   EnumResult_t result=FAIL;
   if(!IsAlive()){      
 #ifdef LINUX
-    pthread_create(&threadHandle,NULL,ThreadEntry,(void*)this);     
-    if(threadHandle!=0)                                   //if we've created a thread,
+    if(pthread_create(&threadHandle,NULL,ThreadEntry,(void*)this)==0)
       result=SUCCESS;                                     //result is a success
+	  else
+		  threadHandle=0;
 #else
     threadHandle=CreateThread(NULL,0,Thread::Entrypoint,this,0,&threadId); 
     if(threadHandle!=NULL)
@@ -257,7 +266,7 @@ EnumResult_t Thread::Stop(void){
   EnumResult_t result=FAIL; 
 #ifdef LINUX
   threadId_t currentThreadId=pthread_self();
-  if(currentThreadId==threadId){                          //are we committing suicide?
+  if(pthread_equal(currentThreadId,threadId)){                          //are we committing suicide?
     running=false;                                       //if so, stop and result eq success
     result=SUCCESS;
   }else{
@@ -292,15 +301,17 @@ EnumResult_t Thread::Stop(void){
 }
 
 EnumResult_t Thread::Kill(void){
-  EnumResult_t result=FAIL;
-  DWORD exitCode=0;
-#ifdef LINUX  
-  if(pthread_kill(threadHandle,SIGKILL)==0)    
-    result=SUCCESS;            
-#else
-  if(TerminateThread(threadHandle,exitCode))
-    result=SUCCESS;      
+  EnumResult_t result=FAIL;  
+	if(IsAlive()){
+#ifdef LINUX    
+    if(pthread_kill(threadHandle,SIGKILL)==0)    
+      result=SUCCESS;   
+#else    
+    DWORD exitCode=0;
+    if(TerminateThread(threadHandle,exitCode))
+      result=SUCCESS;      
 #endif
+  }
   return result;
 }
 

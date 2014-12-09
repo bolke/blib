@@ -1,18 +1,30 @@
 #ifndef BLIB_SOCKET_H
 #define BLIB_SOCKET_H
 
+#ifdef LINUX
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <sys/ioctl.h>
+#include <cstring>
+#define INVALID_SOCKET -1
+#define SOCKET_ERROR -1
+#else
 #include <winsock.h>
+#endif
+
 #include "Core.h"
 
 namespace blib{
 
 class Socket:public Device{
 protected:
-  bool blocking;														//blocking read/write/accept etc
-  uint32_t socketHandle;										//handle to the socket
-  struct sockaddr_in targetAddress;					//address in sockaddr_in form
-  in_addr targetIp;													//address to connect to
-  uint16_t targetPort;											//port to connecto to
+  bool blocking;                            //blocking read/write/accept etc
+  uint32_t socketHandle;                    //handle to the socket
+  struct sockaddr_in targetAddress;         //address in sockaddr_in form
+  in_addr targetIp;                         //address to connect to
+  uint16_t targetPort;                      //port to connecto to
   virtual EnumResult_t CreateSocket(uint32_t& socketHandle,int32_t af=AF_INET,int32_t type=SOCK_STREAM,int32_t protocol=IPPROTO_TCP);  
   virtual EnumResult_t CreateSocket(int32_t af=AF_INET,int32_t type=SOCK_STREAM,int32_t protocol=IPPROTO_TCP);  
 public:
@@ -20,7 +32,7 @@ public:
   ~Socket(); 
  
   virtual bool IsOpen();
-  virtual size_t Size();										//returns max buffer size, but actual size is unknown 
+  virtual size_t Size();                    //returns max buffer size, but actual size is unknown 
   virtual EnumResult_t Open();
   virtual EnumResult_t Close();
 
@@ -30,11 +42,11 @@ public:
   virtual size_t Push(const char_t &c,size_t size=1)=0;  
   virtual size_t Push(const std::string& data);
 
-  virtual EnumResult_t Bind(std::string targetIp="",uint16_t targetPort=0);	//bind socket to given address, or preset address
+  virtual EnumResult_t Bind(std::string targetIp="",uint16_t targetPort=0);  //bind socket to given address, or preset address
 
   virtual bool HasSocket();
   virtual bool HasTarget();
-  virtual bool IsConnected();							  //similair to isopen
+  virtual bool IsConnected();               //similair to isopen
   virtual bool IsBlocking();
   virtual EnumResult_t SetBlocking(bool blocking,uint32_t socketHandle=INVALID_SOCKET);
 
@@ -44,8 +56,8 @@ public:
   virtual EnumResult_t SetTarget(uint16_t targetPort);
   virtual EnumResult_t SetTarget(std::string targetIp,uint16_t targetPort=0);  
 
-	virtual std::string GetTargetIp();
-	virtual uint16_t GetTargetPort();
+  virtual std::string GetTargetIp();
+  virtual uint16_t GetTargetPort();
 
   virtual EnumResult_t SetTargetAddress(const struct sockaddr_in& targetAddress);
 };

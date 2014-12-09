@@ -2,6 +2,11 @@
 #define BLIB_H
 
 #include "Core.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+#ifdef WINDOWS
+#include "Core.h"
 #include "Messages.h"
 #include "Serial.h"
 #include "FileIO.h"
@@ -9,11 +14,13 @@
 #include "Security.h"
 #include "Sql.h"                    //uses sqlite, public domain
 #include "WebServing.h"             //uses mongoose lib,MIT licensed version, pre licence change
+#elif defined LINUX
+#include "BlibHeaders.h"
+#else
+#error NO VALID OPERATING SYSTEM SELECTED
+#endif
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#define BLIB_VERSION "1.1.17.10.2014"
+#define BLIB_VERSION "1.5.05.11.2014"
 #define BLIB_CORE "x86 device"
 
 #if defined(WINDOWS)

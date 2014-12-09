@@ -41,7 +41,7 @@ public:
 				stream.seekg(0,stream.end);
 				size=stream.tellg();
 				if((size>0)&&(size!=-1)){
-					stream.seekg(0,pos);                  
+					stream.seekg(pos);                  
 					size=size-pos;
 					if(size>0){
 						data=new char_t[size];

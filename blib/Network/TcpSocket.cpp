@@ -19,16 +19,16 @@ TcpSocket::TcpSocket(std::string ip,uint16_t port){
 }
 
 EnumResult_t TcpSocket::Open(){  
-	EnumResult_t result=FAIL;
-	if(lock->Lock()){
-		if(HasTarget())
-			result=Connect();
-		else{
-			Listen();
-			result=Accept();
-		}
-		lock->Unlock();
-	}
+  EnumResult_t result=FAIL;
+  if(lock->Lock()){
+    if(HasTarget())
+      result=Connect();
+    else{
+      Listen();
+      result=Accept();
+    }
+    lock->Unlock();
+  }
   return result;
 }
 
@@ -40,10 +40,10 @@ size_t TcpSocket::Pop(char_t& c,size_t size){
   size_t result=0;
   if(lock->Lock()){
     if(HasSocket()){
-      result=recv(socketHandle,&c,size,0);			
-			if(result>size){				
+      result=recv(socketHandle,&c,size,0);      
+      if(result>size){        
         result=0;
-			}
+      }
     }
     lock->Unlock();
   }
@@ -59,10 +59,10 @@ size_t TcpSocket::Push(const char_t &c,size_t size){
   if(lock->Lock()){
     if(HasSocket()){      
       result=send(socketHandle,&c,size,0);
-			if(result>size){
-				Close();
+      if(result>size){
+        Close();
         result=0;
-			}
+      }
     }
     lock->Unlock();
   }
@@ -119,11 +119,15 @@ EnumResult_t TcpSocket::Listen(uint16_t targetPort){
       CreateSocket();
     if(HasSocket()){
       targetAddress.sin_family=AF_INET;
+#ifdef LINUX
+      targetAddress.sin_addr.s_addr=htonl(INADDR_ANY);
+#else
       targetAddress.sin_addr.S_un.S_addr=htonl(INADDR_ANY);
-			if(targetPort>0)
+#endif
+      if(targetPort>0)
         targetAddress.sin_port=htons(targetPort);
-			else
-				targetAddress.sin_port=this->targetPort;
+      else
+        targetAddress.sin_port=this->targetPort;
 
       if(bind(socketHandle,(struct sockaddr *) &targetAddress,sizeof(targetAddress))==0){      
         if(listen(socketHandle,SOMAXCONN)==0){         
@@ -142,29 +146,33 @@ EnumResult_t TcpSocket::Accept(TcpSocket& client){
     if(!HasSocket())
       CreateSocket();
     if(HasSocket()){
-			bool oldBlocking=blocking;			
-			this->SetBlocking(true);
+      bool oldBlocking=blocking;      
+      this->SetBlocking(true);
       struct sockaddr_in clientAddress;
+#ifdef LINUX
+      socklen_t addrSize=sizeof(clientAddress);
+#else
       int32_t addrSize=sizeof(clientAddress);
+#endif
       uint32_t clientSocket=accept(socketHandle,(struct sockaddr*) &clientAddress,&addrSize);
-			if(clientSocket!=INVALID_SOCKET){
-				if(clientSocket>=0){        
-					if(client.HasSocket())
-						client.Close();
-					client.SetSocketHandle(clientSocket);
-					client.SetTargetAddress(clientAddress);
-					client.SetBlocking(oldBlocking);
-					result=SUCCESS;
-				}
-			}
-			if(!oldBlocking)
-				this->SetBlocking(false);
+      if(clientSocket!=INVALID_SOCKET){
+        if(clientSocket>=0){        
+          if(client.HasSocket())
+            client.Close();
+          client.SetSocketHandle(clientSocket);
+          client.SetTargetAddress(clientAddress);
+          client.SetBlocking(oldBlocking);
+          result=SUCCESS;
+        }
+      }
+      if(!oldBlocking)
+        this->SetBlocking(false);
     }
     lock->Unlock();
   }
   return result;
 }
 
-EnumResult_t TcpSocket::Accept(){	
+EnumResult_t TcpSocket::Accept(){  
   return Accept(*this);
 }

@@ -28,7 +28,7 @@ EnumResult_t SaveFile::SetFilename(std::string filename){
 	return result;
 }
 
-EnumResult_t SaveFile::SetFilemode(int32_t filemode){
+EnumResult_t SaveFile::SetFilemode(std::ios_base::openmode filemode){
   EnumResult_t result=FAIL;
 	if((filemode&std::ios::out)==std::ios::out)
 		result=FileInterface::SetFilemode(filemode);

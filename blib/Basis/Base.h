@@ -5,8 +5,8 @@
 
 namespace blib{
 
-class Base{																										
-protected:																										
+class Base{
+protected:
 public:
   BLIB_LIB_API virtual ~Base();	
 };

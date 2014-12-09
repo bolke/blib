@@ -1,4 +1,5 @@
 #include "AESDevice.h"
+#include <cstring>
 
 using namespace blib;
 
@@ -416,9 +417,9 @@ size_t AESDevice::Pop(char_t& c,size_t size){
 			size_t blockCnt=size/16;				
 			if(size>0){		  						
 				while(i<blockCnt){
-					memcpy(in,aesData+i*16,16);
+					std::memcpy(in,aesData+i*16,16);
 					InvCipher();
-					memcpy(&c+i*16,out,16);
+					std::memcpy(&c+i*16,out,16);
 					i++;
 				}			
 				result=size;
@@ -445,9 +446,9 @@ size_t AESDevice::Push(const char_t &c,size_t size){
 			if(size>0){
 				char_t* aesData=new char_t[size];			
 				while(i<blockCnt){
-					memcpy(in,&c+i*16,16);
+					std::memcpy(in,&c+i*16,16);
 					Cipher();
-					memcpy(aesData+i*16,out,16);
+					std::memcpy(aesData+i*16,out,16);
 					i++;
 				}			
 				result=device->Push(*aesData,size);

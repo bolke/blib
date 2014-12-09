@@ -7,15 +7,33 @@
 
 #include "Core.h"
 
+#ifdef WINDOWS
 #include <windows.h>
+#elif defined(LINUX)
+#include <termios.h>
+#include <sys/ioctl.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <limits.h>
+#else
+#error unknown operating system
+#endif
 
 namespace blib{
 
 class SerialPort: public Device,public Base{
-protected:    
+protected:
+#ifdef WINDOWS
   HANDLE hComm;
   DCB dcb;
   _COMMTIMEOUTS timeouts;
+#elif defined(LINUX)
+  int32_t hComm;
+  struct termios oldSettings;
+  struct termios newSettings;  
+#endif
   std::string port;        
   int32_t baud;
   int32_t stop;

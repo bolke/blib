@@ -10,11 +10,11 @@ EnumResult_t Socket::CreateSocket(uint32_t& socketHandle,int32_t af,int32_t type
   EnumResult_t result=FAIL;
   if(lock->Lock()){
     socketHandle=(uint32_t)socket(af,type,protocol);
-		if(socketHandle!=INVALID_SOCKET){
-			SetBlocking(blocking,socketHandle);
+    if(socketHandle!=INVALID_SOCKET){
+      SetBlocking(blocking,socketHandle);
       result=SUCCESS;
-		}
-		lock->Unlock();
+    }
+    lock->Unlock();
   }
   return result;
 }
@@ -22,7 +22,7 @@ EnumResult_t Socket::CreateSocket(uint32_t& socketHandle,int32_t af,int32_t type
 Socket::Socket(){
   blocking=false;
   socketHandle=INVALID_SOCKET;
-  memset(&targetAddress,0,sizeof(targetAddress));   
+  std::memset(&targetAddress,0,sizeof(targetAddress));   
   targetPort=0;
   targetIp.s_addr=inet_addr("0.0.0.0");
 }
@@ -35,7 +35,7 @@ bool Socket::IsOpen(){
   bool result=false;
   if(lock->Lock()){
     result=HasSocket()&&HasTarget();
-		isOpen=result;
+    isOpen=result;
     lock->Unlock();
   }
   return result;
@@ -64,7 +64,11 @@ EnumResult_t Socket::Close(){
   EnumResult_t result=FAIL;
   if(lock->Lock()){
     if(HasSocket()){
+#ifdef LINUX
+      if(close(socketHandle)==0){
+#else
       if(closesocket(socketHandle)==0){
+#endif
         socketHandle=INVALID_SOCKET;
         result=SUCCESS;    
       }
@@ -90,7 +94,11 @@ bool Socket::HasSocket(){
 bool Socket::HasTarget(){
   bool result=false;
   if(lock->Lock()){
+#ifdef LINUX
+    result=((targetAddress.sin_port>0)&&(targetAddress.sin_addr.s_addr>0)&&(targetAddress.sin_family!=0));
+#else
     result=((targetAddress.sin_port>0)&&(targetAddress.sin_addr.S_un.S_addr>0)&&(targetAddress.sin_family!=0));
+#endif
     lock->Unlock();
   }
   return result;
@@ -105,14 +113,18 @@ bool Socket::IsBlocking(){
 }
 
 EnumResult_t Socket::SetBlocking(bool blocking,uint32_t socketHandle){
-  EnumResult_t result=FAIL;	
-  if(lock->Lock()){		
+  EnumResult_t result=FAIL;  
+  if(lock->Lock()){    
     this->blocking=blocking;
-		if(socketHandle==INVALID_SOCKET)
-			socketHandle=this->socketHandle;
-		if(socketHandle!=INVALID_SOCKET){
+    if(socketHandle==INVALID_SOCKET)
+      socketHandle=this->socketHandle;
+    if(socketHandle!=INVALID_SOCKET){
       ulong_t value=blocking?0:1;
+#ifdef LINUX
+      if(ioctl(socketHandle,FIONBIO,&value)==0)
+#else
       if(ioctlsocket(socketHandle,FIONBIO,&value)==0)
+#endif
         result=SUCCESS;
     }
     lock->Unlock();
@@ -135,26 +147,26 @@ EnumResult_t Socket::SetSocketHandle(uint32_t socketHandle){
 }
 
 std::string Socket::GetTargetIp(){
-	std::string result="";
-	if(lock->Lock()){
-		result=inet_ntoa(targetAddress.sin_addr);
-	  lock->Unlock();
-	}
-	return result;
+  std::string result="";
+  if(lock->Lock()){
+    result=inet_ntoa(targetAddress.sin_addr);
+    lock->Unlock();
+  }
+  return result;
 }
 
 uint16_t Socket::GetTargetPort(){
-	uint16_t result=0;
-	if(lock->Lock()){
-		result=ntohs(targetAddress.sin_port);
-		lock->Unlock();
-	}
-	return result;
+  uint16_t result=0;
+  if(lock->Lock()){
+    result=ntohs(targetAddress.sin_port);
+    lock->Unlock();
+  }
+  return result;
 }
 
 EnumResult_t Socket::Bind(std::string targetIp,uint16_t targetPort){
   EnumResult_t result=FAIL;
-	if(lock->Lock()){
+  if(lock->Lock()){
     if(!HasSocket())
       CreateSocket();
     if(HasSocket()){      
@@ -181,9 +193,13 @@ EnumResult_t Socket::SetTarget(std::string targetIp,uint16_t targetPort){
       this->targetPort=htons(targetPort);    
 
     if((this->targetPort>0)&&(this->targetIp.s_addr>0)){
-      memset(&targetAddress,0,sizeof(targetAddress));
+      std::memset(&targetAddress,0,sizeof(targetAddress));
       targetAddress.sin_family=AF_INET;
+#ifdef LINUX
+      targetAddress.sin_addr.s_addr=this->targetIp.s_addr;
+#else
       targetAddress.sin_addr.S_un.S_addr=this->targetIp.s_addr;
+#endif
       targetAddress.sin_port=this->targetPort;
       result=SUCCESS;
     }
@@ -196,7 +212,7 @@ EnumResult_t Socket::SetTarget(std::string targetIp,uint16_t targetPort){
 EnumResult_t Socket::SetTargetAddress(const struct sockaddr_in& targetAddress){
   EnumResult_t result=FAIL;
   if(lock->Lock()){
-    memcpy(&this->targetAddress,&targetAddress,sizeof(this->targetAddress));
+    std::memcpy(&this->targetAddress,&targetAddress,sizeof(this->targetAddress));
     result=SUCCESS;
     lock->Unlock();
   }
