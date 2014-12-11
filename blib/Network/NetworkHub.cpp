@@ -1,20 +1,15 @@
-#include "NetworkHub.h"
+#include "Network.h"
 
 using namespace blib;
 
-NetworkHub::NetworkHub(){
-  port=0;
+NetworkHub::NetworkHub(uint16_t port){
+  this->port=port;
   clientSocket=NULL;
   broadcastSocket=NULL;
   serverSocket=NULL;
   killClientsOnClose=true;
   broadcastMessage="";
-
-  broadcastThread.SetRunDelay(1000);
-  broadcastThread.SetSetupCallback(new Callback0<void,NetworkHub>(this,&NetworkHub::BroadcastSetup));
-  broadcastThread.SetRunCallback(new Callback0<void,NetworkHub>(this,&NetworkHub::BroadcastRun));
-  broadcastThread.SetCleanupCallback(new Callback0<void,NetworkHub>(this,&NetworkHub::BroadcastCleanup));
-
+  
   serverThread.SetRunDelay(50);
   serverThread.SetSetupCallback(new Callback0<void,NetworkHub>(this,&NetworkHub::ServerSetup));
   serverThread.SetRunCallback(new Callback0<void,NetworkHub>(this,&NetworkHub::ServerRun));
@@ -27,8 +22,7 @@ void NetworkHub::BroadcastSetup(){
   InitNetwork();
   GetIpAddress(address);
   broadcastAddress=StringParser::BeforeLast(address,".");
-  broadcastAddress=StringParser::Append(broadcastAddress,".255");
-
+  broadcastAddress=StringParser::Append(broadcastAddress,".255");	
   if(broadcastMessage.size()==0)
     broadcastMessage=StringParser::ToString("#@[%s][%u]$#",address.c_str(),port);
   broadcastSocket=new MultiSocket(broadcastAddress,port);
@@ -81,29 +75,6 @@ void NetworkHub::ServerCleanup(){
   }
 }
 
-uint16_t NetworkHub::GetPort(){
-  uint16_t result=0;
-  if(lock->Lock()){
-    result=port;
-    lock->Unlock();
-  }
-  return result;
-}
-
-EnumResult_t NetworkHub::SetPort(const uint16_t port){
-  EnumResult_t result=FAIL;
-  if(port>0){
-    if(lock->Lock()){
-      if(!IsOpen()){
-        this->port=port;
-        result=SUCCESS;
-      }
-      lock->Unlock();
-    }
-  }
-  return result;
-}
-
 bool NetworkHub::IsOpen(){
   bool result=false;
   if(lock->Lock()){
@@ -118,7 +89,7 @@ EnumResult_t NetworkHub::Open(){
   if(lock->Lock()){
     if(IsOpen())
       Close();
-    broadcastThread.Start();
+		StartBroadcastThread();    
     serverThread.Start();
     isOpen=true;
     result=SUCCESS;
@@ -130,7 +101,7 @@ EnumResult_t NetworkHub::Open(){
 EnumResult_t NetworkHub::Close(){
   EnumResult_t result=FAIL;
   if(lock->Lock()){
-    broadcastThread.Stop();
+    StopBroadcastThread();
     isOpen=false;
     serverThread.Stop();
     lock->Unlock();
@@ -220,15 +191,6 @@ size_t NetworkHub::GetNrOfClients(){
   return result;
 }
 
-std::string NetworkHub::GetBroadcastMessage(){
-  std::string result="";
-  if(lock->Lock()){
-    result=broadcastMessage;
-    lock->Unlock();
-  }
-  return result;
-}
-
 size_t NetworkHub::ClearClosedClients(){
   size_t result=0;
   if(lock->Lock()){
@@ -270,12 +232,18 @@ size_t NetworkHub::ClearClosedClients(){
   return result;
 }
 
-EnumResult_t NetworkHub::SetBroadcastMessage(const std::string value){
-  EnumResult_t result=FAIL;
-  if(lock->Lock()){
-    broadcastMessage=value;
-    result=SUCCESS;
-    lock->Unlock();
-  }
-  return result;
+EnumResult_t NetworkHub::StartBroadcastThread(){
+	EnumResult_t result=FAIL;
+	if(lock->Lock()){
+		if(!broadcastThread.IsAlive()){
+			broadcastThread.ClearCallbacks();
+			broadcastThread.SetRunDelay(500);		
+			broadcastThread.SetSetupCallback(new Callback0<void,NetworkHub>(this,&NetworkHub::BroadcastSetup));
+			broadcastThread.SetRunCallback(new Callback0<void,NetworkHub>(this,&NetworkHub::BroadcastRun));
+			broadcastThread.SetCleanupCallback(new Callback0<void,NetworkHub>(this,&NetworkHub::BroadcastCleanup));
+			result=broadcastThread.Start();
+		}
+		lock->Unlock();
+	}
+	return result;
 }

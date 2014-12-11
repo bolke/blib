@@ -1,32 +1,26 @@
 #ifndef BLIB_NETWORKHUB_H
 #define BLIB_NETWORKHUB_H
 
-#include "Network.h"
+#include "NetworkClient.h"
 #include "Core.h"
 
 namespace blib{
 
-class NetworkHub:public Device{
-protected:
-  uint16_t port;
-  Thread broadcastThread;
-  Thread serverThread;
-  TcpSocket* clientSocket;
-  MultiSocket* broadcastSocket;
-  TcpSocket* serverSocket;
-  std::vector<TcpSocket*> clients;
-  std::string broadcastMessage;
+class NetworkHub:public NetworkClient{
+protected:	
+  Thread serverThread;																							
+  TcpSocket* serverSocket;																					
+  std::vector<TcpSocket*> clients;																	
+  std::string broadcastMessage;																				
   bool killClientsOnClose;
-  void BroadcastSetup();
-  void BroadcastRun();
-  void BroadcastCleanup();
-  void ServerSetup();
-  void ServerRun();
-  void ServerCleanup();
+  virtual void BroadcastSetup();
+  virtual void BroadcastRun();
+  virtual void BroadcastCleanup();
+  virtual void ServerSetup();
+  virtual void ServerRun();
+  virtual void ServerCleanup();
 public:
-  NetworkHub();
-  uint16_t GetPort();
-  EnumResult_t SetPort(const uint16_t port);
+  NetworkHub(uint16_t port=0);
   virtual EnumResult_t Open();
   virtual EnumResult_t Close();
   virtual size_t Size();
@@ -41,8 +35,7 @@ public:
   TcpSocket* PopClient(const uint32_t id);
   size_t ClearClosedClients();
   size_t GetNrOfClients();
-  std::string GetBroadcastMessage();
-  EnumResult_t SetBroadcastMessage(const std::string value);
+	virtual EnumResult_t StartBroadcastThread();
 };
 
 };
