@@ -130,6 +130,9 @@ void NetworkClient::BroadcastRun(){
 		}
 	}
 	if(clientSocket!=NULL){
+		if(!clientSocket->IsOpen()){
+		  clientSocket->Connect();
+		}
 	}
 }
 
