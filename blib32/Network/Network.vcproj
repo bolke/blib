@@ -163,6 +163,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\blib\Network\NetworkClient.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\blib\Network\NetworkHub.cpp"
 				>
 			</File>
@@ -190,6 +194,10 @@
 			</File>
 			<File
 				RelativePath="..\..\blib\Network\Network.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\blib\Network\NetworkClient.h"
 				>
 			</File>
 			<File

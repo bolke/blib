@@ -7,6 +7,7 @@
 #include "TcpSocket.h"
 #include "UdpSocket.h"
 #include "MultiSocket.h"
+#include "NetworkClient.h"
 #include "NetworkHub.h"
 
 namespace blib{
