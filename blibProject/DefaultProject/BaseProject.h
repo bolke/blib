@@ -45,33 +45,33 @@ protected:
 
 	std::map<std::string,CallbackTemp*> argumentFunctions;
 
-  virtual void PrintHelp();																//default -h function, prints help
-	virtual void PrintVersion();														//default -v function, prints version
-	virtual void PrintLicense();														//default -l function, prints license
+  virtual void PrintHelp();																            //default -h function, prints help
+	virtual void PrintVersion();														            //default -v function, prints version
+	virtual void PrintLicense();														            //default -l function, prints license
 
-	virtual void InputThreadSetup();												//setup callback within thread input
-	virtual void OutputThreadSetup();												//setup callback within thread output
-	virtual void InputThreadRun();													//run callback for thread input
-	virtual void OutputThreadRun();													//run callback for thread output
+	virtual void InputThreadSetup();												            //setup callback within thread input
+	virtual void OutputThreadSetup();												            //setup callback within thread output
+	virtual void InputThreadRun();													            //run callback for thread input
+	virtual void OutputThreadRun();													            //run callback for thread output
 
-	virtual EnumResult_t StartInputThread();											//sets callbacks for input thread and starts it
-	virtual EnumResult_t StartOutputThread();										//sets callbacks for output thread and starts it
+	virtual EnumResult_t StartInputThread();											      //sets callbacks for input thread and starts it
+	virtual EnumResult_t StartOutputThread();										        //sets callbacks for output thread and starts it
 
 	virtual FileInterface* GetFileFromArguments(std::vector<std::string>& args);	//returns a fileinterface based upon arguments, device is not openend
 	virtual Socket* GetSocketFromArguments(std::vector<std::string>& args);				//returns a socketinterface based upon arguments, device is not opened
 	virtual SerialPort* GetSerialFromArguments(std::vector<std::string>& args);		//returns a serialports based upon arguments, device is not opened
 
-	virtual void OutputToFile(std::vector<std::string>& args);			//set outputDevice to fileinterface according to arguments
-	virtual void OutputToEthernet(std::vector<std::string>& args);	//set outputDevice to socket according to arguments
-	virtual void OutputToSerial(std::vector<std::string>& args);		//set outputDevice to serial according to arguments
-	virtual void OutputFromArgument(std::string arguments);					//set outputDevice to device according to arguments
-  virtual void InputFromFile(std::vector<std::string>& args);			//set inputDevice to fileinterface according to arguments
-	virtual void InputFromEthernet(std::vector<std::string>& args);	//set inputDevice to socket according to arguments
-	virtual void InputFromSerial(std::vector<std::string>& args);		//set inputDevice to serial according to arguments
-	virtual void InputFromArgument(std::string arguments);					//set inputDevice to device according to arguments
+	virtual void OutputToFile(std::vector<std::string>& args);			    //set outputDevice to fileinterface according to arguments
+	virtual void OutputToEthernet(std::vector<std::string>& args);	    //set outputDevice to socket according to arguments
+	virtual void OutputToSerial(std::vector<std::string>& args);		    //set outputDevice to serial according to arguments
+	virtual void OutputFromArgument(std::string arguments);					    //set outputDevice to device according to arguments
+  virtual void InputFromFile(std::vector<std::string>& args);			    //set inputDevice to fileinterface according to arguments
+	virtual void InputFromEthernet(std::vector<std::string>& args);	    //set inputDevice to socket according to arguments
+	virtual void InputFromSerial(std::vector<std::string>& args);		    //set inputDevice to serial according to arguments
+	virtual void InputFromArgument(std::string arguments);					    //set inputDevice to device according to arguments
 
 	virtual void InitArguments();																		    //initialize arguments handling
-	virtual EnumResult_t ParseArguments(std::vector<std::string> lines);	//handle arguments in listed string form
+	virtual EnumResult_t ParseArguments(std::vector<std::string> lines);//handle arguments in listed string form
 	virtual EnumResult_t ParseArguments(size_t length,char_t* arg[]);		//handle arguments
 	virtual EnumResult_t CleanupArgumentFunctions();									  //cleanup function callbacks 
 public:		
@@ -86,7 +86,7 @@ public:
   virtual size_t Pop(char_t& c,size_t size=1);						            //pop data from cin
   virtual size_t Pop(std::string& data);									
   virtual size_t Push(const char_t &c,size_t size=1);			            //push data into cout
-  virtual size_t Push(const std::string& data);                   
+  virtual size_t Push(const std::string& data);                       
 
 	virtual EnumResult_t Run();																	        //main of project	
 };

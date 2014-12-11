@@ -7,10 +7,10 @@
 namespace blib{
 
 class NetworkHub:public Device{
-protected:  
+protected:
   uint16_t port;
   Thread broadcastThread;
-  Thread serverThread;    
+  Thread serverThread;
   TcpSocket* clientSocket;
   MultiSocket* broadcastSocket;
   TcpSocket* serverSocket;
@@ -26,7 +26,7 @@ protected:
 public:
   NetworkHub();
   uint16_t GetPort();
-  EnumResult_t SetPort(const uint16_t port);  
+  EnumResult_t SetPort(const uint16_t port);
   virtual EnumResult_t Open();
   virtual EnumResult_t Close();
   virtual size_t Size();
@@ -34,9 +34,13 @@ public:
   virtual size_t Pop(char_t& c,size_t size=1);
   virtual size_t Push(const std::string& data);
   virtual size_t Push(const char_t &c,size_t size=1);
+  virtual bool IsOpen();
   bool GetKillClientsOnClose();
   EnumResult_t SetKillClientsOnClose(const bool value);
-  std::vector<TcpSocket*>& GetClients();
+  TcpSocket* GetClient(const uint32_t id);
+  TcpSocket* PopClient(const uint32_t id);
+  size_t ClearClosedClients();
+  size_t GetNrOfClients();
   std::string GetBroadcastMessage();
   EnumResult_t SetBroadcastMessage(const std::string value);
 };

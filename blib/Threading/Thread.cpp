@@ -3,11 +3,11 @@
 using namespace blib;
 
 Thread::Thread(ThreadItem& item,bool destroyLockpad):ThreadSafe(item,destroyLockpad){
-	if(lock->Lock()){
+  if(lock->Lock()){
     killEnabled=false;                                  //at default no killing, because it's not recommended
     killTimeout=KILL_TIMEOUT;                               
 #ifdef LINUX
-		threadHandle=0;                                      
+    threadHandle=0;                                      
 #else
     threadHandle=NULL;                                      
 #endif
@@ -18,27 +18,27 @@ Thread::Thread(ThreadItem& item,bool destroyLockpad):ThreadSafe(item,destroyLock
     setupCallback=NULL;
     runCallback=NULL;
     cleanupCallback=NULL;
-		lock->Unlock();
+    lock->Unlock();
   }
 }
 
 Thread::Thread(ThreadLock& lock):ThreadSafe(lock){
-	if(lock.Lock()){
+  if(lock.Lock()){
     killEnabled=false;                                  //at default no killing, because it's not recommended
     killTimeout=KILL_TIMEOUT;                               
-#ifdef LINUX		
+#ifdef LINUX    
     threadHandle=0;                                      
 #else
-		threadHandle=NULL;                                      
+    threadHandle=NULL;                                      
 #endif
-    threadId=0;		
+    threadId=0;    
     threadId=0;
     running=false;    
     runDelay=RUN_DELAY;
     setupCallback=NULL;
     runCallback=NULL;
     cleanupCallback=NULL;
-		lock.Unlock();
+    lock.Unlock();
   }
 }
 
@@ -55,7 +55,7 @@ Thread::~Thread(void){
 void Thread::Setup(void){
   running=true;    
   if(setupCallback!=NULL)
-    setupCallback->Callback();				                           
+    setupCallback->Callback();
 }
 
 void Thread::Run(void){
@@ -70,7 +70,7 @@ void Thread::Run(void){
 
 void Thread::Cleanup(void){
   if(cleanupCallback!=NULL)
-		cleanupCallback->Callback();
+    cleanupCallback->Callback();
 }
 
 EnumResult_t Thread::SetKillEnabled(bool value){
@@ -112,17 +112,17 @@ EnumResult_t Thread::SetKillTimeout(uint64_t killTimeout){
 }
 
 bool Thread::GetRunning(){
-	return running;
+  return running;
 }
 
 EnumResult_t Thread::SetRunning(bool running){
-	EnumResult_t result=FAIL;
-	if(lock->Lock()){
-		this->running=running;
-		result=SUCCESS;
-	  lock->Unlock();
-	}
-	return result;
+  EnumResult_t result=FAIL;
+  if(lock->Lock()){
+    this->running=running;
+    result=SUCCESS;
+    lock->Unlock();
+  }
+  return result;
 }
 
 EnumResult_t Thread::SetSetupCallback(CallbackTemp* callback){
@@ -183,19 +183,19 @@ uint64_t Thread::GetRunDelay(){
 void* Thread::ThreadEntry(void* args){  
   Thread *thread=(Thread *)args;                          //function called when a new thread is started, actual thread is given as argument          
   thread->Setup();                                        //setup the thread, inherited function
-	thread->Run();                                          //run thread, also virtual
-	thread->Cleanup();                                      //cleanup, also within the cleanup thread  
-	return 0;                                               //thread return value, default 0
+  thread->Run();                                          //run thread, also virtual
+  thread->Cleanup();                                      //cleanup, also within the cleanup thread  
+  return 0;                                               //thread return value, default 0
 }
 #else
 DWORD WINAPI Thread::Entrypoint(LPVOID args){
-	if(args!=NULL){
-		Thread *thread=(Thread *)args;                          //function called when a new thread is started, actual thread is given as argument  
-		thread->Setup();                                        
-		thread->Run();
-		thread->Cleanup();		
-	}
-	return 0;
+  if(args!=NULL){
+    Thread *thread=(Thread *)args;                          //function called when a new thread is started, actual thread is given as argument  
+    thread->Setup();                                        
+    thread->Run();
+    thread->Cleanup();    
+  }
+  return 0;
 }
 #endif
 
@@ -250,8 +250,8 @@ EnumResult_t Thread::Start(void){
 #ifdef LINUX
     if(pthread_create(&threadHandle,NULL,ThreadEntry,(void*)this)==0)
       result=SUCCESS;                                     //result is a success
-	  else
-		  threadHandle=0;
+    else
+      threadHandle=0;
 #else
     threadHandle=CreateThread(NULL,0,Thread::Entrypoint,this,0,&threadId); 
     if(threadHandle!=NULL)
@@ -302,7 +302,7 @@ EnumResult_t Thread::Stop(void){
 
 EnumResult_t Thread::Kill(void){
   EnumResult_t result=FAIL;  
-	if(IsAlive()){
+  if(IsAlive()){
 #ifdef LINUX    
     if(pthread_kill(threadHandle,SIGKILL)==0)    
       result=SUCCESS;   
@@ -317,20 +317,20 @@ EnumResult_t Thread::Kill(void){
 
 EnumResult_t Thread::ClearCallbacks(){
   EnumResult_t result=FAIL;
-	if(lock->Lock()){
-		if(!IsAlive()){
-			if(setupCallback!=NULL)
-				delete setupCallback;
-			if(runCallback!=NULL)
-				delete runCallback;
-			if(cleanupCallback!=NULL)
-				delete cleanupCallback;
-			setupCallback=NULL;
-			runCallback=NULL;
-			cleanupCallback=NULL;
-			result=SUCCESS;
-		}
-		lock->Unlock();
-	}
-	return result;
+  if(lock->Lock()){
+    if(!IsAlive()){
+      if(setupCallback!=NULL)
+        delete setupCallback;
+      if(runCallback!=NULL)
+        delete runCallback;
+      if(cleanupCallback!=NULL)
+        delete cleanupCallback;
+      setupCallback=NULL;
+      runCallback=NULL;
+      cleanupCallback=NULL;
+      result=SUCCESS;
+    }
+    lock->Unlock();
+  }
+  return result;
 }

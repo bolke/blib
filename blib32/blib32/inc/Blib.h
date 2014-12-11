@@ -20,7 +20,7 @@
 #error NO VALID OPERATING SYSTEM SELECTED
 #endif
 
-#define BLIB_VERSION "1.1.09.12.2014"
+#define BLIB_VERSION "1.1.11.12.2014"
 #define BLIB_CORE "x86 device"
 
 #if defined(WINDOWS)

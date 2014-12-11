@@ -24,7 +24,7 @@ uint64_t blib::GetRunTimeMs(){
 #elif LINUX
   struct timespec ts;
   if(clock_gettime(CLOCK_MONOTONIC,&ts)==0)
-    result=(ts.tv_sec*1000)+(ts.tv_nsec%1000000);  
+    result=(ts.tv_sec*1000)+(ts.tv_nsec/1000000);  
 #endif
   return result;
 }

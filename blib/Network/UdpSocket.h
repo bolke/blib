@@ -21,6 +21,9 @@ public:
   virtual size_t Push(const std::string& data);
 
 	virtual EnumResult_t SetBlocking(bool blocking,uint32_t socketHandle);
+	
+  virtual uint32_t GetSendSocketHandle();
+  virtual EnumResult_t SetSendSocketHandle(uint32_t socketHandle);  
 };
 
 };

@@ -1,5 +1,18 @@
 #include "MultiSocket.h"
 
+#ifdef LINUX
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <errno.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#endif
+
 using namespace blib;
 
 MultiSocket::MultiSocket(std::string ip,uint16_t port){      
@@ -34,9 +47,16 @@ EnumResult_t MultiSocket::Bind(std::string targetIp,uint16_t targetPort){
           int32_t value=1;
           mreq.imr_multiaddr.s_addr=inet_addr(targetIp.c_str());    
           mreq.imr_interface.s_addr=htonl(INADDR_ANY);    
-          if(setsockopt(socketHandle,IPPROTO_IP,IP_ADD_MEMBERSHIP,(const char *) &mreq,sizeof(struct ip_mreq))==SUCCESS)
-            if(setsockopt(socketHandle,IPPROTO_IP,SO_REUSEADDR,(const char *)&value,sizeof(value)==SUCCESS))
+#ifdef WINDOWS
+          if(setsockopt(socketHandle,IPPROTO_IP,IP_ADD_MEMBERSHIP,(const char *) &mreq,sizeof(struct ip_mreq))==0)
+#endif
+            if(setsockopt(socketHandle,IPPROTO_IP,SO_REUSEADDR,(const char *)&value,sizeof(value))==0){
+#ifdef LINUX
+              int32_t broadcast=1;
+              if(setsockopt(socketHandle,SOL_SOCKET,SO_BROADCAST,&broadcast,sizeof broadcast)==0)
+#endif
               result=SUCCESS;
+            }
         }
       }  
     }

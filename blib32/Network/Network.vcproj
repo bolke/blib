@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="Network"
 	ProjectGUID="{B7D4F495-5655-4EF4-B761-C4A747266806}"
 	RootNamespace="Network"
@@ -62,6 +62,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalDependencies="wsock32.lib iphlpapi.lib"
+				OutputFile="$(OutDir)\$(ProjectName).lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -81,7 +82,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)\build"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
 			CharacterSet="1"
@@ -125,6 +126,8 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				AdditionalDependencies="wsock32.lib iphlpapi.lib"
+				OutputFile="$(OutDir)\$(ProjectName).lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -160,6 +163,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\blib\Network\NetworkHub.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\blib\Network\Socket.cpp"
 				>
 			</File>
@@ -183,6 +190,10 @@
 			</File>
 			<File
 				RelativePath="..\..\blib\Network\Network.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\blib\Network\NetworkHub.h"
 				>
 			</File>
 			<File

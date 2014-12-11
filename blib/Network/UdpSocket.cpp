@@ -87,3 +87,23 @@ EnumResult_t UdpSocket::SetBlocking(bool blocking,uint32_t socketHandle){
   }
   return result;
 }
+
+uint32_t UdpSocket::GetSendSocketHandle(){
+  uint32_t result=0;
+	if(lock->Lock()){
+	  result=sendSocket;
+		lock->Unlock();
+  }
+	return result;
+}
+
+EnumResult_t UdpSocket::SetSendSocketHandle(uint32_t socketHandle){
+  EnumResult_t result=FAIL;
+	if(lock->Lock()){
+	  sendSocket=socketHandle;
+		result=SUCCESS;
+    lock->Unlock();
+  }
+	return result;
+}
+

@@ -57,8 +57,12 @@ size_t TcpSocket::Pop(std::string& data){
 size_t TcpSocket::Push(const char_t &c,size_t size){
   size_t result=0;
   if(lock->Lock()){
-    if(HasSocket()){      
+    if(HasSocket()){ 
+#ifdef WINDOWS    
       result=send(socketHandle,&c,size,0);
+#elif defined(LINUX)
+      result=send(socketHandle,&c,size,MSG_NOSIGNAL);
+#endif
       if(result>size){
         Close();
         result=0;
@@ -164,6 +168,11 @@ EnumResult_t TcpSocket::Accept(TcpSocket& client){
           client.SetBlocking(oldBlocking);
           result=SUCCESS;
         }
+        std::cout<<"arse\r\n";
+      }else{
+        std::cout<<strerror(errno)<<"\r\n";
+        std::cout<<"socket handle:"<<socketHandle<<"\r\n";
+        std::cout<<"client handle:"<<clientSocket<<"\r\n";
       }
       if(!oldBlocking)
         this->SetBlocking(false);

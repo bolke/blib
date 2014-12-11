@@ -17,7 +17,7 @@ ThreadItem::ThreadItem(size_t grabTimeout){
   pthread_mutexattr_settype(&mta, PTHREAD_MUTEX_RECURSIVE);
 
   pthread_mutex_init(&mutex, &mta);
-#else
+#elif defined(WINDOWS)
   mutex=CreateMutex(NULL,false,NULL);
 #endif
 }

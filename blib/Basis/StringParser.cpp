@@ -432,10 +432,7 @@ std::vector<std::string> StringParser::Split(const std::string line,const std::s
 }
 
 std::vector<std::string> StringParser::SplitLines(const std::string line,const bool keepEmpty){
-	std::string toSplit=Replace(Replace(line,"\r\n","\n"),"\r","");
-	if(keepEmpty)
-		toSplit=Replace(toSplit,"\n\n","\n \n");
-  return Split(toSplit,"\n");
+  return Split(Replace(Replace(line,"\r\n","\n"),"\r",""),"\n");
 }
 
 std::string StringParser::Compress(const std::string line){

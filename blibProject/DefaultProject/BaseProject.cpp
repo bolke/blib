@@ -299,12 +299,8 @@ void BaseProject::InputFromArgument(std::string arguments){
 void BaseProject::InitArguments(){
 	argumentFunctions["h"]=new Callback0<void,BaseProject>(this,&BaseProject::PrintHelp);
 	argumentFunctions["l"]=new Callback0<void,BaseProject>(this,&BaseProject::PrintLicense);
-#ifdef BLIB_INPUT_ENABLED
 	argumentFunctions["i"]=new Callback1<void,BaseProject,std::string>(this,&BaseProject::InputFromArgument,"");
-#endif
-#ifdef BLIB_OUTPUT_ENABLED
 	argumentFunctions["o"]=new Callback1<void,BaseProject,std::string>(this,&BaseProject::OutputFromArgument,"");	
-#endif
 	argumentFunctions["v"]=new Callback0<void,BaseProject>(this,&BaseProject::PrintVersion);	
 }
 
