@@ -20,10 +20,6 @@ Tokenizer::~Tokenizer(){
 	  delete tokens.back();
 		tokens.pop_back();
 	}
-	while(tokenDefs.size()>0){
-	  delete tokenDefs.back()
-		tokenDefs.pop_back();
-  }
 }
 
 EnumResult_t Tokenizer::InitRegex(){
@@ -91,7 +87,7 @@ size_t Tokenizer::Parse(std::string data){
   size_t result=0;
 	size_t position=0;
 
-	std::vector<std::string*>::iterator it=tokenDefs.begin();
+	std::vector<std::string>::iterator it=tokenDefs.begin();
   std::string regStr=GetRegex();
 
   std::tr1::regex reg(regStr.c_str());    
@@ -219,7 +215,7 @@ std::string Tokenizer::GetRegex(){
   std::string result="";  
   if(tokenDefs.size()>0){
 	  std::vector<std::string>::iterator it=tokenDefs.begin();  
-	  result=**it;
+	  result=*it;
     it++;
     while(it!=tokenDefs.end()){    
 		  result=sp.Append(result,sp.Append("|",*it));
