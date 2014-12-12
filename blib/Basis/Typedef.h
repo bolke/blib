@@ -203,7 +203,7 @@ BLIB_LIB_API EnumResult_t InitTypeMaps();
 };
 
 #ifdef DEBUG
-#define DBG_OUT(msg)  std::cout<<"Debug:"<<msg<<":"<<__LINE__<<":"<<__FILE<<std::endl; 
+#define DBG_OUT(msg)  std::cout<<"Debug:"<<msg<<":"<<__LINE__<<":"<<__FILE__<<std::endl; 
 #else
 #define DBG_OUT(msg)
 #endif
