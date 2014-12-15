@@ -3,12 +3,6 @@
 
 using namespace blib;
 
-CppToken::CppToken(const EnumToken_t id,const std::string content,const size_t position){
-  this->id=id;
-	this->content=content;
-	this->position=position;
-}
-
 Tokenizer::Tokenizer(){
 	regex="";
 	InitRegex();
@@ -98,19 +92,32 @@ size_t Tokenizer::Parse(std::string data){
     std::tr1::smatch match;
     std::string token=rit->str();            
     if(std::tr1::regex_match(token,match,reg)){
-      EnumToken_t tokenId=TOK_UNKNOWN;              
-      for(size_t f=1;f<match.size();f++){
-        if(match[f].length()>0){
-          tokenId=static_cast<EnumToken_t>(f);
-          break;
-        }
-      }          
+			EnumToken_t tokenId=TOK_UNKNOWN;              
+			if(std::find(toIgnore.begin(),toIgnore.end(),match[0])!=toIgnore.end())
+			  tokenId=TOK_IGNORE;
+			else{				
+				for(size_t f=1;f<match.size();f++){
+					if(match[f].length()>0){
+						tokenId=static_cast<EnumToken_t>(f);
+						break;
+					}
+				}
+			}
       tokens.push_back(new CppToken(tokenId,match[0]));
-
 			tokens.back()->position =position;
 			if(tokens.back()->id==TOK_NAME){
 				if(std::find(keywords.begin(),keywords.end(),tokens.back()->content)!=keywords.end())
 					tokens.back()->id=TOK_KEYWORD;
+				else if(std::find(conditionals.begin(),conditionals.end(),tokens.back()->content)!=conditionals.end())
+					tokens.back()->id=TOK_CONDITIONAL;
+				else if(std::find(rights.begin(),rights.end(),tokens.back()->content)!=rights.end())
+					tokens.back()->id=TOK_RIGHT;
+				else if(std::find(defDataTypes.begin(),defDataTypes.end(),tokens.back()->content)!=defDataTypes.end())
+					tokens.back()->id=TOK_DEFDATATYPE;
+				else if(std::find(dataTypes.begin(),dataTypes.end(),tokens.back()->content)!=dataTypes.end())
+					tokens.back()->id=TOK_DATATYPE;
+				else if(std::find(modDataTypes.begin(),modDataTypes.end(),tokens.back()->content)!=modDataTypes.end())
+					tokens.back()->id=TOK_MODDATATYPE;
 			}
 			position=position+match[0].length();
     }
@@ -121,21 +128,9 @@ size_t Tokenizer::Parse(std::string data){
 }
 
 size_t Tokenizer::InitKeywords(){  
-	keywords.push_back("if");	
-  keywords.push_back("while");	
-	keywords.push_back("for");
-	keywords.push_back("switch");
-  keywords.push_back("catch");	
-
   keywords.push_back("try");															
 	keywords.push_back("else");
 	keywords.push_back("do");	
-
-	keywords.push_back("enum");
-	keywords.push_back("struct");	
-	keywords.push_back("union");	
-	keywords.push_back("class");
-	keywords.push_back("typedef");	
 
 	keywords.push_back("case");	
 	keywords.push_back("default");
@@ -144,11 +139,6 @@ size_t Tokenizer::InitKeywords(){
 	keywords.push_back("public");
 	keywords.push_back("protected");	
 
-	keywords.push_back("register");
-	keywords.push_back("virtual");
-	keywords.push_back("extern");
-	keywords.push_back("static");
-	keywords.push_back("auto");
 	keywords.push_back("char");
 	keywords.push_back("const");
 	keywords.push_back("double");
@@ -156,12 +146,18 @@ size_t Tokenizer::InitKeywords(){
 	keywords.push_back("int");
 	keywords.push_back("long");
 	keywords.push_back("wchar_t");
-  keywords.push_back("short");
+  keywords.push_back("short");	
+	keywords.push_back("void");	
+  keywords.push_back("bool");
+
+	keywords.push_back("register");
+	keywords.push_back("virtual");
+	keywords.push_back("extern");
+	keywords.push_back("static");
+	keywords.push_back("auto");
 	keywords.push_back("signed");
 	keywords.push_back("unsigned");
-	keywords.push_back("void");
 	keywords.push_back("volatile");
-  keywords.push_back("bool");
 
 	keywords.push_back("and");		      														
 	keywords.push_back("and_eq");														
@@ -204,6 +200,42 @@ size_t Tokenizer::InitKeywords(){
 	keywords.push_back("typename");
 	keywords.push_back("using");	
 
+	conditionals.push_back("if");
+  conditionals.push_back("while");	
+	conditionals.push_back("for");
+	conditionals.push_back("switch");
+  conditionals.push_back("catch");	
+
+	rights.push_back("private");
+	rights.push_back("public");
+	rights.push_back("protected");	
+  
+	defDataTypes.push_back("enum");
+	defDataTypes.push_back("struct");	
+	defDataTypes.push_back("union");	
+	defDataTypes.push_back("class");
+	defDataTypes.push_back("typedef");	
+  
+	dataTypes.push_back("char");
+	dataTypes.push_back("const");
+	dataTypes.push_back("double");
+	dataTypes.push_back("float");
+	dataTypes.push_back("int");
+	dataTypes.push_back("long");
+	dataTypes.push_back("wchar_t");
+  dataTypes.push_back("short");	
+	dataTypes.push_back("void");	
+  dataTypes.push_back("bool");
+
+	modDataTypes.push_back("register");
+	modDataTypes.push_back("virtual");
+	modDataTypes.push_back("extern");
+	modDataTypes.push_back("static");
+	modDataTypes.push_back("auto");
+	modDataTypes.push_back("signed");
+	modDataTypes.push_back("unsigned");
+	modDataTypes.push_back("volatile");
+
 	return keywords.size();
 }
 
@@ -212,7 +244,7 @@ std::vector<CppToken*>& Tokenizer::GetTokens(){
 }
 
 std::string Tokenizer::GetRegex(){
-  std::string result="";  
+  std::string result="";	
   if(tokenDefs.size()>0){
 	  std::vector<std::string>::iterator it=tokenDefs.begin();  
 	  result=*it;
@@ -320,4 +352,8 @@ std::string Tokenizer::TokenIdToString(const EnumToken_t tokenId){
 			break;
 	}
 	return result;
+}
+
+std::vector<std::string>& Tokenizer::GetToIgnore(){
+  return toIgnore;
 }

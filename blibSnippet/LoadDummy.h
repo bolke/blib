@@ -1,3 +1,10 @@
+/*	
+	file: LoadDummy.h
+	date: 12-12-14
+	author: bolke
+	description: A linux only test load implemented into a function and thread, taking xx cpu load, on a single core.
+*/
+
 #ifndef BLIB_LOADDUMMY_H
 #define BLIB_LOADDUMMY_H
 

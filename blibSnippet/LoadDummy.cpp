@@ -50,7 +50,6 @@ void DummyLoadThread::Run(){
           sweetspot=(sweetspot+j)/2;
           j=sweetspot;
         }
-        std::cout<<percentage<<":"<<target<<":"<<j<<"\r\n";
       }
       if(j==0)
         j=target;
@@ -117,8 +116,6 @@ uint32_t blib::DummyLoad(const uint32_t targetPercentage,uint32_t runtime,uint32
         j=(j/percentage)*targetPercentage;
         if(j<j/5)
           j=j-(j/5);
-      }else{
-        std::cout<<percentage<<":"<<targetPercentage<<":"<<j<<"\r\n";
       }
       if(j==0)
         j=targetPercentage;
