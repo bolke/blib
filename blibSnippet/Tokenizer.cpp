@@ -20,39 +20,40 @@ EnumResult_t Tokenizer::InitRegex(){
 	EnumResult_t result=SUCCESS;
 
   tokenDefs.push_back("(#[a-zA-Z_][a-zA-Z0-9_]*)");										//01 TOK_PREPROCESSOR
-	tokenDefs.push_back("([\r\n]+)");																		//02 TOK_NEWLINE
-	tokenDefs.push_back("(\"[^\"]*\")");																//03 TOK_STRING
-	tokenDefs.push_back("([a-zA-Z_][a-zA-Z0-9_]*)");										//04 TOK_NAME
-	tokenDefs.push_back("([0-9]*\\.?[0-9]+)");													//05 TOK_NUMBER
-	tokenDefs.push_back("([ \t]+)");																		//06 TOK_SPACE
+	tokenDefs.push_back("(\\\\\n|\\\\\r|\\\\\r\n)");        					  //02 TOK_NEWLINE_IGNORE
+	tokenDefs.push_back("([\r\n]+)");																		//03 TOK_NEWLINE
+	tokenDefs.push_back("(\"[^\"]*\")");																//04 TOK_STRING
+	tokenDefs.push_back("([a-zA-Z_][a-zA-Z0-9_]*)");										//05 TOK_NAME
+	tokenDefs.push_back("([0-9]*\\.?[0-9]+)");													//06 TOK_NUMBER
+	tokenDefs.push_back("([ \t]+)");																		//07 TOK_SPACE
 
-	tokenDefs.push_back("(/\\*)"); 																			//07 TOK_COMMENTSTART
-	tokenDefs.push_back("(\\*/)");	  																	//08 TOK_COMMENTEND
-	tokenDefs.push_back("(//.*)");																			//09 TOK_COMMENT
+	tokenDefs.push_back("(/\\*)"); 																			//08 TOK_COMMENTSTART
+	tokenDefs.push_back("(\\*/)");	  																	//09 TOK_COMMENTEND
+	tokenDefs.push_back("(//.*)");																			//10 TOK_COMMENT
 
-	tokenDefs.push_back("(->)");																				//10 TOK_REFARROW
-	tokenDefs.push_back("(\\:\\:)");																		//11 TOK_DOUBLECOLON
-	tokenDefs.push_back("(\\;)");																				//12 TOK_SEMICOLON
+	tokenDefs.push_back("(->)");																				//11 TOK_REFARROW
+	tokenDefs.push_back("(\\:\\:)");																		//12 TOK_DOUBLECOLON
+	tokenDefs.push_back("(\\;)");																				//13 TOK_SEMICOLON
+
+	tokenDefs.push_back("(\\+\\+|\\-\\-)");															//14 TOK_CREMENT
+	tokenDefs.push_back("([\\*\\/\\%\\+\\-\\&\\^\\|\\~]=|<<=|>>=|=)");	//15 TOK_ASSIGN
+	tokenDefs.push_back("([\\*\\+\\-\\/\\%])"); 												//16 TOK_OPERATOR
+  tokenDefs.push_back("(\\!\\||\\&\\&|==|\\!=)");											//17 TOK_COMPARE
 	
-	tokenDefs.push_back("(\\+\\+|\\-\\-)");															//13 TOK_CREMENT
-	tokenDefs.push_back("([\\*\\/\\%\\+\\-\\&\\^\\|\\~]=|<<=|>>=|=)");	//14 TOK_ASSIGN
-	tokenDefs.push_back("([\\*\\+\\-\\/\\%])"); 												//15 TOK_OPERATOR
-  tokenDefs.push_back("(\\!\\||\\&\\&|==|\\!=)");											//16 TOK_COMPARE
+	tokenDefs.push_back("(,)");																					//18 TOK_KOMMA
+	tokenDefs.push_back("([\\:])");																			//19 TOK_COLON
+	tokenDefs.push_back("([{])");																				//20 TOK_OPENBRACE
+	tokenDefs.push_back("([}])");																				//21 TOK_CLOSEBRACE
+	tokenDefs.push_back("([(])");																				//22 TOK_OPENPARENTHESE
+	tokenDefs.push_back("([)])");																				//23 TOK_CLOSEPARENTHESE
+	tokenDefs.push_back("([\\&\\|\\^\\~]|\\<\\<|\\>\\>)");							//24 TOK_BINAIRY
 	
-	tokenDefs.push_back("(,)");																					//17 TOK_KOMMA
-	tokenDefs.push_back("([\\:])");																			//18 TOK_COLON
-	tokenDefs.push_back("([{])");																				//19 TOK_OPENBRACE
-	tokenDefs.push_back("([}])");																				//20 TOK_CLOSEBRACE
-	tokenDefs.push_back("([(])");																				//21 TOK_OPENPARENTHESE
-	tokenDefs.push_back("([)])");																				//22 TOK_CLOSEPARENTHESE
-	tokenDefs.push_back("([\\&\\|\\^\\~]|\\<\\<|\\>\\>)");							//23 TOK_BINAIRY
-	
-	tokenDefs.push_back("([\\<])");																			//24 TOK_OPENCHEVRON
-	tokenDefs.push_back("([\\>])");																			//25 TOK_CLOSECHEVRON
-	tokenDefs.push_back("([\\[])");																			//26 TOK_OPENBRACKET
-	tokenDefs.push_back("([\\]])");																			//27 TOK_CLOSEBRACKET
-	tokenDefs.push_back("([\\.])");																			//28 TOK_DOT
-	tokenDefs.push_back("(.+)");																				//29 TOK_CATCHALL
+	tokenDefs.push_back("([\\<])");																			//25 TOK_OPENCHEVRON
+	tokenDefs.push_back("([\\>])");																			//26 TOK_CLOSECHEVRON
+	tokenDefs.push_back("([\\[])");																			//27 TOK_OPENBRACKET
+	tokenDefs.push_back("([\\]])");																			//28 TOK_CLOSEBRACKET
+	tokenDefs.push_back("([\\.])");																			//29 TOK_DOT
+	tokenDefs.push_back("(.+)");																				//30 TOK_CATCHALL
 
 	return result;
 }
@@ -108,6 +109,8 @@ size_t Tokenizer::Parse(std::string data){
 			if(tokens.back()->id==TOK_NAME){
 				if(std::find(keywords.begin(),keywords.end(),tokens.back()->content)!=keywords.end())
 					tokens.back()->id=TOK_KEYWORD;
+				else if(std::find(unconditionals.begin(),unconditionals.end(),tokens.back()->content)!=unconditionals.end())
+					tokens.back()->id=TOK_UNCONDITIONAL;	
 				else if(std::find(conditionals.begin(),conditionals.end(),tokens.back()->content)!=conditionals.end())
 					tokens.back()->id=TOK_CONDITIONAL;
 				else if(std::find(rights.begin(),rights.end(),tokens.back()->content)!=rights.end())
@@ -127,37 +130,9 @@ size_t Tokenizer::Parse(std::string data){
   return result;
 }
 
-size_t Tokenizer::InitKeywords(){  
-  keywords.push_back("try");															
-	keywords.push_back("else");
-	keywords.push_back("do");	
-
+size_t Tokenizer::InitKeywords(){    
 	keywords.push_back("case");	
 	keywords.push_back("default");
-
-	keywords.push_back("private");
-	keywords.push_back("public");
-	keywords.push_back("protected");	
-
-	keywords.push_back("char");
-	keywords.push_back("const");
-	keywords.push_back("double");
-	keywords.push_back("float");
-	keywords.push_back("int");
-	keywords.push_back("long");
-	keywords.push_back("wchar_t");
-  keywords.push_back("short");	
-	keywords.push_back("void");	
-  keywords.push_back("bool");
-
-	keywords.push_back("register");
-	keywords.push_back("virtual");
-	keywords.push_back("extern");
-	keywords.push_back("static");
-	keywords.push_back("auto");
-	keywords.push_back("signed");
-	keywords.push_back("unsigned");
-	keywords.push_back("volatile");
 
 	keywords.push_back("and");		      														
 	keywords.push_back("and_eq");														
@@ -170,13 +145,6 @@ size_t Tokenizer::InitKeywords(){
 	keywords.push_back("or_eq");															
 	keywords.push_back("xor");																
 	keywords.push_back("xor_eq");															
-
-	keywords.push_back("continue");
-	keywords.push_back("break");
-
-	keywords.push_back("throw");
-	keywords.push_back("return");
-	keywords.push_back("goto");
 
 	keywords.push_back("const_cast");
 	keywords.push_back("dynamic_cast");
@@ -200,6 +168,16 @@ size_t Tokenizer::InitKeywords(){
 	keywords.push_back("typename");
 	keywords.push_back("using");	
 
+	outbreakers.push_back("continue");
+	outbreakers.push_back("break");
+	outbreakers.push_back("throw");
+	outbreakers.push_back("return");
+	outbreakers.push_back("goto");
+	
+	unconditionals.push_back("try");															
+	unconditionals.push_back("else");
+	unconditionals.push_back("do");	
+	
 	conditionals.push_back("if");
   conditionals.push_back("while");	
 	conditionals.push_back("for");
@@ -262,6 +240,9 @@ std::string Tokenizer::TokenIdToString(const EnumToken_t tokenId){
 	switch(tokenId){		
 		case TOK_PREPROCESSOR:
 			result="TOK_PREPROCESSOR";
+			break;
+		case TOK_IGNORENEWLINE:
+			result="TOK_IGNORENEWLINE";
 			break;
 		case TOK_NEWLINE:
 			result="TOK_NEWLINE";
@@ -349,6 +330,42 @@ std::string Tokenizer::TokenIdToString(const EnumToken_t tokenId){
 			break;
 		case TOK_KEYWORD:
 			result="TOK_KEYWORD";
+			break;			
+		case TOK_UNCONDITIONAL:
+			result="TOK_UNCONDITIONAL";
+			break;
+		case TOK_CONDITIONAL:
+			result="TOK_CONDITIONAL";
+			break;
+		case TOK_RIGHT:
+			result="TOK_RIGHT";
+			break;
+		case TOK_DEFDATATYPE:
+			result="TOK_DEFDATATYPE";
+			break;
+		case TOK_DATATYPE:
+			result="TOK_DATATYPE";
+			break;
+		case TOK_MODDATATYPE:
+			result="TOK_MODDATATYPE";
+			break;
+		case TOK_BRACES:
+			result="TOK_BRACES";
+			break;
+		case TOK_PARENTHESES:
+			result="TOK_PARENTHESES";
+			break;
+		case TOK_CHEVRONS:
+			result="TOK_CHEVRONS";
+			break;
+		case TOK_BRACKETS:
+			result="TOK_BRACKETS";
+			break;
+		case TOK_OUTBREAK:
+		  result="TOK_OUTBREAK";
+			break;
+		case TOK_IGNORE:
+			result="TOK_IGNORE";
 			break;
 	}
 	return result;

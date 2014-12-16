@@ -6,23 +6,23 @@
 
 namespace blib{
 
-class Device:public Data,public ThreadSafe{                       //a open and closeable data source
+class Device:public Data,public ThreadSafe{                       						//a open and closeable data source
 protected:
-  bool isOpen;                                                    //if nothing else, this is used to indicate open/closed
+  bool isOpen;                                                    						//if nothing else, this is used to indicate open/closed
 public:
-  BLIB_LIB_API Device(ThreadItem& item,bool destroyLockpad=false);              //get a lock from somewhere, and do we need to destroy it
-  BLIB_LIB_API Device(ThreadLock& lock=*(new ThreadLock(false)));              //get your own lock, will be destroyed
+  BLIB_LIB_API Device(ThreadItem& item,bool destroyLockpad=false);            //get a lock from somewhere, and do we need to destroy it
+  BLIB_LIB_API Device(ThreadLock& lock=*(new ThreadLock(false)));             //get your own lock, will be destroyed
   BLIB_LIB_API virtual ~Device();                                             //destructo does nothing really
   BLIB_LIB_API virtual size_t Size()=0;                                       //return size of data that's poppable
   BLIB_LIB_API virtual size_t Pop(char_t& c,size_t size=1)=0;                 //pop data into char array, return cnt of data popped
   BLIB_LIB_API virtual size_t Pop(std::string& data);                         //pop data into string, return cnt of data popped
-  BLIB_LIB_API virtual size_t Push(const char_t &c,size_t size=1)=0;            //push data into device, return cnt of data pushed
-  BLIB_LIB_API virtual size_t Push(const std::string& data);                    //push data into device, return cnt of data pushed
+  BLIB_LIB_API virtual size_t Push(const char_t &c,size_t size=1)=0;          //push data into device, return cnt of data pushed
+  BLIB_LIB_API virtual size_t Push(const std::string& data);                  //push data into device, return cnt of data pushed
   BLIB_LIB_API virtual bool IsOpen();                                         //returns isOpen variable
   BLIB_LIB_API virtual EnumResult_t Open();                                   //sets isOpen to TRUE
-  BLIB_LIB_API virtual EnumResult_t Close();                                    //sets isOpen to FALSE
-  BLIB_LIB_API virtual Device& operator>>(Device& device);                      //stream to other device (this->pop other->push)
-  BLIB_LIB_API virtual Device& operator<<(Device& device);                      //stream from other device (other->pop other->push)
+  BLIB_LIB_API virtual EnumResult_t Close();                                  //sets isOpen to FALSE
+  BLIB_LIB_API virtual Device& operator>>(Device& device);                    //stream to other device (this->pop other->push)
+  BLIB_LIB_API virtual Device& operator<<(Device& device);                    //stream from other device (other->pop other->push)
   BLIB_LIB_API virtual Device& operator>>(std::string& data);                 //stream data to string (this->pop(string))
   BLIB_LIB_API virtual Device& operator<<(const std::string& data);           //stream data from string (this->push(string))
 
