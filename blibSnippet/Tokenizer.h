@@ -19,14 +19,12 @@ protected:
 	std::string regex;
 	std::vector<std::string> tokenDefs;
 	std::vector<std::string> keywords;
-	std::vector<std::string> unconditionals;
 	std::vector<std::string> conditionals;
 	std::vector<std::string> rights;
 	std::vector<std::string> dataTypes;
 	std::vector<std::string> defDataTypes;
 	std::vector<std::string> modDataTypes;
 	std::vector<std::string> toIgnore;
-	std::vector<std::string> outbreakers;
 	virtual EnumResult_t InitRegex();
 	virtual size_t InitKeywords();
 	virtual std::string GetRegex();

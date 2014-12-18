@@ -596,10 +596,11 @@ std::string StringParser::RemoveFirst(const std::string line,const std::string t
 }
 
 std::string StringParser::RemoveLast(const std::string line,const std::string target){
+	std::string result=line;
   int32_t pos=Last(line,target);
   if(pos>=0)
-    line==Sub(line,pos,pos+target.size());
-  return line;
+    result=RemoveBetween(line,pos,pos+line.size());
+  return result;
 }
 
 std::string StringParser::RemoveTarget(const std::string line,const std::string target,const size_t pos){
