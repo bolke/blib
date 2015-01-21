@@ -11,7 +11,7 @@ namespace blib{												//constants in blib namespace
   const int32_t NO_OWNER=0;           //no owner id, 0 is safe
   const int32_t KILL_TIMEOUT=100;     //default kill timeout in ms. if possible, try to kill after this timeout
   const int32_t RUN_DELAY=1;					//running delay of 1 millisecond by default
-  BLIB_LIB_API DWORD GetThreadId();								//return the current thread id
+  BLIB_LIB_API DWORD GetThreadId();		//return the current thread id
 };
 
 #include "ThreadItem.h"               //base thread item, mutex grab and drop functions
@@ -21,5 +21,6 @@ namespace blib{												//constants in blib namespace
 #include "ThreadWorker.h"							//task worker, executes tasks 
 #include "ThreadTask.h"								//a callback with execcnt,execlimit
 #include "ThreadTaskPool.h"						//a task container, multiple threadworkers can get tasks from here
+#include "ThreadWorkerPool.h"					//manager for taskworkers, tasks, pool, etc
 
 #endif

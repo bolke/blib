@@ -1,4 +1,4 @@
-#include "ThreadLock.h"
+#include "Threading.h"
 
 using namespace blib;
 
@@ -26,19 +26,27 @@ ThreadLock::~ThreadLock(){
 }
 
 bool ThreadLock::Lock(){
-  return lockpad->GrabMutex();
+	if(lockpad)
+    return lockpad->GrabMutex();
+	return true;
 }
 
 bool ThreadLock::Unlock(){
-  return lockpad->DropMutex();
+	if(lockpad)
+    return lockpad->DropMutex();
+	return true;
 }
 
 threadId_t ThreadLock::GetOwner(void){
-  return lockpad->GetOwner();
+	if(lockpad)
+    return lockpad->GetOwner();
+	return NO_OWNER;
 }
 
 size_t ThreadLock::GetLockCnt(void){
-  return lockpad->GetGrabCnt();
+	if(lockpad)
+		return lockpad->GetGrabCnt();
+	return 0;
 }
 
 ThreadItem* ThreadLock::GetLockpad(){
@@ -48,17 +56,21 @@ ThreadItem* ThreadLock::GetLockpad(){
 EnumResult_t ThreadLock::SetLockpad(ThreadItem* lockpad,bool locked,bool lockedExchange){
   EnumResult_t result=FAIL;  
   if(lockpad!=NULL){
-    destroyLockpad=false;
     ThreadItem* oldLockpad=this->lockpad;
     if(locked)
       lockpad->GrabMutex();
     if(lockedExchange){
-      oldLockpad->GrabMutex();   
-      this->lockpad=lockpad;
-      oldLockpad->DropMutex();
-    }else{
-      this->lockpad=lockpad;
-    }
+			if(oldLockpad){
+				oldLockpad->GrabMutex();   
+				this->lockpad=lockpad;
+				oldLockpad->DropMutex();
+			}
+    }else
+      this->lockpad=lockpad;    
+		if(oldLockpad){
+			if(destroyLockpad)
+				delete oldLockpad;		
+		}
     result=SUCCESS;
   }
   return result;

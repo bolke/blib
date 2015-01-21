@@ -18,5 +18,5 @@ bool MultiRequestHandler::ParseRequest(mongoose::ServerHandlingEvent eventCode,m
   if(wIt!=handlers.end())
     if(wIt->second->ParseRequest(eventCode,connection,request,response))
       result=SUCCESS;
-  return result;  
+  return result==SUCCESS;  
 }

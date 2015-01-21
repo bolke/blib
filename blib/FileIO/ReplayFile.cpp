@@ -48,7 +48,7 @@ size_t ReplayFile::Push(const std::string& data){
 bool ReplayFile::IsBinairy(){
   bool result=false;
   if(lock->Lock()){
-    result=file->GetFilemode()&std::fstream::binary;
+    result=(file->GetFilemode()&std::fstream::binary)!=0;
     lock->Unlock();
   }
   return result;
