@@ -182,10 +182,6 @@
 				RelativePath="..\..\blib\Threading\ThreadWorker.cpp"
 				>
 			</File>
-			<File
-				RelativePath="..\..\blib\Threading\ThreadWorkerPool.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -222,10 +218,6 @@
 			</File>
 			<File
 				RelativePath="..\..\blib\Threading\ThreadWorker.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\blib\Threading\ThreadWorkerPool.h"
 				>
 			</File>
 		</Filter>

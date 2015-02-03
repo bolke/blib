@@ -176,14 +176,14 @@ EnumResult_t RawParser::SetInt64_t(const int64_t value,char_t& target,const size
 
 EnumResult_t RawParser::SetFloat32_t(const float32_t value,char_t& target,const size_t start){
 	union32_t data;
-	data.f_value=value;
+	data.value=value;
 	std::memcpy(&(&target)[start],data.c,4);
 	return SUCCESS;
 }
 
 EnumResult_t RawParser::SetFloat64_t(const float64_t value,char_t& target,const size_t start){
 	union64_t data;
-	data.f_value=value;
+	data.value=value;
 	std::memcpy(&(&target)[start],data.c,8);
 	return SUCCESS;
 }
