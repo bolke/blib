@@ -10,6 +10,7 @@ namespace blib{
 
 class WebRequestHandler{
 protected:
+  size_t lastCallLimit;
   std::vector<time_t> lastCalls;
   mongoose::MongooseRequest* request;
   mongoose::MongooseConnection* connection;
@@ -17,6 +18,7 @@ protected:
   virtual size_t ExtractVariables(std::string queryString,const mongoose::MongooseRequest &request,std::vector<std::pair<std::string,std::string>> &variables);
   virtual EnumResult_t HandleRequest(mongoose::ServerHandlingEvent eventCode,mongoose::MongooseResponse &response,std::string uri,std::vector<std::pair<std::string,std::string>> &variables)=0;
 public:
+  WebRequestHandler();
   virtual ~WebRequestHandler();
   virtual bool ParseRequest(mongoose::ServerHandlingEvent eventCode,mongoose::MongooseConnection &connection,const mongoose::MongooseRequest &request, mongoose::MongooseResponse &response);
 };

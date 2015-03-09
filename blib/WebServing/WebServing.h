@@ -10,6 +10,5 @@
 #include "WebRequestHandler.h"
 #include "MultiRequestHandler.h"
 #include "CallbackRequestHandler.h"
-#include "UploadRequestHandler.h"
 
 #endif

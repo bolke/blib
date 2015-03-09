@@ -167,10 +167,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\blib\WebServing\UploadRequestHandler.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\blib\WebServing\WebRequestHandler.cpp"
 				>
 			</File>
@@ -198,10 +194,6 @@
 			</File>
 			<File
 				RelativePath="..\..\blib\WebServing\MultiRequestHandler.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\blib\WebServing\UploadRequestHandler.h"
 				>
 			</File>
 			<File

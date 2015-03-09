@@ -27,7 +27,7 @@ public:
   BLIB_LIB_API virtual Device& operator<<(const std::string& data);           //stream data from string (this->push(string))
 
   //push data from an istream into a Device, return the stream. 
-  friend std::istream& operator>>(std::istream &stream,Device &output){
+  BLIB_LIB_API friend std::istream& operator>>(std::istream &stream,Device &output){
     char_t* data=NULL;
     size_t pos;
     size_t size;
@@ -57,7 +57,7 @@ public:
   };
 
   //pop data from a Device and into an ostream.
-  friend std::ostream& operator<<(std::ostream& stream,Device& input){    
+  BLIB_LIB_API friend std::ostream& operator<<(std::ostream& stream,Device& input){    
     size_t size=input.Size();
     if(size>0){    
       char_t* data=new char_t[size];

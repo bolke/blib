@@ -23,7 +23,7 @@ public:
 	BLIB_LIB_API virtual Data& operator>>(std::string& data);
 	BLIB_LIB_API virtual Data& operator<<(const std::string& data);
 
-	friend std::istream& operator>>(std::istream &stream,Data &output){
+	BLIB_LIB_API friend std::istream& operator>>(std::istream &stream,Data &output){
 		char_t* data=NULL;
 		size_t pos;
 		size_t size;
@@ -52,7 +52,7 @@ public:
 		return stream;
 	};
 
-	friend std::ostream& operator<<(std::ostream& stream,Data& input){
+	BLIB_LIB_API friend std::ostream& operator<<(std::ostream& stream,Data& input){
     size_t size=input.Size();
     if(size>0){
       char_t* data=new char_t[size];
